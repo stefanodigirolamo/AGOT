@@ -9,7 +9,7 @@ const Header = () => (
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'transparent',
+    backgroundColor: '#000000CD',
     alignItems: 'center',
   },
   image: {

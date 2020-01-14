@@ -2,32 +2,34 @@ import React from 'react';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import Video from 'react-native-video';
 import background from '../assets/Throne.mp4';
-import Header from '../components/header/Header';
 
 const {height} = Dimensions.get('window');
 
-const Background = () => {
+const Background = props => {
   return (
     <View style={styles.container}>
-      <Header />
-      <Video
-        source={background}
-        muted={true}
-        repeat={true}
-        resizeMode={'cover'}
-        rate={0.7}
-        style={styles.video}
-        ignoreSilentSwitch={'obey'}
-      />
+      <View style={styles.videoContainer}>
+        <Video
+          source={background}
+          muted={true}
+          repeat={true}
+          resizeMode={'cover'}
+          rate={0.7}
+          style={styles.video}
+          ignoreSilentSwitch={'obey'}
+        />
+        {props.children}
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000',
+    backgroundColor: '#000000C9',
+  },
+  videoContainer: {
     justifyContent: 'center',
-    alignItems: 'center',
   },
   video: {
     position: 'absolute',
@@ -37,7 +39,6 @@ const styles = StyleSheet.create({
     right: 0,
     left: 0,
     height: height,
-    opacity: 0.3,
   },
 });
 

@@ -8,10 +8,13 @@ import DecksList from './screens/decksList/DecksList';
 import MyDecks from './screens/myDecks/MyDecks';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/Background';
+import Header from './components/header/Header';
 
 const App = () => (
   <>
-    <Background />
+    <Background>
+      <Header />
+    </Background>
     <AppNavigator />
   </>
 );
