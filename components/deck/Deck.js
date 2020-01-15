@@ -1,36 +1,25 @@
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, ImageBackground } from 'react-native'
 import { TouchableOpacity } from 'react-native-gesture-handler'
+import deckStyles from './deckStyles'
 
 const Deck = ({ name, faction, navigation }) => {
+    const styles = deckStyles
+
     const openModal = () => {
 
     }
-    
+
     return (
-        <TouchableOpacity /* onPress={} */ style={styles.CardContainer}>
-            <View style={styles.titleContainer}>
-                <Text style={styles.text}>{name}</Text>
-                <Text style={styles.text}>{faction}</Text>
-            </View>
+        <TouchableOpacity /* onPress={} */ style={styles.cardContainer}>
+            <ImageBackground imageStyle={styles.background} style={{width: '100%'}} source={{uri: 'https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/ed23ad19-a59a-4b4c-a894-162a4e6b2537/d4fa1dz-18e8dfb3-6530-49f2-a20b-9bc4848f691a.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2VkMjNhZDE5LWE1OWEtNGI0Yy1hODk0LTE2MmE0ZTZiMjUzN1wvZDRmYTFkei0xOGU4ZGZiMy02NTMwLTQ5ZjItYTIwYi05YmM0ODQ4ZjY5MWEuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YVuQrNi9HNQtx5GKkSfzR-SV6w45ocXVaEGinOo6BOQ'}}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>{name}</Text>
+                    <Text style={styles.subtitle}>{faction}</Text>
+                </View>
+            </ImageBackground>
         </TouchableOpacity>
     )
 }
-const styles = StyleSheet.create({
-    CardContainer: {
-        backgroundColor: '#3e3e3e',
-        borderRadius: 6,
-        marginVertical: 10,
-    },
-    titleContainer: {
-        paddingVertical: 10,
-        paddingHorizontal: 10,
-        flexDirection: 'row',
-        justifyContent: 'space-around'
-    },
-    text: {
-        color: '#fefefe'
-    }
-})
 
 export default Deck
