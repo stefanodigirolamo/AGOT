@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, ImageBackground, StyleSheet} from 'react-native';
+import {View, Text, FlatList, StyleSheet} from 'react-native';
 import {getDailyDecklists} from '../../api/decklists/dailyDecklists';
 import {getPackagesLists} from '../../api/packs/packagesLists';
 import PacksImages from '../../assets/packagesImagesSwitch';
@@ -12,6 +12,7 @@ const Home = () => {
     try {
       const dailyDecks = await getDailyDecklists();
       setDailyDecks(dailyDecks);
+      console.log(dailyDecks);
     } catch (error) {
       console.log(error);
     }
@@ -21,7 +22,6 @@ const Home = () => {
     try {
       const packsLists = await getPackagesLists();
       setPacksLists(packsLists);
-
       console.log(packsLists);
     } catch (error) {
       console.log(error);
@@ -35,22 +35,13 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <ImageBackground
-          source={{
-            uri:
-              'https://live.staticflickr.com/3328/4615825551_d36ae5f896_b.jpg',
-          }}
-          style={styles.loginButton}
-          imageStyle={styles.loginButtonImage}>
-          <Text style={styles.loginButtonText}> PLAY NOW </Text>
-        </ImageBackground>
+      <View style={styles.packsListsTitleContainer}>
+        <Text style={styles.listsTitle}> All Packs Lists </Text>
       </View>
-
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        data={packsLists}
+        data={packsLists.reverse()}
         renderItem={({item}) => (
           <View style={styles.singlePacksContainer}>
             <PacksImages packagesImages={item.name} />
@@ -80,23 +71,17 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#000000C9',
   },
-  loginButton: {
-    height: 75,
-    width: 260,
-    marginVertical: '8%',
-  },
-  loginButtonImage: {
-    opacity: 0.6,
-    borderRadius: 7,
-  },
-  loginButtonText: {
-    fontSize: 30,
-    color: '#000000',
-    textAlign: 'center',
+  packsListsTitleContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
     marginVertical: '6%',
+    marginLeft: '5%',
+  },
+  listsTitle: {
+    color: '#ffc533',
+    fontSize: 18,
     fontWeight: 'bold',
   },
   singlePacksContainer: {
@@ -104,14 +89,13 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
   },
   packsListsContainer: {
-    marginTop: '5%',
     flex: 2,
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     color: '#c2a67f',
+    marginTop: 10,
     fontWeight: 'bold',
-    marginTop: 15,
   },
   description: {
     fontSize: 15,
