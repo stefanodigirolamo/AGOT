@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, ImageBackground, StyleSheet} from 'react-native';
-import {getDailyDecklists} from '../../api/decklists/dailyDecklists';
-import {getPackagesLists} from '../../api/packs/packagesLists';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, ImageBackground, StyleSheet } from 'react-native';
+import { getDailyDecklists } from '../../api/decklists/dailyDecklists';
+import { getPackagesLists } from '../../api/packs/packagesLists';
 import PacksImages from '../../assets/packagesImagesSwitch';
+import Deck from '../../components/deck/Deck';
 
 const Home = () => {
   const [dailyDecks, setDailyDecks] = useState([]);
@@ -51,7 +52,7 @@ const Home = () => {
         showsHorizontalScrollIndicator={false}
         horizontal={true}
         data={packsLists}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <View style={styles.singlePacksContainer}>
             <PacksImages packagesImages={item.name} />
             <Text style={styles.title}> {item.name} </Text>
@@ -61,18 +62,21 @@ const Home = () => {
         keyExtractor={item => `key-${item.code}`}
         style={styles.packsListsContainer}
       />
+      <View style={styles.decksListsContainer}>
+        <Text style={styles.title}>Daily Decks</Text>
+        {dailyDecks ?
+          <FlatList
+            data={dailyDecks}
+            keyExtractor={item => `key-${item.id}`}
+            renderItem={({ item }) => (
+              <Deck id={item.id} name={item.title} faction={item.faction} description={item.description} />
+            )
+            }
+          /> :
+          <Text style={styles.description}>I'm sorry! There are no Decklist for today!</Text>
+        }
+      </View>
 
-      <FlatList
-        data={dailyDecks}
-        keyExtractor={item => `key-${item.id}`}
-        style={styles.decksListsContainer}
-        renderItem={({item}) => (
-          <View>
-            <Text style={styles.text}>{item.title}</Text>
-            <Text style={styles.text}>{item.faction}</Text>
-          </View>
-        )}
-      />
     </View>
   );
 };
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
   },
   packsListsContainer: {
     marginTop: '5%',
-    flex: 2,
+    flex: 3,
   },
   title: {
     fontSize: 20,
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     color: '#c2a67f',
   },
   decksListsContainer: {
-    flex: 3,
+    flex: 1,
   },
 });
 
