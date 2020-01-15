@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, ImageBackground, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Platform, StyleSheet } from 'react-native';
 import { getDailyDecklists } from '../../api/decklists/dailyDecklists';
 import { getPackagesLists } from '../../api/packs/packagesLists';
 import PacksImages from '../../assets/packagesImagesSwitch';
@@ -13,6 +13,7 @@ const Home = () => {
     try {
       const dailyDecks = await getDailyDecklists();
       setDailyDecks(dailyDecks);
+      console.log(dailyDecks);
     } catch (error) {
       console.log(error);
     }
@@ -22,7 +23,6 @@ const Home = () => {
     try {
       const packsLists = await getPackagesLists();
       setPacksLists(packsLists);
-
       console.log(packsLists);
     } catch (error) {
       console.log(error);
@@ -36,22 +36,30 @@ const Home = () => {
 
   return (
     <View style={styles.container}>
-      <View>
-        <ImageBackground
-          source={{
-            uri:
-              'https://live.staticflickr.com/3328/4615825551_d36ae5f896_b.jpg',
-          }}
-          style={styles.loginButton}
-          imageStyle={styles.loginButtonImage}>
-          <Text style={styles.loginButtonText}> PLAY NOW </Text>
-        </ImageBackground>
+      <View style={styles.decksListsContainer}>
+        <Text style={styles.listsTitle}>Daily Decks</Text>
+        {dailyDecks ?
+          <FlatList
+            data={dailyDecks}
+            keyExtractor={item => `key-${item.id}`}
+            renderItem={({ item }) => (
+              <Deck id={item.id} name={item.title} faction={item.faction} description={item.description} />
+            )
+            }
+          /> :
+          <View style={styles.errorContainer}>
+            <Text style={styles.messageError}>I'm sorry! There are no Decklist for today!</Text>
+          </View>
+        }
       </View>
 
+      <View style={styles.packsListsTitleContainer}>
+        <Text style={styles.listsTitle}> All Packs Lists </Text>
+      </View>
       <FlatList
         showsHorizontalScrollIndicator={false}
         horizontal={true}
-        data={packsLists}
+        data={packsLists.reverse()}
         renderItem={({ item }) => (
           <View style={styles.singlePacksContainer}>
             <PacksImages packagesImages={item.name} />
@@ -62,21 +70,6 @@ const Home = () => {
         keyExtractor={item => `key-${item.code}`}
         style={styles.packsListsContainer}
       />
-      <View style={styles.decksListsContainer}>
-        <Text style={styles.title}>Daily Decks</Text>
-        {dailyDecks ?
-          <FlatList
-            data={dailyDecks}
-            keyExtractor={item => `key-${item.id}`}
-            renderItem={({ item }) => (
-              <Deck id={item.id} name={item.title} faction={item.faction} description={item.description} />
-            )
-            }
-          /> :
-          <Text style={styles.description}>I'm sorry! There are no Decklist for today!</Text>
-        }
-      </View>
-
     </View>
   );
 };
@@ -84,41 +77,44 @@ const Home = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
     backgroundColor: '#000000C9',
   },
-  loginButton: {
-    height: 75,
-    width: 260,
-    marginVertical: '8%',
+  packsListsTitleContainer: {
+    display: 'flex',
+    alignItems: 'flex-start',
   },
-  loginButtonImage: {
-    opacity: 0.6,
-    borderRadius: 7,
-  },
-  loginButtonText: {
-    fontSize: 30,
-    color: '#000000',
-    textAlign: 'center',
-    marginVertical: '6%',
+  listsTitle: {
+    color: '#ffc533',
+    fontSize: 18,
     fontWeight: 'bold',
+    marginLeft: '5%',
+    marginVertical: Platform.OS === 'android' ? '6%' : '5%',
   },
   singlePacksContainer: {
     alignItems: 'center',
     marginHorizontal: 20,
   },
   packsListsContainer: {
-    marginTop: '5%',
-    flex: 3,
+    flex: 2,
+    marginTop: Platform.OS === 'ios' ? '5%' : null
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     color: '#c2a67f',
+    marginTop: 10,
     fontWeight: 'bold',
-    marginTop: 15,
   },
   description: {
     fontSize: 15,
+    color: '#c2a67f',
+  },
+  errorContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    marginVertical: '25%'
+  },
+  messageError: {
+    fontSize: 18,
     color: '#c2a67f',
   },
   decksListsContainer: {
