@@ -31,8 +31,14 @@ const homeStack = createStackNavigator(
       }),
     },
     Modal: {
-      screen: Modal
-    }
+      screen: Modal,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: '#000000',
+          opacity: 0.94,
+        },
+      }),
+    },
   },
   {headerMode: 'none'},
 );

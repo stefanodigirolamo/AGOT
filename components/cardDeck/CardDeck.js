@@ -1,18 +1,14 @@
 import React from 'react';
 import {View, Text, ImageBackground} from 'react-native';
-import {TouchableOpacity} from 'react-native-gesture-handler';
-import deckStyles from './deckStyles';
+import deckStyles from './cardDeckStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Deck = ({name, faction, navigation}) => {
+const Deck = ({name, faction}) => {
   const styles = deckStyles;
 
-  const openModal = () => {};
-
   return (
-    <TouchableOpacity /* onPress={} */ style={styles.cardContainer}>
+    <View style={styles.cardContainer}>
       <ImageBackground
-        imageStyle={styles.background}
         style={{width: '100%'}}
         source={{
           uri:
@@ -28,7 +24,7 @@ const Deck = ({name, faction, navigation}) => {
           </View>
         </View>
       </ImageBackground>
-    </TouchableOpacity>
+    </View>
   );
 };
 

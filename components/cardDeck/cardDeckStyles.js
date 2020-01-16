@@ -5,21 +5,17 @@ const deckStyles = StyleSheet.create({
     marginVertical: '2%',
     marginHorizontal: 20,
   },
-  background: {
-    opacity: 0.4,
-    borderRadius: 8,
-  },
   detailContainer: {
     flexDirection: 'row',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
+    backgroundColor: '#000000C1',
   },
   titleContainer: {
     paddingVertical: 10,
     paddingHorizontal: 10,
     flexDirection: 'column',
-    justifyContent: 'space-around',
     width: '90%',
   },
   arrowContainer: {
@@ -28,6 +24,9 @@ const deckStyles = StyleSheet.create({
   title: {
     fontSize: 15,
     color: '#c2a67f',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 10,
   },
   subtitle: {
     fontSize: 15,
@@ -35,6 +34,9 @@ const deckStyles = StyleSheet.create({
     color: '#c2a67f',
     marginTop: '5%',
     textDecorationLine: 'underline',
+    textShadowColor: 'rgba(0, 0, 0, 0.75)',
+    textShadowOffset: {width: 2, height: 2},
+    textShadowRadius: 10,
   },
 });
 

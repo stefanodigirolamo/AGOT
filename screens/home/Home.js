@@ -29,8 +29,8 @@ const Home = ({navigation}) => {
     }
   };
 
-  const openModal = (id, name) => {
-    navigation.navigate('Modal', {id, name});
+  const openModal = (id, name, total) => {
+    navigation.navigate('Modal', {id, name, total});
   };
 
   useEffect(() => {
@@ -47,12 +47,14 @@ const Home = ({navigation}) => {
             data={dailyDecks}
             keyExtractor={item => `key-${item.id}`}
             renderItem={({item}) => (
-              <Deck
-                id={item.id}
-                name={item.title}
-                faction={item.faction}
-                description={item.description}
-              />
+              <TouchableOpacity onPress={() => openModal(item.id)}>
+                <Deck
+                  id={item.id}
+                  name={item.title}
+                  faction={item.faction}
+                  description={item.description}
+                />
+              </TouchableOpacity>
             )}
           />
         ) : (
@@ -72,7 +74,8 @@ const Home = ({navigation}) => {
           data={packsLists.reverse()}
           renderItem={({item}) => (
             <View style={styles.singlePacksContainer}>
-              <TouchableOpacity onPress={() => openModal(item.code, item.name)}>
+              <TouchableOpacity
+                onPress={() => openModal(item.code, item.name, item.total)}>
                 <PacksImages packagesImages={item.name} />
               </TouchableOpacity>
               <Text style={styles.title}> {item.name} </Text>
