@@ -9,6 +9,7 @@ import MyDecks from './screens/myDecks/MyDecks';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/Background';
 import Header from './components/header/Header';
+import Modal from './components/modalDetails/ModalDetails';
 
 const App = () => (
   <>
@@ -29,6 +30,9 @@ const homeStack = createStackNavigator(
         },
       }),
     },
+    Modal: {
+      screen: Modal
+    }
   },
   {headerMode: 'none'},
 );

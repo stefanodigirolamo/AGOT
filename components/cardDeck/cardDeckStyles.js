@@ -3,14 +3,15 @@ import { StyleSheet } from 'react-native'
 const deckStyles = StyleSheet.create({
     cardContainer: {
         marginVertical: '2%',
-        marginHorizontal: 20,        
+        marginHorizontal: 10,        
     },
     background: {
-        opacity: 0.4
+        opacity: 0.4,
+        borderRadius: 8
     },
     titleContainer: {
-        paddingVertical: 30,
-        paddingHorizontal: 30,
+        paddingVertical: 10,
+        paddingHorizontal: 10,
         flexDirection: 'column',
         justifyContent: 'space-around',
     },
@@ -22,7 +23,8 @@ const deckStyles = StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',
         color: '#c2a67f',
-        marginTop: '5%'
+        marginTop: '5%',
+        textDecorationLine: 'underline'
     }
 })
 

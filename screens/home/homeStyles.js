@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Platform } from 'react-native'
 
 const homeStyles = StyleSheet.create({
     container: {
@@ -7,13 +7,14 @@ const homeStyles = StyleSheet.create({
     },
     listsContainer: {
       flex: 3,
+      marginTop: '5%'
     },
     listsTitle: {
       color: '#ffc533',
       fontSize: 18,
       fontWeight: 'bold',
       marginLeft: '5%',
-      marginVertical: Platform.OS === 'android' ? '9%' : '8%',
+      marginVertical: Platform.OS === 'android' ? '3%' : '8%',
     },
     packsListsTitleContainer: {
       display: 'flex',
