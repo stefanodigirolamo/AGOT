@@ -1,11 +1,11 @@
 import decklists from '../../interceptors/decklistInterceptor';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
 const today = format(new Date(), 'yyyy-MM-dd');
 
 export const getDailyDecklists = async () => {
   try {
-    const decks = await decklists.get(`2020-01-14.json`)
+    const decks = await decklists.get(`2019-12-04.json`);
 
     const dailyDecks = decks.data.map(deck => {
       return {
@@ -15,12 +15,12 @@ export const getDailyDecklists = async () => {
         faction: deck.faction_name,
         description: deck.description_md,
         joust: deck.isLegalForJoust,
-        melee: deck.isLegalForMelee
-      }
-    })
+        melee: deck.isLegalForMelee,
+      };
+    });
     return dailyDecks;
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
 
