@@ -22,6 +22,7 @@ const modalStyles = StyleSheet.create({
   headerItemsContainer: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-between',
     marginHorizontal: '5%',
   },
   title: {
@@ -35,7 +36,7 @@ const modalStyles = StyleSheet.create({
     fontSize: 15,
     color: '#ffc533',
     textShadowColor: 'rgba(0, 0, 0, 0.95)',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 10,
   },
   buttonContainer: {

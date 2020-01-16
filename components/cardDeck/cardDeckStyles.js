@@ -4,6 +4,15 @@ const deckStyles = StyleSheet.create({
   cardContainer: {
     marginVertical: '2%',
     marginHorizontal: 20,
+    elevation: 1,
+  },
+  newDeckIconContainer: {
+    display: 'flex',
+    alignItems: 'flex-end',
+    position: 'relative',
+    top: 20,
+    right: 10,
+    elevation: 2,
   },
   detailContainer: {
     flexDirection: 'row',

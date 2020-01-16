@@ -1,5 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, ImageBackground, Image, Button} from 'react-native';
+import {
+  View,
+  Text,
+  ImageBackground,
+  Image,
+  Button,
+  Linking,
+} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import modalStyles from './modalStyles';
 import {getDeckDetails} from '../../api/deckDetailsApi/deckdetailsApi';
@@ -11,6 +18,7 @@ const Modal = ({navigation}) => {
   const styles = modalStyles;
   const packName = navigation.state.params.name;
   const totalCards = navigation.state.params.total;
+  const URL = navigation.state.params.url;
 
   const [deckDetails, setDeckDetails] = useState({});
   const [packDetails, setPackDetails] = useState([]);
@@ -41,12 +49,18 @@ const Modal = ({navigation}) => {
     }
   }, [navigation.state.params.id]);
 
+  const openUrl = () => {
+    Linking.openURL(URL);
+  };
+
   console.log(deckDetails);
+  console.log(packDetails);
+  console.log(URL);
   const dateCreation = deckDetails.date_creation;
 
   return (
     <View>
-      {!packName && dateCreation ? (
+      {!packName && dateCreation && deckDetails ? (
         <ImageBackground
           source={{
             uri: 'https://jooinn.com/images1280_/old-paper-background.jpg',
@@ -79,7 +93,11 @@ const Modal = ({navigation}) => {
                 <Text style={styles.title}>{packName}</Text>
                 <Text style={styles.details}> Total {totalCards} </Text>
                 <View style={styles.buttonContainer}>
-                  <Button title="View On Site" color="#000000C9" />
+                  <Button
+                    title="View On Site"
+                    color="#000000C9"
+                    onPress={() => openUrl()}
+                  />
                 </View>
               </View>
             </View>

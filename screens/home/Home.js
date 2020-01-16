@@ -29,8 +29,8 @@ const Home = ({navigation}) => {
     }
   };
 
-  const openModal = (id, name, total) => {
-    navigation.navigate('Modal', {id, name, total});
+  const openModal = (id, name, total, url) => {
+    navigation.navigate('Modal', {id, name, total, url});
   };
 
   useEffect(() => {
@@ -75,7 +75,9 @@ const Home = ({navigation}) => {
           renderItem={({item}) => (
             <View style={styles.singlePacksContainer}>
               <TouchableOpacity
-                onPress={() => openModal(item.code, item.name, item.total)}>
+                onPress={() =>
+                  openModal(item.code, item.name, item.total, item.url)
+                }>
                 <PacksImages packagesImages={item.name} />
               </TouchableOpacity>
               <Text style={styles.title}> {item.name} </Text>
