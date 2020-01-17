@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import modalStyles from './modalStyles';
-import { View, Text, ImageBackground, Button } from 'react-native';
+import { View, Text, ImageBackground, Button, Linking } from 'react-native';
 import PackImage from '../../assets/packagesImagesSwitch';
 import CardList from '../cardList/CardList';
 import { getDeckDetails } from '../../api/deckDetailsApi/deckdetailsApi';
 import { getCard } from '../../api/cardApi/cardApi';
-import { getCards } from '../../api/cardsApi/cardsApi';
+import { getCards, getSections } from '../../api/cardsApi/cardsApi';
 import { format } from 'date-fns';
 
 const Modal = ({ navigation }) => {
@@ -15,7 +15,7 @@ const Modal = ({ navigation }) => {
   const URL = navigation.state.params.url;
 
   const [deckDetails, setDeckDetails] = useState({});
-  const [cards, setCards] = useState([])
+  const [cardSections, setCardSections] = useState([])
 
   useEffect(() => {
     if (packName) {
@@ -32,8 +32,13 @@ const Modal = ({ navigation }) => {
       const ids = getIds(details.slots)
       const cards = await Promise.all(ids.map(item => getCard(item)))
 
+      const array_type_name = cards.map(item=>item.type_name)
+      const cardSections = await getSections(array_type_name, cards);      
+
       setDeckDetails(details);
-      setCards(cards)
+      setCardSections(cardSections);
+      // console.log(cardSections);
+          
 
     } catch (error) {
       console.log(error);
@@ -47,7 +52,11 @@ const Modal = ({ navigation }) => {
   const card = useCallback(async () => {
     try {
       const cards = await getCards(navigation.state.params.id);
-      setCards(cards);
+      const array_type_name = cards.map(item=>item.type_name)
+      const cardSections = await getSections(array_type_name, cards);  
+      setCardSections(cardSections);
+      // console.log(cardSections);
+
     } catch (error) {
       console.log(error);
     }
@@ -77,9 +86,9 @@ const Modal = ({ navigation }) => {
                 </Text>
               </View>
             </ImageBackground>
-            <CardList deck cards={cards} />
+            <CardList deck cards={cardSections} />
           </View>
-        ) : (
+        ) : packName && (
           <View style={{ flex: 2 }}>
             <ImageBackground
               source={require('../../assets/modal_header_background.jpg')}
@@ -102,7 +111,7 @@ const Modal = ({ navigation }) => {
                 </View>
               </View>
             </ImageBackground>
-            <CardList cards={cards} />
+            <CardList cards={cardSections} />
           </View>
         )}
     </View>

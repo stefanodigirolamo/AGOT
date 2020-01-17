@@ -1,12 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, FlatList, TouchableOpacity} from 'react-native';
-import {getDailyDecklists} from '../../api/decklistApi/decklistsApi';
-import {getPackagesLists} from '../../api/packsApi/packagesApi';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { getDailyDecklists } from '../../api/decklistApi/decklistsApi';
+import { getPackagesLists } from '../../api/packsApi/packagesApi';
 import PacksImages from '../../assets/packagesImagesSwitch';
 import Deck from '../../components/cardDeck/CardDeck';
 import homeStyle from './homeStyles';
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const styles = homeStyle;
   const [dailyDecks, setDailyDecks] = useState([]);
   const [packsLists, setPacksLists] = useState([]);
@@ -30,7 +30,7 @@ const Home = ({navigation}) => {
   };
 
   const openModal = (id, name, total, url) => {
-    navigation.navigate('Modal', {id, name, total, url});
+    navigation.navigate('Modal', { id, name, total, url });
   };
 
   useEffect(() => {
@@ -44,9 +44,10 @@ const Home = ({navigation}) => {
         <Text style={styles.listsTitle}>Daily Decks</Text>
         {dailyDecks ? (
           <FlatList
+            showsVerticalScrollIndicator={false}
             data={dailyDecks}
             keyExtractor={item => `key-${item.id}`}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <TouchableOpacity onPress={() => openModal(item.id)}>
                 <Deck
                   id={item.id}
@@ -58,12 +59,12 @@ const Home = ({navigation}) => {
             )}
           />
         ) : (
-          <View style={styles.errorContainer}>
-            <Text style={styles.messageError}>
-              I'm sorry! There are no Decklists for now!
+            <View style={styles.errorContainer}>
+              <Text style={styles.messageError}>
+                I'm sorry! There are no Decklists for now!
             </Text>
-          </View>
-        )}
+            </View>
+          )}
       </View>
 
       <View style={styles.listsContainer}>
@@ -72,7 +73,7 @@ const Home = ({navigation}) => {
           showsHorizontalScrollIndicator={false}
           horizontal={true}
           data={packsLists.reverse()}
-          renderItem={({item}) => (
+          renderItem={({ item }) => (
             <View style={styles.singlePacksContainer}>
               <TouchableOpacity
                 onPress={() =>

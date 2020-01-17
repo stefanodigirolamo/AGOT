@@ -11,6 +11,14 @@ const cardStyles = StyleSheet.create({
         marginLeft: '2%',
         width: '90%'
       },
+      headerContainer: {
+        backgroundColor: '#c2a67f',
+        paddingVertical: '10%',
+      },
+      sectionHeader: {
+        fontSize: 25,
+        color: '#ffc533',
+      },
       cardName: {
         fontSize: 25,
         color: '#c2a67f',
