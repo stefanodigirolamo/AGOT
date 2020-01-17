@@ -41,7 +41,7 @@ const modalStyles = StyleSheet.create({
   },
   buttonContainer: {
     marginTop: '20%',
-  },
+  }
 });
 
 export default modalStyles;
