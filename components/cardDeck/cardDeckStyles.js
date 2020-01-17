@@ -23,8 +23,13 @@ const deckStyles = StyleSheet.create({
     backgroundColor: '#000000C1',
   },
   titleContainer: {
+<<<<<<< HEAD
     paddingVertical: '2%',
     paddingHorizontal: 10,
+=======
+    paddingVertical: '1%',
+    paddingHorizontal: '3%',
+>>>>>>> d2f95d50cf3a85552cc9b97884dd310c622f1ad7
     flexDirection: 'column',
     width: '90%',
   },

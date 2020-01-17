@@ -46,6 +46,7 @@ const Home = ({ navigation }) => {
           <FlatList
             showsVerticalScrollIndicator={false}
             data={dailyDecks}
+            showsVerticalScrollIndicator={false}
             keyExtractor={item => `key-${item.id}`}
             renderItem={({ item }) => (
               <TouchableOpacity onPress={() => openModal(item.id)}>
