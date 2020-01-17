@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/Background';
 import Header from './components/header/Header';
 import Modal from './components/modalDetails/ModalDetails';
+import Card from './components/cardDetails/CardDetails';
 
 const App = () => (
   <>
@@ -32,6 +33,15 @@ const homeStack = createStackNavigator(
     },
     Modal: {
       screen: Modal,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: '#000000',
+          opacity: 0.94,
+        },
+      }),
+    },
+    Card: {
+      screen: Card,
       navigationOptions: () => ({
         cardStyle: {
           backgroundColor: '#000000',

@@ -2,16 +2,17 @@ import {StyleSheet} from 'react-native';
 
 const deckStyles = StyleSheet.create({
   cardContainer: {
-    marginVertical: '2%',
     marginHorizontal: 20,
+    zIndex: 1,
     elevation: 1,
   },
   newDeckIconContainer: {
     display: 'flex',
     alignItems: 'flex-end',
     position: 'relative',
-    top: 20,
+    top: 10,
     right: 10,
+    zIndex: 2,
     elevation: 2,
   },
   detailContainer: {
@@ -22,8 +23,8 @@ const deckStyles = StyleSheet.create({
     backgroundColor: '#000000C1',
   },
   titleContainer: {
-    paddingVertical: 10,
-    paddingHorizontal: 10,
+    paddingVertical: '1%',
+    paddingHorizontal: '3%',
     flexDirection: 'column',
     width: '90%',
   },

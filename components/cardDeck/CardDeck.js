@@ -7,7 +7,7 @@ const Deck = ({name, faction}) => {
   const styles = deckStyles;
 
   return (
-    <>
+    <View>
       <View style={styles.newDeckIconContainer}>
         <Icon name="new-box" size={20} color="#e60000" />
       </View>
@@ -29,7 +29,7 @@ const Deck = ({name, faction}) => {
           </View>
         </ImageBackground>
       </View>
-    </>
+    </View>
   );
 };
 
