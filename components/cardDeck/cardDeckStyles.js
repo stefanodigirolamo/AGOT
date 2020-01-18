@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const deckStyles = StyleSheet.create({
   cardContainer: {
@@ -23,13 +23,8 @@ const deckStyles = StyleSheet.create({
     backgroundColor: '#000000C1',
   },
   titleContainer: {
-<<<<<<< HEAD
-    paddingVertical: '2%',
-    paddingHorizontal: 10,
-=======
-    paddingVertical: '1%',
+    paddingVertical: Platform.OS === 'android' ? '2.12%' : '4%',
     paddingHorizontal: '3%',
->>>>>>> d2f95d50cf3a85552cc9b97884dd310c622f1ad7
     flexDirection: 'column',
     width: '90%',
   },

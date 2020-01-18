@@ -1,17 +1,17 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const modalStyles = StyleSheet.create({
   detailsContainer: {
-    paddingVertical: '5%',
+    maxHeight: Platform.OS === 'ios' ? '25%' : '40%',
+    paddingVertical: Platform.OS === 'android' ? '10%' : '5%',
   },
   imageContainer: {
-    width: '50%',
+    width: '35%',
   },
   titleContainer: {
-    width: '50%',
+    width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: '10%',
   },
   deckNameContainer: {
     display: 'flex',

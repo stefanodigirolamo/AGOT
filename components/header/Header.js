@@ -1,9 +1,10 @@
 import React from 'react';
 import {View, Image, StyleSheet} from 'react-native';
+import AGOTLogo from '../../assets/gotLogo.png'
 
 const Header = () => (
   <View style={styles.container}>
-    <Image source={require('../../assets/gotLogo.png')} style={styles.image} />
+    <Image source={AGOTLogo} style={styles.image} />
   </View>
 );
 

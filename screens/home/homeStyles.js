@@ -7,7 +7,6 @@ const homeStyles = StyleSheet.create({
   },
   listsContainer: {
     flex: 3,
-    marginTop: '5%',
   },
   listsTitle: {
     color: '#ffc533',
