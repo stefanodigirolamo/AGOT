@@ -12,7 +12,7 @@ const cardStyles = StyleSheet.create({
     width: '92%',
   },
   headerContainer: {
-    backgroundColor: '#c2a67f',
+    backgroundColor: '#545147',
   },
   sectionHeader: {
     fontSize: 18,

@@ -1,7 +1,12 @@
-import {StyleSheet} from 'react-native';
+import {StyleSheet, Platform} from 'react-native';
 
 const CardDetailsStyle = StyleSheet.create({
+  cardImageContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
   cardTitle: {
+    marginTop: Platform.OS === 'ios' ? '15%' : '0%',
     fontSize: 25,
     color: '#ffc533',
     marginVertical: '5%',

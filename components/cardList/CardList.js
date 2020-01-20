@@ -41,6 +41,7 @@ const CardList = ({deck, cards, navigation}) => {
     <SectionList
       sections={cards}
       keyExtractor={item => `key-${item.code}`}
+      stickySectionHeadersEnabled
       ItemSeparatorComponent={() => (
         <View style={{height: 0.5, backgroundColor: '#c2a67f'}} />
       )}
