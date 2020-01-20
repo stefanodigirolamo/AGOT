@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   Modal,
   Text,
-  TouchableNativeFeedback,
+  TouchableHighlight,
 } from 'react-native';
 import {getCard} from '../../api/cardApi/cardApi';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const CardDetails = ({navigation}) => {
   const styles = CardDetailsStyle;
@@ -42,41 +41,47 @@ const CardDetails = ({navigation}) => {
 
   return (
     <>
-      <View style={styles.topDetailsContainer}>
-        <View style={styles.cardImageContainer}>
-          <TouchableNativeFeedback onPress={() => openModal()}>
-            <Image
-              style={styles.cardImage}
-              resizeMode="contain"
-              source={{uri: `${cardInfo.image_url}`}}
-            />
-          </TouchableNativeFeedback>
-        </View>
-        <View style={styles.firstDetailsContainer}>
-          <Text style={styles.cardTitle}> {cardInfo.name} </Text>
-          <Text style={styles.cardDescriptions}> {cardInfo.traits} </Text>
-          <Text style={styles.cardDescriptions}> {cardInfo.flavor} </Text>
-        </View>
+      <Text style={styles.cardTitle}> {cardInfo.name} </Text>
+      <TouchableOpacity
+        style={styles.cardImageContainer}
+        onPress={() => openModal()}>
+        <Image
+          style={styles.cardImage}
+          resizeMode="contain"
+          source={{uri: `${cardInfo.image_url}`}}
+        />
+      </TouchableOpacity>
+      <View style={{marginTop: '4%'}}>
+        <Text style={styles.cardDescriptions}> " {cardInfo.text} " </Text>
+        <Text style={styles.cardDescriptions}>
+          Faction Name: {cardInfo.faction_name}
+        </Text>
+        <Text style={styles.cardDescriptions}>
+          Pack Name: "{cardInfo.pack_name}"
+        </Text>
+        <Text style={styles.cardDescriptions}>
+          Deck Limit: {cardInfo.deck_limit}
+        </Text>
       </View>
+
       <Modal
         animationType="fade"
         transparent={true}
         visible={modalState}
         onRequestClose={() => closeModal()}>
-        <View style={styles.modalContainer}>
-          <TouchableOpacity
-            onPress={() => closeModal()}
-            style={styles.closeModalIconContainer}>
-            <Icon name="close-box-outline" color="#ffc533" size={25} />
-          </TouchableOpacity>
-          <View style={styles.modalImageContainer}>
-            <Image
-              style={styles.modalImage}
-              resizeMode="contain"
-              source={{uri: `${cardInfo.image_url}`}}
-            />
+        <TouchableHighlight
+          onPress={() => closeModal()}
+          style={styles.closeModalIconContainer}>
+          <View style={styles.modalContainer}>
+            <View style={styles.modalImageContainer}>
+              <Image
+                style={styles.modalImage}
+                resizeMode="contain"
+                source={{uri: `${cardInfo.image_url}`}}
+              />
+            </View>
           </View>
-        </View>
+        </TouchableHighlight>
       </Modal>
     </>
   );

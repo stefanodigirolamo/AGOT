@@ -1,11 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import Header from '../../components/header/Header';
 
-const DecksList = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>DecksList</Text>
-  </View>
-);
+const DecksList = () => {
+  return (
+    <>
+      <Header />
+
+      <View style={styles.container}>
+        <Text style={styles.text}>DeckList</Text>
+      </View>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

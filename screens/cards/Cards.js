@@ -1,11 +1,18 @@
 import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
+import Header from '../../components/header/Header';
 
-const Cards = () => (
-  <View style={styles.container}>
-    <Text style={styles.text}>Cards</Text>
-  </View>
-);
+const Cards = () => {
+  return (
+    <>
+      <Header />
+
+      <View style={styles.container}>
+        <Text style={styles.text}>Cards</Text>
+      </View>
+    </>
+  );
+};
 
 const styles = StyleSheet.create({
   container: {

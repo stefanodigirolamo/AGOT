@@ -1,10 +1,10 @@
 import React from 'react';
-import { View, Text, ImageBackground } from 'react-native';
-import backgroundDeck from '../../assets/background_dailyDecks.jpg'
+import {View, Text, ImageBackground} from 'react-native';
+import backgroundDeck from '../../assets/background_dailyDecks.jpg';
 import deckStyles from './cardDeckStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Deck = ({ name, faction }) => {
+const Deck = ({name, faction}) => {
   const styles = deckStyles;
 
   return (
@@ -14,8 +14,8 @@ const Deck = ({ name, faction }) => {
       </View>
       <View style={styles.cardContainer}>
         <ImageBackground
-          style={{ width: '100%'}}
-          imageStyle={{transform: [{ rotateY: '180deg' }]}}
+          style={{width: '100%'}}
+          imageStyle={{transform: [{rotateY: '180deg'}]}}
           source={backgroundDeck}>
           <View style={styles.detailContainer}>
             <View style={styles.titleContainer}>

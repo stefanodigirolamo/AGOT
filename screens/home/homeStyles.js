@@ -1,6 +1,7 @@
-import { StyleSheet, Dimensions, Platform } from 'react-native';
+import {StyleSheet, Dimensions, Platform} from 'react-native';
 
-const { height } = Dimensions.get('window')
+const {height} = Dimensions.get('window');
+console.log(height);
 
 const homeStyles = StyleSheet.create({
   container: {
@@ -8,17 +9,17 @@ const homeStyles = StyleSheet.create({
     backgroundColor: '#000000C9',
   },
   decklistContainer:
-    height > 800 ?
-      {
-        flex: 3,
-        marginBottom: '2%',
-      } :
-      {
-        flex: 1
-      },
+    height > 800
+      ? {
+          flex: 3,
+          marginBottom: '2%',
+        }
+      : {
+          flex: 1,
+        },
   packListContainer: {
     flex: height > 800 ? 3 : 1,
-    marginTop: height > 800 ? '5%' : '0%'
+    marginTop: height > 800 ? '5%' : '0%',
   },
   decklistTitle: {
     display: 'flex',
