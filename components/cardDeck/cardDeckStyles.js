@@ -1,4 +1,6 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet, Platform, Dimensions} from 'react-native';
+
+const { height } = Dimensions.get('window')
 
 const deckStyles = StyleSheet.create({
   cardContainer: {
@@ -23,7 +25,7 @@ const deckStyles = StyleSheet.create({
     backgroundColor: '#000000C1',
   },
   titleContainer: {
-    paddingVertical: Platform.OS === 'android' ? '2.12%' : '4%',
+    paddingVertical: '5%',
     paddingHorizontal: '3%',
     flexDirection: 'column',
     width: '90%',
@@ -42,7 +44,7 @@ const deckStyles = StyleSheet.create({
     fontSize: 15,
     fontWeight: 'bold',
     color: '#c2a67f',
-    marginTop: '5%',
+    marginTop: height > 800 ? '5%' : '2%',
     textDecorationLine: 'underline',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: 2, height: 2},

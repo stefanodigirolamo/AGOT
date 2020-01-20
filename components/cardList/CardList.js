@@ -36,7 +36,7 @@ const CardList = ({ deck, cards, navigation }) => {
     <SectionList
       sections={cards}
       keyExtractor={(item) => `key-${item.code}`}
-      ItemSeparatorComponent={() => (<View style={{ height: 1, backgroundColor: '#c2a67f' }} />)}
+      ItemSeparatorComponent={() => (<View style={{ height: 0.5, backgroundColor: '#c2a67f' }} />)}
       renderSectionHeader={renderSectionListHeader}
       renderItem={({ item, section, index }) => handleRenderItem(item, section, index)}
     />

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import modalStyles from './modalStyles';
-import { View, Text, ImageBackground, Button, Linking } from 'react-native';
+import { View, Text, ImageBackground, TouchableOpacity, Linking } from 'react-native';
 import headerBackground from '../../assets/modal_header_background.jpg'
 import Spinner from '../../utils/spinner/Spinner'
 import PackImage from '../../assets/packagesImagesSwitch';
@@ -39,8 +39,6 @@ const Modal = ({ navigation }) => {
       setDeckDetails(details);
       setCardSections(cardSections);
       // console.log(cardSections);
-
-
     } catch (error) {
       console.log(error);
     }
@@ -57,7 +55,6 @@ const Modal = ({ navigation }) => {
       const cardSections = await getSections(array_type_name, cards);
       setCardSections(cardSections);
       // console.log(cardSections);
-
     } catch (error) {
       console.log(error);
     }
@@ -104,13 +101,11 @@ const Modal = ({ navigation }) => {
               <View style={styles.titleContainer}>
                 <Text style={styles.title}>{packName}</Text>
                 <Text style={styles.details}> Total {totalCards} </Text>
-                <View style={styles.buttonContainer}>
-                  <Button
-                    title="View On Site"
-                    color="#000000C9"
-                    onPress={() => openUrl()}
-                  />
-                </View>
+                <TouchableOpacity onPress={() => openUrl()} style={{marginTop: '10%'}}>
+                  <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>View On Site</Text>
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
           </ImageBackground>

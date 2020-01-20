@@ -5,7 +5,7 @@ const today = format(new Date(), 'yyyy-MM-dd');
 
 export const getDailyDecklists = async () => {
   try {
-    const decks = await decklists.get(`2019-12-04.json`);
+    const decks = await decklists.get(`2020-01-19.json`);
 
     const dailyDecks = decks.data.map(deck => {
       return {

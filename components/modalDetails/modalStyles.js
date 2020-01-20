@@ -1,9 +1,11 @@
-import {StyleSheet, Platform} from 'react-native';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
+
+const { height } = Dimensions.get('window')
 
 const modalStyles = StyleSheet.create({
   detailsContainer: {
-    maxHeight: Platform.OS === 'ios' ? '25%' : '40%',
-    paddingVertical: Platform.OS === 'android' ? '10%' : '5%',
+    maxHeight: Platform.OS === 'ios' ? '30%' : '45%',
+    paddingVertical: Platform.OS === 'android' ? '5%' : '2%',
   },
   imageContainer: {
     width: '35%',
@@ -24,24 +26,42 @@ const modalStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: '5%',
+    marginTop: '5%'
   },
   title: {
-    fontSize: 25,
+    fontSize: height > 800 ? 25 : 18,
+    fontWeight: Platform.OS === 'android' ? 'normal' : 'bold',
     color: '#ffc533',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: 2, height: 2},
+    textShadowOffset: { width: 2, height: 2 },
     textShadowRadius: 10,
   },
   details: {
-    fontSize: 15,
+    fontSize: height > 800 ? 18 : 12,
+    fontWeight: Platform.OS === 'android' ? 'normal' : 'bold',
     color: '#ffc533',
     textShadowColor: 'rgba(0, 0, 0, 0.95)',
-    textShadowOffset: {width: 0, height: 1},
+    textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 10,
   },
   buttonContainer: {
-    marginTop: '20%',
-  }
+    display: 'flex',
+    borderRadius: 20,
+    height: '50%',
+    paddingHorizontal: '10%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#000000C9',
+    shadowOpacity: 0.4,
+    shadowOffset: { height: 10, width: 0 },
+    shadowRadius: 20,
+  },
+  buttonText: {
+    fontSize: 15,
+    fontWeight: Platform.OS === 'android' ? 'normal' : 'bold',
+    textTransform: 'uppercase',
+    color: '#c2a67f',
+  },
 });
 
 export default modalStyles;

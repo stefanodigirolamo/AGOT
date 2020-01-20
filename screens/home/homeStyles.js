@@ -1,46 +1,63 @@
-import {StyleSheet, Platform} from 'react-native';
+import { StyleSheet, Dimensions, Platform } from 'react-native';
+
+const { height } = Dimensions.get('window')
 
 const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#000000C9',
   },
-  listsContainer: {
-    flex: 3,
+  decklistContainer:
+    height > 800 ?
+      {
+        flex: 3,
+        marginBottom: '2%',
+      } :
+      {
+        flex: 1
+      },
+  packListContainer: {
+    flex: height > 800 ? 3 : 1,
+    marginTop: height > 800 ? '5%' : '0%'
   },
-  listsTitle: {
+  decklistTitle: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     color: '#ffc533',
-    fontSize: 18,
+    fontSize: height > 800 ? 25 : 20,
     fontWeight: 'bold',
     marginLeft: '5%',
-    marginVertical: Platform.OS === 'android' ? '3%' : '8%',
+    marginVertical: Platform.OS === 'android' ? '4%' : '4%',
   },
-  packsListsTitleContainer: {
-    display: 'flex',
-    alignItems: 'flex-start',
-    marginTop: '5%',
+  packListTitle: {
+    color: '#ffc533',
+    fontSize: height > 800 ? 25 : 20,
+    fontWeight: 'bold',
+    marginLeft: '5%',
+    marginVertical: Platform.OS === 'android' ? '5%' : '5%',
   },
   singlePacksContainer: {
     alignItems: 'center',
     marginHorizontal: 20,
   },
   title: {
-    fontSize: 15,
+    fontSize: height > 800 ? 18 : 16,
     color: '#c2a67f',
     marginTop: 10,
     fontWeight: 'bold',
   },
   description: {
-    fontSize: 15,
+    fontSize: height > 800 ? 18 : 16,
     color: '#c2a67f',
   },
-  errorContainer: {
+  warningContainer: {
     display: 'flex',
     alignItems: 'center',
     marginVertical: '25%',
   },
-  messageError: {
-    fontSize: 18,
+  messageWarning: {
+    fontSize: height > 800 ? 20 : 14,
     color: '#c2a67f',
   },
 });

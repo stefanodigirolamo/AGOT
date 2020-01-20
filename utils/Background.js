@@ -26,7 +26,7 @@ const Background = props => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#000000C9',
+    backgroundColor: '#000000CD',
   },
   videoContainer: {
     justifyContent: 'center',

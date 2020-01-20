@@ -1,31 +1,33 @@
-import { StyleSheet } from 'react-native'
+import { StyleSheet, Dimensions, Platform } from 'react-native'
+
+const { height } = Dimensions.get('window')
 
 const cardStyles = StyleSheet.create({
     cardContainer: {
-        marginVertical: '5%',
+        paddingVertical: '2.5%',
         flexDirection: 'row',
         display: 'flex',
         justifyContent: 'space-between',
       },
       cardNameContainer: {
         marginLeft: '2%',
-        width: '90%'
+        width: '92%'
       },
       headerContainer: {
         backgroundColor: '#c2a67f',
         paddingVertical: '10%',
       },
       sectionHeader: {
-        fontSize: 25,
+        fontSize: height > 800 ? 25 : 18,
         color: '#ffc533',
       },
       cardName: {
-        fontSize: 25,
+        fontSize: height > 800 ? 25 : 18,
         color: '#c2a67f',
-        fontWeight: 'bold'
+        fontWeight: Platform.OS === 'android' ? 'normal' : 'bold'
       },
       arrowContainer: {
-          width: '10%',
+          width: '8%'
       }
 })
 

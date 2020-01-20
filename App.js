@@ -136,7 +136,6 @@ const tabNavigator = createBottomTabNavigator(
       style: {
         backgroundColor: '#000000',
         height: 65,
-        paddingBottom: 10,
       },
     },
     initialRouteName: 'Home',
