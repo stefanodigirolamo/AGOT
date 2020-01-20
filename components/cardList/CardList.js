@@ -3,8 +3,6 @@ import {View, TouchableOpacity, SectionList, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import cardListStyles from './cardListStyles';
 
-//NON SI VEDE L'HEADER + GESTIRE ARRAY CON EMPTY OBJ
-
 const CardList = ({deck, cards, navigation}) => {
   const styles = cardListStyles;
   // console.log(cards);

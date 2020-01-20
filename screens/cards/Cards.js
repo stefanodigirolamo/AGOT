@@ -1,30 +1,28 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import CardsStyle from './CardsStyle';
+import {View} from 'react-native';
 import Header from '../../components/header/Header';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const Cards = () => {
+const Cards = ({navigation}) => {
+  const styles = CardsStyle;
+  const cardsFilters = () => {
+    navigation.navigate('Filters');
+  };
+
   return (
     <>
       <Header />
-
       <View style={styles.container}>
-        <Text style={styles.text}>Cards</Text>
+        <Icon
+          onPress={() => cardsFilters()}
+          name="filter-outline"
+          size={25}
+          color="#c2a67f"
+        />
       </View>
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000000C9',
-  },
-  text: {
-    fontSize: 20,
-    color: 'red',
-  },
-});
 
 export default Cards;

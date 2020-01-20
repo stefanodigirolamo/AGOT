@@ -10,6 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/Background';
 import Modal from './components/modalDetails/ModalDetails';
 import Card from './components/cardDetails/CardDetails';
+import Filters from './screens/cards/cards_filters/cardsFilters';
 
 const App = () => (
   <>
@@ -55,6 +56,14 @@ const cardsStack = createStackNavigator(
       navigationOptions: () => ({
         cardStyle: {
           backgroundColor: 'transparent',
+        },
+      }),
+    },
+    Filters: {
+      screen: Filters,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: '#000000',
         },
       }),
     },

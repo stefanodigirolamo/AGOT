@@ -38,7 +38,7 @@ const CardDetails = ({navigation}) => {
     card();
   }, [card]);
 
-  // console.log(cardInfo);
+  console.log(cardInfo);
 
   return !cardInfo.image_url ? (
     <Spinner />
