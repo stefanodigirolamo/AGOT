@@ -36,7 +36,6 @@ const homeStack = createStackNavigator(
       navigationOptions: () => ({
         cardStyle: {
           backgroundColor: '#000000',
-          opacity: 0.94,
         },
       }),
     },
@@ -45,7 +44,6 @@ const homeStack = createStackNavigator(
       navigationOptions: () => ({
         cardStyle: {
           backgroundColor: '#000000',
-          opacity: 0.94,
         },
       }),
     },
