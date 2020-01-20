@@ -6,9 +6,13 @@ const modalStyles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  detailsContainer: {
-    maxHeight: Platform.OS === 'ios' ? '30%' : '45%',
-    paddingVertical: Platform.OS === 'android' ? '5%' : '2%',
+  deckDetailsContainer: {
+    maxHeight: '30%',
+    paddingVertical: Platform.OS === 'ios' ? '2%' : height > 800 ? '5%' : '0%',
+  },
+  packDetailsContainer: {
+    maxHeight: '30%',
+    paddingVertical: Platform.OS === 'ios' ? '2%' : '5%',
   },
   imageContainer: {
     width: '35%',
@@ -32,7 +36,7 @@ const modalStyles = StyleSheet.create({
     marginTop: '5%',
   },
   title: {
-    fontSize: height > 800 ? 25 : 18,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#ffc533',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
@@ -40,7 +44,7 @@ const modalStyles = StyleSheet.create({
     textShadowRadius: 10,
   },
   details: {
-    fontSize: height > 800 ? 18 : 12,
+    fontSize: 12,
     fontWeight: 'bold',
     color: '#ffc533',
     textShadowColor: 'rgba(0, 0, 0, 0.95)',

@@ -1,82 +1,104 @@
-import cards from '../../interceptors/cardsInterceptor'
+import cards from '../../interceptors/cardsInterceptor';
 
 export const getCards = async id => {
   try {
-    const { data } = await cards.get(`${id}.json`);
-    return data
+    const {data} = await cards.get(`${id}.json`);
+    return data;
   } catch (error) {
-    return undefined
+    return undefined;
   }
 };
 
 export const getSections = (type, cards) => {
+  let agendaSection = {};
+  let attachmentSection = {};
+  let characterSection = {};
+  let plotSection = {};
+  let locationSection = {};
+  let eventSection = {};
 
-  let agendaSection = {}
-  let attachmentSection = {}
-  let characterSection = {}
-  let plotSection = {}
-  let locationSection = {}
-  let eventSection = {}
-
-  const sectionsArray = []
+  const sectionsArray = [];
 
   type.map(item => {
     switch (item) {
-      case 'Agenda': {
-        agendaSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+      case 'Agenda':
+        {
+          agendaSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      case 'Attachment': {
-        attachmentSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+        break;
+      case 'Attachment':
+        {
+          attachmentSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      case 'Character': {
-        characterSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+        break;
+      case 'Character':
+        {
+          characterSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      case 'Plot': {
-        plotSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+        break;
+      case 'Plot':
+        {
+          plotSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      case 'Location': {
-        locationSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+        break;
+      case 'Location':
+        {
+          locationSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      case 'Event': {
-        eventSection = {
-          title: item, data: cards.filter(card => {
-            return card.type_name == item
-          })
+        break;
+      case 'Event':
+        {
+          eventSection = {
+            title: item,
+            data: cards.filter(card => {
+              return card.type_name == item;
+            }),
+          };
         }
-      }; break;
-      default: return null
+        break;
+      default:
+        return null;
     }
-  })
+  });
   sectionsArray.push(
     agendaSection,
     attachmentSection,
     characterSection,
     plotSection,
     locationSection,
-    eventSection
+    eventSection,
   );
 
-  // console.log(sectionsArray);
+  const filterCards = sectionsArray.filter(
+    value => JSON.stringify(value) !== '{}',
+  );
 
-  return sectionsArray
-}
+  // console.log(filterCards);
+
+  return filterCards;
+};

@@ -81,7 +81,7 @@ const Modal = ({navigation}) => {
           <ImageBackground
             source={headerBackground}
             imageStyle={{opacity: 0.95}}
-            style={styles.detailsContainer}>
+            style={styles.deckDetailsContainer}>
             <View style={styles.deckNameContainer}>
               <Text style={styles.title}>{deckDetails.name}</Text>
             </View>
@@ -100,7 +100,7 @@ const Modal = ({navigation}) => {
             <ImageBackground
               source={headerBackground}
               imageStyle={{opacity: 0.95}}
-              style={styles.detailsContainer}>
+              style={styles.packDetailsContainer}>
               <View style={styles.headerItemsContainer}>
                 <View style={styles.imageContainer}>
                   <PackImage packagesImages={packName} />

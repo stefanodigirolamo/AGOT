@@ -1,6 +1,4 @@
-import {StyleSheet, Dimensions, Platform} from 'react-native';
-
-const {height} = Dimensions.get('window');
+import {StyleSheet} from 'react-native';
 
 const cardStyles = StyleSheet.create({
   cardContainer: {
@@ -15,14 +13,14 @@ const cardStyles = StyleSheet.create({
   },
   headerContainer: {
     backgroundColor: '#c2a67f',
-    paddingVertical: '10%',
   },
   sectionHeader: {
-    fontSize: height > 800 ? 25 : 18,
+    fontSize: 18,
+    fontWeight: 'bold',
     color: '#ffc533',
   },
   cardName: {
-    fontSize: height > 800 ? 25 : 18,
+    fontSize: 18,
     color: '#c2a67f',
     fontWeight: 'bold',
   },

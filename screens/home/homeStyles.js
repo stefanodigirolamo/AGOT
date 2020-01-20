@@ -26,14 +26,14 @@ const homeStyles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     color: '#ffc533',
-    fontSize: height > 800 ? 25 : 20,
+    fontSize: 20,
     fontWeight: 'bold',
     marginLeft: '5%',
     marginVertical: Platform.OS === 'android' ? '4%' : '4%',
   },
   packListTitle: {
     color: '#ffc533',
-    fontSize: height > 800 ? 25 : 20,
+    fontSize: 20,
     fontWeight: 'bold',
     marginLeft: '5%',
     marginVertical: Platform.OS === 'android' ? '5%' : '5%',
@@ -43,13 +43,13 @@ const homeStyles = StyleSheet.create({
     marginHorizontal: 20,
   },
   title: {
-    fontSize: height > 800 ? 18 : 16,
+    fontSize: 16,
     color: '#c2a67f',
     marginTop: 10,
     fontWeight: 'bold',
   },
   description: {
-    fontSize: height > 800 ? 18 : 16,
+    fontSize: 16,
     color: '#c2a67f',
   },
   warningContainer: {
@@ -58,7 +58,7 @@ const homeStyles = StyleSheet.create({
     marginVertical: '25%',
   },
   messageWarning: {
-    fontSize: height > 800 ? 20 : 14,
+    fontSize: 14,
     color: '#c2a67f',
   },
 });

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import CardDetailsStyle from './CardDetailsStyle';
+import Spinner from '../../utils/spinner/Spinner';
 import {
   View,
   Image,
@@ -37,9 +38,11 @@ const CardDetails = ({navigation}) => {
     card();
   }, [card]);
 
-  console.log(cardInfo);
+  // console.log(cardInfo);
 
-  return (
+  return !cardInfo.image_url ? (
+    <Spinner />
+  ) : (
     <>
       <Text style={styles.cardTitle}> {cardInfo.name} </Text>
       <TouchableOpacity
