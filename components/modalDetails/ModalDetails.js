@@ -44,7 +44,6 @@ const Modal = ({navigation}) => {
 
       setDeckDetails(details);
       setCardSections(cardSections);
-      // console.log(cardSections);
     } catch (error) {
       console.log(error);
     }
