@@ -1,40 +1,58 @@
 import {StyleSheet, Platform} from 'react-native';
 
 const CardDetailsStyle = StyleSheet.create({
+  titleContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginTop: Platform.OS === 'ios' ? '10%' : '4%',
+    marginBottom: Platform.OS === 'ios' ? '2%' : '0%',
+  },
+  iconContainer: {
+    display: 'flex',
+    width: '20%',
+    alignItems: 'center',
+    marginTop: '1%'
+  },
+  cardNameContainer: {
+    display: 'flex',
+    width: '80%',
+    alignItems: 'flex-start',
+  },
   cardTitle: {
-    marginTop: Platform.OS === 'ios' ? '15%' : '0%',
+    textTransform: 'uppercase',
     fontSize: 25,
-    color: '#ffc533',
+    color: '#000000',
     marginVertical: '5%',
-    marginHorizontal: '5%',
   },
   cardImage: {
-    width: '60%',
-    height: 240,
-    marginVertical: '5%',
+    marginTop: '10%',
+    marginBottom: '5%',
     marginHorizontal: '20%',
-    borderRadius: 10,
   },
   cardDescriptions: {
-    fontSize: 15,
+    fontSize: 20,
     color: '#c2a67f',
-    marginVertical: '3%',
+    marginVertical: '1%',
     marginHorizontal: '5%',
   },
   modalContainer: {
-    backgroundColor: '#000000CC',
+    backgroundColor: '#000000',
     width: '100%',
     height: '100%',
-  },
-  modalImageContainer: {
     display: 'flex',
     alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalImageContainer: {
+    /* display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center', */
   },
   modalImage: {
     width: '80%',
     height: '80%',
     marginVertical: '7%',
-    borderRadius: 10,
+    // borderRadius: 10,
   },
 });
 

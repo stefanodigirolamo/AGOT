@@ -19,66 +19,45 @@ export const getSections = (type, cards) => {
 
   const sectionsArray = [];
 
+  const sectionFilter = (title, array) => {
+    return {
+      title: title,
+      data: array.filter(card => {
+        return card.type_name === title;
+      }),
+    };
+  };
+
   type.map(item => {
     switch (item) {
       case 'Agenda':
         {
-          agendaSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          agendaSection = sectionFilter(item, cards);
         }
         break;
       case 'Attachment':
         {
-          attachmentSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          attachmentSection = sectionFilter(item, cards);
         }
         break;
       case 'Character':
         {
-          characterSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          characterSection = sectionFilter(item, cards);
         }
         break;
       case 'Plot':
         {
-          plotSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          plotSection = sectionFilter(item, cards);
         }
         break;
       case 'Location':
         {
-          locationSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          locationSection = sectionFilter(item, cards);
         }
         break;
       case 'Event':
         {
-          eventSection = {
-            title: item,
-            data: cards.filter(card => {
-              return card.type_name == item;
-            }),
-          };
+          eventSection = sectionFilter(item, cards);
         }
         break;
       default:
