@@ -1,6 +1,4 @@
-import {StyleSheet, Platform, Dimensions} from 'react-native';
-
-const {height} = Dimensions.get('window');
+import {StyleSheet, Platform} from 'react-native';
 
 const modalStyles = StyleSheet.create({
   container: {
@@ -8,11 +6,11 @@ const modalStyles = StyleSheet.create({
   },
   deckDetailsContainer: {
     maxHeight: '30%',
-    paddingVertical: Platform.OS === 'ios' ? '2%' : '5%',
+    paddingVertical: '5%',
   },
   packDetailsContainer: {
     maxHeight: '30%',
-    paddingVertical: Platform.OS === 'ios' ? '0%' : '5%',
+    paddingVertical: Platform.OS === 'ios' ? '0%' : '10%',
     paddingTop: Platform.OS === 'ios' ? '15%' : '0%',
     paddingBottom: Platform.OS === 'ios' ? '5%' : '0%',
   },
@@ -29,6 +27,7 @@ const modalStyles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'flex-start',
     marginHorizontal: '5%',
+    paddingVertical: '5%',
   },
   headerItemsContainer: {
     display: 'flex',
