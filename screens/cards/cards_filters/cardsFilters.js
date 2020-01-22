@@ -1,67 +1,66 @@
 import React from 'react';
-import {Text, View, StyleSheet, Picker} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  ScrollView,
+  Platform,
+} from 'react-native';
 import Button from '../../../utils/button/Button';
+import Select from '../../../components/picker/Select';
 
 const cardsFilters = () => {
+  const typeItemsArray = [
+    '- Select Type -',
+    'Agenda',
+    'Attachment',
+    'Character',
+    'Plot',
+    'Event',
+    'Location',
+  ];
+  const factionItemsArray = [
+    '- Select Faction -',
+    'House Baratheon',
+    'House Greyjoy',
+    'House Lannister',
+    'House Martell',
+    'House Stark',
+    'House Targaryen',
+    "The Night's Watch",
+    'House Tyrell',
+    'Neutral',
+  ];
+  const costItemsArray = ['=', '<', '>'];
+  const strenghtItemsArray = ['=', '<', '>'];
+  const challengesItemsArray = [
+    '- Select Challenges -',
+    'Military',
+    'Intrigue',
+    'Power',
+  ];
+
   return (
     <View style={styles.container}>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Type </Text>
-      </View>
-      <View style={styles.pickersContainer}>
-        <Picker style={styles.input}>
-          <Picker.Item value="ciao" label="ciao" />
-          <Picker.Item value="buongiorno" label="buongiorno" />
-          <Picker.Item value="buonasera" label="buonasera" />
-        </Picker>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Faction </Text>
-      </View>
-      <View style={styles.pickersContainer}>
-        <Picker style={styles.input}>
-          <Picker.Item value="ciao" label="ciao" />
-          <Picker.Item value="buongiorno" label="buongiorno" />
-          <Picker.Item value="buonasera" label="buonasera" />
-        </Picker>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Cost </Text>
-      </View>
-      <View style={styles.pickersContainer}>
-        <Picker style={styles.input}>
-          <Picker.Item value="ciao" label="ciao" />
-          <Picker.Item value="buongiorno" label="buongiorno" />
-          <Picker.Item value="buonasera" label="buonasera" />
-        </Picker>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Strength </Text>
-      </View>
-      <View style={styles.pickersContainer}>
-        <Picker style={styles.input}>
-          <Picker.Item value="ciao" label="ciao" />
-          <Picker.Item value="buongiorno" label="buongiorno" />
-          <Picker.Item value="buonasera" label="buonasera" />
-        </Picker>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}> Challenges </Text>
-      </View>
-      <View style={styles.pickersContainer}>
-        <Picker style={styles.input}>
-          <Picker.Item value="ciao" label="ciao" />
-          <Picker.Item value="buongiorno" label="buongiorno" />
-          <Picker.Item value="buonasera" label="buonasera" />
-        </Picker>
-      </View>
-      <Button
-        bgColor="#ffc533"
-        height="30%"
-        width={280}
-        buttonTitle="Search"
-        fontColor="#000000"
-      />
+      <ScrollView>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          enabled
+          style={{flexGrow: 1, height: '100%'}}>
+          <Select title="Type" itemName={typeItemsArray} />
+          <Select title="Faction" itemName={factionItemsArray} />
+          <Select title="Cost" itemName={costItemsArray} number />
+          <Select title="Strenght" itemName={strenghtItemsArray} number />
+          <Select title="Challenges" itemName={challengesItemsArray} />
+          <Button
+            bgColor="#ffc533"
+            height="30%"
+            width={280}
+            buttonTitle="Search"
+            fontColor="#000000"
+          />
+        </KeyboardAvoidingView>
+      </ScrollView>
     </View>
   );
 };
@@ -72,27 +71,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#000000',
     display: 'flex',
     alignItems: 'center',
-  },
-  titleContainer: {
-    marginTop: '3%',
-  },
-  title: {
-    color: '#ffc533',
-    fontSize: 25,
-  },
-  pickersContainer: {
-    borderWidth: 2,
-    borderColor: '#c2a67f',
-    borderRadius: 4,
-    width: 280,
-    marginVertical: '3%',
-  },
-  input: {
-    display: 'flex',
-    alignItems: 'center',
-    height: 35,
-    width: 280,
-    color: '#c2a67f',
   },
 });
 

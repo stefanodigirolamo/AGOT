@@ -6,13 +6,12 @@ const modalStyles = StyleSheet.create({
   },
   deckDetailsContainer: {
     maxHeight: '30%',
-    paddingVertical: '5%',
+    paddingBottom: '8%',
   },
   packDetailsContainer: {
     maxHeight: '30%',
-    paddingVertical: Platform.OS === 'ios' ? '0%' : '10%',
-    paddingTop: Platform.OS === 'ios' ? '15%' : '0%',
-    paddingBottom: Platform.OS === 'ios' ? '5%' : '0%',
+    paddingTop: Platform.OS === 'ios' ? '15%' : '6%',
+    paddingBottom: Platform.OS === 'ios' ? '5%' : '7%',
   },
   imageContainer: {
     width: '35%',

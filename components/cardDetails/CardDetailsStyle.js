@@ -4,14 +4,13 @@ const CardDetailsStyle = StyleSheet.create({
   titleContainer: {
     display: 'flex',
     flexDirection: 'row',
-    marginTop: Platform.OS === 'ios' ? '10%' : '4%',
-    marginBottom: Platform.OS === 'ios' ? '2%' : '0%',
+    marginTop: Platform.OS === 'ios' ? '10%' : '3%',
+    marginBottom: '2%',
   },
   iconContainer: {
     display: 'flex',
     width: '20%',
     alignItems: 'center',
-    marginTop: '1%'
   },
   cardNameContainer: {
     display: 'flex',
@@ -20,9 +19,10 @@ const CardDetailsStyle = StyleSheet.create({
   },
   cardTitle: {
     textTransform: 'uppercase',
-    fontSize: 25,
+    fontSize: 20,
     color: '#000000',
     marginVertical: '5%',
+    fontWeight: 'bold',
   },
   cardImage: {
     marginTop: '10%',
@@ -32,7 +32,7 @@ const CardDetailsStyle = StyleSheet.create({
   cardDescriptions: {
     fontSize: 20,
     color: '#c2a67f',
-    marginVertical: '1%',
+    marginVertical: '2%',
     marginHorizontal: '5%',
   },
   modalContainer: {
@@ -43,16 +43,10 @@ const CardDetailsStyle = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  modalImageContainer: {
-    /* display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center', */
-  },
   modalImage: {
     width: '80%',
     height: '80%',
     marginVertical: '7%',
-    // borderRadius: 10,
   },
 });
 

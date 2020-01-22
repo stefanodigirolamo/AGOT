@@ -1,5 +1,9 @@
 import React from 'react';
-import {createAppContainer} from 'react-navigation';
+import {
+  createAppContainer,
+  StackActions,
+  NavigationActions,
+} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import Home from './screens/home/Home';
@@ -14,7 +18,7 @@ import Filters from './screens/cards/cards_filters/cardsFilters';
 
 const App = () => (
   <>
-    <Background></Background>
+    <Background />
     <AppNavigator />
   </>
 );
@@ -139,6 +143,7 @@ const tabNavigator = createBottomTabNavigator(
         height: 65,
       },
     },
+    resetOnBlur: true,
     initialRouteName: 'Home',
   },
 );

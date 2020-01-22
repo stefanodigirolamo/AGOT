@@ -5,8 +5,9 @@ import factionColor from '../../utils/factionColors';
 import Spinner from '../../utils/spinner/Spinner';
 import {
   View,
+  ScrollView,
   Image,
-  TouchableOpacity,
+  TouchableWithoutFeedback,
   Modal,
   Text,
   TouchableHighlight,
@@ -54,21 +55,23 @@ const CardDetails = ({navigation}) => {
           </View>
         </View>
       </View>
-      <TouchableOpacity
-        style={{display: 'flex', alignItems: 'center'}}
-        onPress={() => openModal()}>
-        <Image
-          style={[
-            styles.cardImage,
-            cardInfo.type_code === 'plot'
-              ? {width: 260, height: 160}
-              : {width: 190, height: 270},
-          ]}
-          borderRadius={10}
-          source={{uri: `${cardInfo.image_url}`}}
-        />
-      </TouchableOpacity>
-      <View style={{marginTop: '4%'}}>
+
+      <ScrollView>
+        <View style={{display: 'flex', alignItems: 'center'}}>
+          <TouchableWithoutFeedback onPress={() => openModal()}>
+            <Image
+              style={[
+                styles.cardImage,
+                cardInfo.type_code === 'plot'
+                  ? {width: 260, height: 160}
+                  : {width: 190, height: 270},
+              ]}
+              borderRadius={10}
+              source={{uri: `${cardInfo.image_url}`}}
+            />
+          </TouchableWithoutFeedback>
+        </View>
+
         <Text
           style={[
             styles.cardDescriptions,
@@ -106,7 +109,7 @@ const CardDetails = ({navigation}) => {
         <Text style={styles.cardDescriptions}>
           Deck Limit: {cardInfo.deck_limit}
         </Text>
-      </View>
+      </ScrollView>
 
       <Modal
         animationType="fade"
@@ -121,7 +124,7 @@ const CardDetails = ({navigation}) => {
               style={[
                 styles.cardImage,
                 cardInfo.type_code === 'plot'
-                  ? {width: 370, height: 235}
+                  ? {width: 350, height: 215}
                   : {width: 315, height: 450},
               ]}
               borderRadius={10}
