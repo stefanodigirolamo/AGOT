@@ -52,24 +52,6 @@ const modalStyles = StyleSheet.create({
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 10,
   },
-  buttonContainer: {
-    display: 'flex',
-    borderRadius: 20,
-    height: '50%',
-    paddingHorizontal: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000000C9',
-    shadowOpacity: 0.4,
-    shadowOffset: {height: 10, width: 0},
-    shadowRadius: 20,
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    color: '#c2a67f',
-  },
 });
 
 export default modalStyles;

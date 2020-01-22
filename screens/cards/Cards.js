@@ -17,7 +17,7 @@ const Cards = ({navigation}) => {
         <Icon
           onPress={() => cardsFilters()}
           name="filter-outline"
-          size={25}
+          size={30}
           color="#c2a67f"
         />
       </View>

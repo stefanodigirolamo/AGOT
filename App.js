@@ -61,11 +61,6 @@ const cardsStack = createStackNavigator(
     },
     Filters: {
       screen: Filters,
-      navigationOptions: () => ({
-        cardStyle: {
-          backgroundColor: '#000000',
-        },
-      }),
     },
   },
   {headerMode: 'none'},

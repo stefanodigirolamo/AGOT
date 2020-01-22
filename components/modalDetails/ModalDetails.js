@@ -1,12 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import modalStyles from './modalStyles';
-import {
-  View,
-  Text,
-  ImageBackground,
-  TouchableOpacity,
-  Linking,
-} from 'react-native';
+import {View, Text, ImageBackground, Linking} from 'react-native';
 import headerBackground from '../../assets/modal_header_background.jpg';
 import Spinner from '../../utils/spinner/Spinner';
 import PackImage from '../../assets/packagesImagesSwitch';
@@ -15,6 +9,7 @@ import {getDeckDetails} from '../../api/deckDetailsApi/deckdetailsApi';
 import {getCard} from '../../api/cardApi/cardApi';
 import {getCards, getSections} from '../../api/cardsApi/cardsApi';
 import {format} from 'date-fns';
+import Button from '../../utils/button/Button';
 
 const Modal = ({navigation}) => {
   const styles = modalStyles;
@@ -107,13 +102,13 @@ const Modal = ({navigation}) => {
                 <View style={styles.titleContainer}>
                   <Text style={styles.title}>{packName}</Text>
                   <Text style={styles.details}> Total {totalCards} </Text>
-                  <TouchableOpacity
-                    onPress={() => openUrl()}
-                    style={{marginTop: '10%'}}>
-                    <View style={styles.buttonContainer}>
-                      <Text style={styles.buttonText}>View On Site</Text>
-                    </View>
-                  </TouchableOpacity>
+                  <Button
+                    bgColor="#000000C9"
+                    height="50%"
+                    buttonTitle="View On Site"
+                    fontColor="#c2a67f"
+                    press={() => openUrl()}
+                  />
                 </View>
               </View>
             </ImageBackground>
