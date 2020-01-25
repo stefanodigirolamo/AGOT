@@ -14,7 +14,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/Background';
 import Modal from './components/modalDetails/ModalDetails';
 import Card from './components/cardDetails/CardDetails';
-import Filters from './screens/cards/cards_filters/cardsFilters';
+import Filtered from './screens/cards/filteredCardsList/FilteredCardsList';
 
 const App = () => (
   <>
@@ -63,8 +63,8 @@ const cardsStack = createStackNavigator(
         },
       }),
     },
-    Filters: {
-      screen: Filters,
+    Filtered: {
+      screen: Filtered,
     },
   },
   {headerMode: 'none'},

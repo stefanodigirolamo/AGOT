@@ -9,6 +9,15 @@ export const getCards = async id => {
   }
 };
 
+export const getAllCardsList = async () => {
+  try {
+    const {data} = await cards.get();
+    return data;
+  } catch (error) {
+    return undefined;
+  }
+};
+
 export const getSections = (type, cards) => {
   let agendaSection = {};
   let attachmentSection = {};
