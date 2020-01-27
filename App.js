@@ -1,11 +1,8 @@
-import React from 'react';
-import {
-  createAppContainer,
-  StackActions,
-  NavigationActions,
-} from 'react-navigation';
+import React, {useState, useEffect, useCallback} from 'react';
+import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
+import {View} from 'react-native';
 import Home from './screens/home/Home';
 import Cards from './screens/cards/Cards';
 import DecksList from './screens/decksList/DecksList';
@@ -15,13 +12,42 @@ import Background from './utils/Background';
 import Modal from './components/modalDetails/ModalDetails';
 import Card from './components/cardDetails/CardDetails';
 import Filtered from './screens/cards/filteredCardsList/FilteredCardsList';
+import {getAllCardsList} from './api/cardsApi/cardsApi';
+import Spinner from './utils/spinner/Spinner';
 
-const App = () => (
-  <>
-    <Background />
-    <AppNavigator />
-  </>
-);
+export const Context = React.createContext([]);
+
+const App = () => {
+  const [cards, setCards] = useState([]);
+
+  const getAllCards = useCallback(async () => {
+    try {
+      const cardsList = await getAllCardsList();
+      setCards(cardsList);
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    getAllCards();
+  }, [getAllCards]);
+
+  return (
+    <>
+      {cards.length > 0 ? (
+        <Context.Provider value={cards}>
+          <Background />
+          <AppNavigator />
+        </Context.Provider>
+      ) : (
+        <View style={{backgroundColor: '#000000'}}>
+          <Spinner />
+        </View>
+      )}
+    </>
+  );
+};
 
 const homeStack = createStackNavigator(
   {

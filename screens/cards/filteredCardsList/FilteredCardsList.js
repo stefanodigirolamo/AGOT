@@ -1,7 +1,7 @@
-import React, {useEffect, useState, useCallback} from 'react';
+import React, {useContext, useMemo} from 'react';
 import {View, Text} from 'react-native';
-import {getAllCardsList} from '../../../api/cardsApi/cardsApi';
 import filteredCardListStyle from './filteredCardListStyle';
+import {Context} from '../../../App';
 
 const Filtered = ({navigation}) => {
   const {
@@ -14,12 +14,11 @@ const Filtered = ({navigation}) => {
 
   const styles = filteredCardListStyle;
 
-  const [filteredArray, setFilteredArray] = useState([]);
+  const cardsList = useContext(Context);
 
-  const filteredCardsArray = useCallback(async () => {
-    try {
-      const cardsList = await getAllCardsList();
-      const filteredCards = cardsList.reduce((acc, item) => {
+  const filteredCardsArray = useMemo(
+    () =>
+      cardsList.reduce((acc, item) => {
         let isValidFilter = true;
         if (type.length > 0 && type !== item.type_name) {
           isValidFilter = false;
@@ -56,18 +55,11 @@ const Filtered = ({navigation}) => {
           acc.push(item);
         }
         return acc;
-      }, []);
-      setFilteredArray(filteredCards);
-    } catch (error) {
-      console.log(error);
-    }
-  }, [boolean, type, faction, valueCost, valueStrength]);
+      }, []),
+    [boolean, type, faction, valueCost, valueStrength, cardsList],
+  );
 
-  useEffect(() => {
-    filteredCardsArray();
-  }, [filteredCardsArray]);
-
-  console.log(filteredArray);
+  console.log(filteredCardsArray);
 
   return (
     <>
