@@ -1,14 +1,8 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  TextInput,
-  StyleSheet,
-  Dimensions,
-  Platform,
-} from 'react-native';
+import {Text, View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {Picker} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import NumericInput from 'react-native-numeric-input';
 
 const {height} = Dimensions.get('window');
 
@@ -17,8 +11,8 @@ const Select = ({
   itemsName,
   itemValue,
   getValue,
-  textValue,
-  setTextValue,
+  numberValue,
+  setNumberValue,
   number,
   placeholder,
 }) => {
@@ -28,40 +22,53 @@ const Select = ({
         <Text style={styles.title}> {title} </Text>
       </View>
 
-      <View style={number && styles.smallPickersContainer}>
-        <View style={[styles.pickersContainer, number && {marginRight: '5%'}]}>
-          <Picker
-            headerStyle={styles.modalHeader}
-            headerBackButtonTextStyle={{color: '#000000', fontWeight: 'bold'}}
-            headerTitleStyle={{fontSize: 25}}
-            itemStyle={{height: 80}}
-            itemTextStyle={{color: '#ffc533', fontSize: 25}}
-            placeholder={Platform.OS === 'ios' ? placeholder : null}
-            placeholderStyle={{color: '#C2A67F'}}
-            placeholderIconColor="#ffc533"
-            modalStyle={{backgroundColor: '#000000'}}
-            selectedValue={itemValue}
-            onValueChange={item => getValue(item)}
-            iosIcon={
-              <Icon
-                name="chevron-down"
-                style={{color: '#ffc533', fontSize: 25}}
-              />
-            }
-            textStyle={{color: '#C2A67F'}}
-            style={number ? styles.smallPicker : styles.picker}>
-            {itemsName.map(item => (
-              <Picker.Item value={item} label={item} key={item} />
-            ))}
-          </Picker>
-        </View>
-        {number && (
-          <TextInput
-            selectionColor="#ffc533"
-            value={textValue}
-            onChangeText={text => setTextValue(text)}
-            style={styles.textInput}
-          />
+      <View>
+        {!number ? (
+          <View style={styles.pickersContainer}>
+            <Picker
+              headerStyle={styles.modalHeader}
+              headerBackButtonTextStyle={{color: '#000000', fontWeight: 'bold'}}
+              headerTitleStyle={{fontSize: 25}}
+              itemStyle={{height: 80}}
+              itemTextStyle={{color: '#ffc533', fontSize: 25}}
+              placeholder={Platform.OS === 'ios' ? placeholder : null}
+              placeholderStyle={{color: '#C2A67F'}}
+              placeholderIconColor="#ffc533"
+              modalStyle={{backgroundColor: '#000000'}}
+              selectedValue={itemValue}
+              onValueChange={item => getValue(item)}
+              iosIcon={
+                <Icon
+                  name="chevron-down"
+                  style={{color: '#ffc533', fontSize: 25}}
+                />
+              }
+              textStyle={{color: '#C2A67F'}}
+              style={styles.picker}>
+              {!number &&
+                itemsName.map(item => (
+                  <Picker.Item value={item} label={item} key={item} />
+                ))}
+            </Picker>
+          </View>
+        ) : (
+          <View style={{alignItems: 'center'}}>
+            <NumericInput
+              value={numberValue}
+              onChange={item => setNumberValue(item)}
+              totalWidth={240}
+              totalHeight={50}
+              iconSize={25}
+              step={1}
+              minValue={0}
+              valueType="real"
+              rounded
+              textColor="#ffc533"
+              iconStyle={{color: '#000000'}}
+              rightButtonBackgroundColor="#c2a67f"
+              leftButtonBackgroundColor="#c2a67f"
+            />
+          </View>
         )}
       </View>
     </>
@@ -69,9 +76,7 @@ const Select = ({
 };
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    // paddingVertical: '6%',
-  },
+  titleContainer: {},
   title: {
     color: '#ffc533',
     fontSize: 25,
@@ -84,19 +89,19 @@ const styles = StyleSheet.create({
   },
   pickersContainer: {
     borderWidth: 2,
-    borderColor: '#C2A67F',
+    borderColor: '#c2a67f',
     borderRadius: 4,
   },
   smallPicker: {
     height: 40,
     width: 120,
     paddingTop: '6%',
-    color: '#C2A67F',
+    color: '#c2a67f',
   },
   picker: {
     width: 280,
     paddingVertical: height > 800 ? '10%' : '8%',
-    color: '#C2A67F',
+    color: '#c2a67f',
   },
   textInput: {
     fontSize: 20,

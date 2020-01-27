@@ -1,22 +1,24 @@
-import React, {useEffect, useCallback} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import React, {useEffect, useState, useCallback} from 'react';
+import {View, Text} from 'react-native';
 import {getAllCardsList} from '../../../api/cardsApi/cardsApi';
+import filteredCardListStyle from './filteredCardListStyle';
 
 const Filtered = ({navigation}) => {
   const {
     type,
     faction,
-    symbolCost,
-    symbolStrenght,
     valueCost,
-    valueStrenght,
-    challenges: {challenge, boolean},
+    valueStrength,
+    challenges: {boolean},
   } = navigation.state.params;
+
+  const styles = filteredCardListStyle;
+
+  const [filteredArray, setFilteredArray] = useState([]);
 
   const filteredCardsArray = useCallback(async () => {
     try {
       const cardsList = await getAllCardsList();
-
       const filteredCards = cardsList.reduce((acc, item) => {
         let isValidFilter = true;
         if (type.length > 0 && type !== item.type_name) {
@@ -25,7 +27,20 @@ const Filtered = ({navigation}) => {
         if (faction.length > 0 && faction !== item.faction_name) {
           isValidFilter = false;
         }
-        if (valueCost !== item.cost) {
+        if (
+          (valueCost && valueCost < 0 && valueCost !== item.cost) ||
+          (valueCost && valueCost !== 0 && valueCost !== item.cost)
+        ) {
+          isValidFilter = false;
+        }
+        if (
+          (valueStrength &&
+            valueStrength < 0 &&
+            valueStrength !== item.strength) ||
+          (valueStrength &&
+            valueStrength !== 0 &&
+            valueStrength !== item.strength)
+        ) {
           isValidFilter = false;
         }
         if (boolean === true && boolean !== item.is_military) {
@@ -42,28 +57,17 @@ const Filtered = ({navigation}) => {
         }
         return acc;
       }, []);
-
-      // const filteredArray = cardsList.map(card => {
-
-      //   return (
-      //     card.type_name === params.type ||
-      //     card.faction_name === params.faction ||
-      //     card.cost === params.valueCost ||
-      //     card.strenght === params.valueStrenght ||
-      //     card.is_military === params.challenges.boolean ||
-      //     card.is_intrigue === params.challenges.boolean ||
-      //     card.is_power === params.challenges.boolean
-      //   );
-      // });
-      console.log(filteredCards);
+      setFilteredArray(filteredCards);
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [boolean, type, faction, valueCost, valueStrength]);
 
   useEffect(() => {
     filteredCardsArray();
   }, [filteredCardsArray]);
+
+  console.log(filteredArray);
 
   return (
     <>
@@ -73,18 +77,5 @@ const Filtered = ({navigation}) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#000000',
-  },
-  text: {
-    fontSize: 20,
-    color: 'red',
-  },
-});
 
 export default Filtered;

@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState} from 'react';
 import CardsStyle from './CardsStyle';
 import {View, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
 import Header from '../../components/header/Header';
-import {getAllCardsList} from '../../api/cardsApi/cardsApi';
 import Select from '../../components/picker/Select';
 import Button from '../../utils/button/Button';
 
@@ -12,21 +11,16 @@ const Cards = ({navigation}) => {
   const [value, setValue] = useState({
     type: '',
     faction: '',
-    cost: '',
-    strenght: '',
+    cost: null,
+    strength: null,
     challenges: {challenge: '', boolean: false},
-  });
-
-  const [numberValue, setNumberValue] = useState({
-    cost: '',
-    strenght: '',
   });
 
   const valueObj = {
     type: '',
     faction: '',
     cost: '',
-    strenght: '',
+    strength: '',
     challenges: {challenge: '', boolean: false},
   };
 
@@ -51,8 +45,6 @@ const Cards = ({navigation}) => {
     'House Tyrell',
     'Neutral',
   ];
-  const costItemsArray = ['', '=', '<', '>'];
-  const strenghtItemsArray = ['', '=', '<', '>'];
   const challengesItemsArray = ['', 'is_military', 'is_intrigue', 'is_power'];
 
   const setTypeValue = item => {
@@ -65,24 +57,14 @@ const Cards = ({navigation}) => {
     setValue({...value, faction: valueObj.faction});
   };
 
-  const setCostValue = item => {
+  const setCostNumber = item => {
     valueObj.cost = item;
     setValue({...value, cost: valueObj.cost});
   };
 
-  const setStrenghtValue = item => {
-    valueObj.strenght = item;
-    setValue({...value, strenght: valueObj.strenght});
-  };
-
-  const setCostNumber = item => {
-    valueObj.cost = item;
-    setNumberValue({...numberValue, cost: valueObj.cost});
-  };
-
-  const setStrenghtNumber = item => {
-    valueObj.strenght = item;
-    setNumberValue({...numberValue, strenght: valueObj.strenght});
+  const setStrengthNumber = item => {
+    valueObj.strength = item;
+    setValue({...value, strength: valueObj.strength});
   };
 
   const setChallengesValue = item => {
@@ -93,33 +75,15 @@ const Cards = ({navigation}) => {
     });
   };
 
-  const onSearch = (
-    type,
-    faction,
-    symbolCost,
-    symbolStrenght,
-    valueCost,
-    valueStrenght,
-    challenges,
-  ) => {
+  const onSearch = (type, faction, valueCost, valueStrength, challenges) => {
     navigation.navigate('Filtered', {
       type,
       faction,
-      symbolCost,
-      symbolStrenght,
       valueCost,
-      valueStrenght,
+      valueStrength,
       challenges,
     });
   };
-
-  // console.log(value.type);
-  // console.log(value.faction);
-  // console.log(value.cost);
-  // console.log(value.strenght);
-  // console.log(numberValue.cost);
-  // console.log(numberValue.strenght);
-  // console.log(value.challenges);
 
   return (
     <>
@@ -143,23 +107,18 @@ const Cards = ({navigation}) => {
               getValue={setFactionValue}
               itemValue={value.faction}
             />
+
             <Select
               title="Cost"
-              itemsName={costItemsArray}
-              getValue={setCostValue}
-              itemValue={value.cost}
               number
-              textValue={numberValue.cost}
-              setTextValue={setCostNumber}
+              numberValue={value.cost}
+              setNumberValue={setCostNumber}
             />
             <Select
               title="Strenght"
-              itemsName={strenghtItemsArray}
-              getValue={setStrenghtValue}
-              itemValue={value.strenght}
               number
-              textValue={numberValue.strenght}
-              setTextValue={setStrenghtNumber}
+              numberValue={value.strength}
+              setNumberValue={setStrengthNumber}
             />
             <Select
               title="Challenges"
@@ -179,9 +138,7 @@ const Cards = ({navigation}) => {
                     value.type,
                     value.faction,
                     value.cost,
-                    value.strenght,
-                    numberValue.cost,
-                    numberValue.strenght,
+                    value.strength,
                     value.challenges,
                   )
                 }
