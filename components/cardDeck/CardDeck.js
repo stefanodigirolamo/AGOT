@@ -3,6 +3,7 @@ import {View, Text, ImageBackground} from 'react-native';
 import backgroundDeck from '../../assets/background_dailyDecks.jpg';
 import deckStyles from './cardDeckStyles';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {theme} from '../../assets/styles/theme';
 
 const Deck = ({name, faction}) => {
   const styles = deckStyles;
@@ -23,7 +24,7 @@ const Deck = ({name, faction}) => {
               <Text style={styles.subtitle}>{faction}</Text>
             </View>
             <View style={styles.arrowContainer}>
-              <Icon name="chevron-right" size={25} color="#ffc533" />
+              <Icon name="chevron-right" size={25} color={theme.primary} />
             </View>
           </View>
         </ImageBackground>

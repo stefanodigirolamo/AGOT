@@ -1,4 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
+import { theme } from '../../assets/styles/theme';
 
 const modalStyles = StyleSheet.create({
   container: {
@@ -37,7 +38,7 @@ const modalStyles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#ffc533',
+    color: theme.primary,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 10,
@@ -46,7 +47,7 @@ const modalStyles = StyleSheet.create({
   details: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: '#ffc533',
+    color: theme.primary,
     textShadowColor: 'rgba(0, 0, 0, 0.95)',
     textShadowOffset: {width: 0, height: 1},
     textShadowRadius: 10,

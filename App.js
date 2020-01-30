@@ -8,12 +8,13 @@ import Cards from './screens/cards/Cards';
 import DecksList from './screens/decksList/DecksList';
 import MyDecks from './screens/myDecks/MyDecks';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import Background from './utils/Background';
+import Background from './utils/background/Background';
 import Modal from './components/modalDetails/ModalDetails';
 import Card from './components/cardDetails/CardDetails';
 import Filtered from './screens/cards/filteredCardsList/FilteredCardsList';
 import {getAllCardsList} from './api/cardsApi/cardsApi';
 import Spinner from './utils/spinner/Spinner';
+import {theme, colors} from './assets/styles/theme';
 
 export const Context = React.createContext([]);
 
@@ -41,7 +42,7 @@ const App = () => {
           <AppNavigator />
         </Context.Provider>
       ) : (
-        <View style={{backgroundColor: '#000000'}}>
+        <View style={{flex: 1, backgroundColor: colors.black}}>
           <Spinner />
         </View>
       )}
@@ -63,7 +64,7 @@ const homeStack = createStackNavigator(
       screen: Modal,
       navigationOptions: () => ({
         cardStyle: {
-          backgroundColor: '#000000',
+          backgroundColor: colors.black,
         },
       }),
     },
@@ -71,7 +72,7 @@ const homeStack = createStackNavigator(
       screen: Card,
       navigationOptions: () => ({
         cardStyle: {
-          backgroundColor: '#000000',
+          backgroundColor: colors.black,
         },
       }),
     },
@@ -162,10 +163,10 @@ const tabNavigator = createBottomTabNavigator(
         getTabBarIcon(navigation, focused, tintColor),
     }),
     tabBarOptions: {
-      activeTintColor: '#ffc533',
-      inactiveTintColor: '#c2a67f',
+      activeTintColor: theme.primary,
+      inactiveTintColor: theme.secondary,
       style: {
-        backgroundColor: '#000000',
+        backgroundColor: colors.black,
         height: 65,
       },
     },

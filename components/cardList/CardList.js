@@ -2,6 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, SectionList, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import cardListStyles from './cardListStyles';
+import { theme } from '../../assets/styles/theme';
 
 const CardList = ({deck, cards, navigation}) => {
   const styles = cardListStyles;
@@ -23,12 +24,11 @@ const CardList = ({deck, cards, navigation}) => {
         <View style={styles.cardContainer}>
           <View style={styles.cardNameContainer}>
             <Text style={styles.cardName}>
-              {' '}
               {deck ? `${item.quantity} x ${item.name}` : item.name}
             </Text>
           </View>
           <View style={styles.arrowContainer}>
-            <Icon name="chevron-right" size={25} color="#ffc533" />
+            <Icon name="chevron-right" size={25} color={theme.primary} />
           </View>
         </View>
       </TouchableOpacity>
@@ -40,9 +40,7 @@ const CardList = ({deck, cards, navigation}) => {
       sections={cards}
       keyExtractor={item => `key-${item.code}`}
       stickySectionHeadersEnabled
-      ItemSeparatorComponent={() => (
-        <View style={{height: 0.5, backgroundColor: '#c2a67f'}} />
-      )}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
       renderSectionHeader={renderSectionListHeader}
       renderItem={handleRenderItem}
     />

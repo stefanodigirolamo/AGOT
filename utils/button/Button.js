@@ -1,5 +1,8 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, StyleSheet} from 'react-native';
+import {Text, View, TouchableOpacity} from 'react-native';
+import buttonStyles from './buttonStyles';
+
+const styles = buttonStyles;
 
 const Button = ({press, bgColor, fontColor, height, width, buttonTitle}) => {
   return (
@@ -16,23 +19,5 @@ const Button = ({press, bgColor, fontColor, height, width, buttonTitle}) => {
     </TouchableOpacity>
   );
 };
-
-const styles = StyleSheet.create({
-  buttonContainer: {
-    display: 'flex',
-    borderRadius: 20,
-    paddingHorizontal: '10%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowOpacity: 0.4,
-    shadowOffset: {height: 10, width: 0},
-    shadowRadius: 20,
-  },
-  buttonText: {
-    fontSize: 15,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-  },
-});
 
 export default Button;

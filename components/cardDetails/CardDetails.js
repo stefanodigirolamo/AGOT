@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import CardDetailsStyle from './CardDetailsStyle';
 import FactionIcon from '../../assets/houses_logos/housesLogoSwitch';
-import factionColor from '../../utils/factionColors';
+import factionColor from '../../assets/styles/factionColor';
 import Spinner from '../../utils/spinner/Spinner';
 import {
   View,
@@ -16,7 +16,6 @@ import {getCard} from '../../api/cardApi/cardApi';
 
 const CardDetails = ({navigation}) => {
   const styles = CardDetailsStyle;
-
   const [cardInfo, setCardInfo] = useState({});
   const [modalState, setModalState] = useState(false);
 
@@ -48,7 +47,11 @@ const CardDetails = ({navigation}) => {
       <View style={{backgroundColor: factionColor(cardInfo.faction_name)}}>
         <View style={styles.titleContainer}>
           <View style={styles.iconContainer}>
-            <FactionIcon factionName={cardInfo.faction_name} />
+            <FactionIcon
+              factionName={cardInfo.faction_name}
+              width={50}
+              height={50}
+            />
           </View>
           <View style={styles.cardNameContainer}>
             <Text style={styles.cardTitle}> {cardInfo.name} </Text>
@@ -57,14 +60,14 @@ const CardDetails = ({navigation}) => {
       </View>
 
       <ScrollView>
-        <View style={{display: 'flex', alignItems: 'center'}}>
+        <View style={styles.cardImageContainer}>
           <TouchableWithoutFeedback onPress={() => openModal()}>
             <Image
               style={[
                 styles.cardImage,
                 cardInfo.type_code === 'plot'
-                  ? {width: 260, height: 160}
-                  : {width: 190, height: 270},
+                  ? styles.dimensionsPlotCards
+                  : styles.dimensionsOtherCards,
               ]}
               borderRadius={10}
               source={{uri: `${cardInfo.image_url}`}}
@@ -72,41 +75,30 @@ const CardDetails = ({navigation}) => {
           </TouchableWithoutFeedback>
         </View>
 
-        <Text
-          style={[
-            styles.cardDescriptions,
-            {color: '#ffc533', fontWeight: 'bold'},
-          ]}>
+        <Text style={[styles.cardDetails, styles.emphasizedFaction]}>
           {cardInfo.faction_name}
         </Text>
-        <Text style={[styles.cardDescriptions, {fontWeight: 'bold'}]}>
+        <Text style={[styles.cardDetails, styles.emphasizedName]}>
           {cardInfo.type_name} {cardInfo.cost && `. Cost: ${cardInfo.cost}`}
         </Text>
         {cardInfo.traits ? (
-          <Text
-            style={[
-              styles.cardDescriptions,
-              {fontWeight: 'bold', fontStyle: 'italic', color: '#ffc533'},
-            ]}>
+          <Text style={[styles.cardDetails, styles.emphasizedTraits]}>
             {cardInfo.traits}
           </Text>
         ) : null}
-        <View style={{display: 'flex', flexDirection: 'row', marginLeft: '2%'}}>
+        <View style={styles.containerDescription}>
           <View
-            style={{
-              width: 3,
-              height: '100%',
-              backgroundColor: factionColor(cardInfo.faction_name),
-            }}
+            style={[
+              styles.verticalLineDesc,
+              {backgroundColor: factionColor(cardInfo.faction_name)},
+            ]}
           />
-          <Text style={styles.cardDescriptions}>
+          <Text style={styles.cardDetails}>
             {cardInfo.text.replace(/<b>|<\/b>|<i>|<\/i>|<em>|<\/em>/gi, '')}
           </Text>
         </View>
-        <Text style={styles.cardDescriptions}>
-          Pack Name: {cardInfo.pack_name}
-        </Text>
-        <Text style={styles.cardDescriptions}>
+        <Text style={styles.cardDetails}>Pack Name: {cardInfo.pack_name}</Text>
+        <Text style={styles.cardDetails}>
           Deck Limit: {cardInfo.deck_limit}
         </Text>
       </ScrollView>
@@ -124,8 +116,8 @@ const CardDetails = ({navigation}) => {
               style={[
                 styles.cardImage,
                 cardInfo.type_code === 'plot'
-                  ? {width: 350, height: 215}
-                  : {width: 315, height: 450},
+                  ? styles.dimensionsPlotZoom
+                  : styles.dimensionsOtherZoom,
               ]}
               borderRadius={10}
               source={{uri: `${cardInfo.image_url}`}}

@@ -1,17 +1,17 @@
 import {StyleSheet} from 'react-native';
 import {colors} from '../../assets/styles/theme';
 
-const CardsStyle = StyleSheet.create({
+const myDecksStyles = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: colors.mattBlack,
   },
-  buttonContainer: {
-    display: 'flex',
-    alignItems: 'center',
+  text: {
+    fontSize: 20,
+    color: 'red',
   },
 });
 
-export default CardsStyle;
+export default myDecksStyles;

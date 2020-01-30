@@ -1,4 +1,5 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
+import {theme} from '../../assets/styles/theme';
 
 const {height} = Dimensions.get('window');
 
@@ -35,7 +36,7 @@ const deckStyles = StyleSheet.create({
   },
   title: {
     fontSize: 15,
-    color: '#c2a67f',
+    color: theme.secondary,
     textShadowColor: 'rgba(0, 0, 0, 0.75)',
     textShadowOffset: {width: 2, height: 2},
     textShadowRadius: 10,
@@ -43,7 +44,7 @@ const deckStyles = StyleSheet.create({
   subtitle: {
     fontSize: 15,
     fontWeight: 'bold',
-    color: '#c2a67f',
+    color: theme.secondary,
     marginTop: Platform.OS === 'ios' ? '10.5%' : height > 800 ? '3%' : '4%',
     textDecorationLine: 'underline',
     textShadowColor: 'rgba(0, 0, 0, 0.75)',

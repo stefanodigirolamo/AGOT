@@ -10,6 +10,7 @@ import {getCard} from '../../api/cardApi/cardApi';
 import {getCards, getSections} from '../../api/cardsApi/cardsApi';
 import {format} from 'date-fns';
 import Button from '../../utils/button/Button';
+import {theme, colors} from '../../assets/styles/theme';
 
 const Modal = ({navigation}) => {
   const styles = modalStyles;
@@ -103,10 +104,10 @@ const Modal = ({navigation}) => {
                   <Text style={styles.title}>{packName}</Text>
                   <Text style={styles.details}> Total {totalCards} </Text>
                   <Button
-                    bgColor="#000000C9"
+                    bgColor={colors.mattBlack}
                     height="50%"
                     buttonTitle="View On Site"
-                    fontColor="#c2a67f"
+                    fontColor={theme.secondary}
                     press={() => openUrl()}
                   />
                 </View>

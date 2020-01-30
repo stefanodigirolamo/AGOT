@@ -1,11 +1,12 @@
 import {StyleSheet, Dimensions, Platform} from 'react-native';
+import {theme, colors} from '../../assets/styles/theme';
 
 const {height} = Dimensions.get('window');
 
 const homeStyles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#000000C9',
+    backgroundColor: colors.mattBlack,
   },
   decklistContainer:
     height > 800
@@ -24,14 +25,14 @@ const homeStyles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    color: '#ffc533',
+    color: theme.primary,
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: '5%',
     marginVertical: Platform.OS === 'android' ? '4%' : '4%',
   },
   packListTitle: {
-    color: '#ffc533',
+    color: theme.primary,
     fontSize: 20,
     fontWeight: 'bold',
     marginLeft: '5%',
@@ -43,13 +44,13 @@ const homeStyles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    color: '#c2a67f',
+    color: theme.secondary,
     marginTop: 10,
     fontWeight: 'bold',
   },
   description: {
     fontSize: 16,
-    color: '#c2a67f',
+    color: theme.secondary,
   },
   warningContainer: {
     display: 'flex',
@@ -58,7 +59,7 @@ const homeStyles = StyleSheet.create({
   },
   messageWarning: {
     fontSize: 14,
-    color: '#c2a67f',
+    color: theme.secondary,
   },
 });
 

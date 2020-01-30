@@ -1,4 +1,5 @@
 import {StyleSheet} from 'react-native';
+import {theme} from '../../assets/styles/theme';
 
 const cardStyles = StyleSheet.create({
   cardContainer: {
@@ -17,13 +18,14 @@ const cardStyles = StyleSheet.create({
   sectionHeader: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#ffc533',
+    color: theme.primary,
   },
   cardName: {
     fontSize: 18,
-    color: '#c2a67f',
+    color: theme.secondary,
     fontWeight: 'bold',
   },
+  separator: {height: 0.5, backgroundColor: theme.secondary},
   arrowContainer: {
     width: '8%',
   },

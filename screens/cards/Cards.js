@@ -4,25 +4,18 @@ import {View, KeyboardAvoidingView, ScrollView, Platform} from 'react-native';
 import Header from '../../components/header/Header';
 import Select from '../../components/picker/Select';
 import Button from '../../utils/button/Button';
+import {theme, colors} from '../../assets/styles/theme';
 
 const Cards = ({navigation}) => {
   const styles = CardsStyle;
 
   const [value, setValue] = useState({
     type: '',
-    faction: '',
-    cost: null,
-    strength: null,
+    faction: {name: '', selected: false},
+    cost: 0,
+    strength: 0,
     challenges: {challenge: '', boolean: false},
   });
-
-  const valueObj = {
-    type: '',
-    faction: '',
-    cost: '',
-    strength: '',
-    challenges: {challenge: '', boolean: false},
-  };
 
   const typeItemsArray = [
     '',
@@ -48,30 +41,38 @@ const Cards = ({navigation}) => {
   const challengesItemsArray = ['', 'is_military', 'is_intrigue', 'is_power'];
 
   const setTypeValue = item => {
-    valueObj.type = item;
-    setValue({...value, type: valueObj.type});
+    setValue({...value, type: item});
   };
 
   const setFactionValue = item => {
-    valueObj.faction = item;
-    setValue({...value, faction: valueObj.faction});
+    setValue({
+      ...value,
+      faction: {name: item, selected: true},
+    });
   };
 
   const setCostNumber = item => {
-    valueObj.cost = item;
-    setValue({...value, cost: valueObj.cost});
+    setValue({...value, cost: item});
   };
 
   const setStrengthNumber = item => {
-    valueObj.strength = item;
-    setValue({...value, strength: valueObj.strength});
+    setValue({...value, strength: item});
   };
 
   const setChallengesValue = item => {
-    valueObj.challenges.challenge = item;
     setValue({
       ...value,
-      challenges: {challenge: valueObj.challenges.challenge, boolean: true},
+      challenges: {challenge: item, boolean: true},
+    });
+  };
+
+  const resetFilters = () => {
+    setValue({
+      type: '',
+      faction: {name: '', selected: false},
+      cost: 0,
+      strength: 0,
+      challenges: {challenge: '', boolean: false},
     });
   };
 
@@ -87,7 +88,7 @@ const Cards = ({navigation}) => {
 
   return (
     <>
-      <Header />
+      <Header resetFilters resetValue={resetFilters} />
 
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -96,18 +97,19 @@ const Cards = ({navigation}) => {
             enabled
             style={{flexGrow: 1, height: '100%'}}>
             <Select
-              title="Type"
+              placeholder="- Select Type -"
+              title="Types"
               itemsName={typeItemsArray}
               getValue={setTypeValue}
               itemValue={value.type}
             />
             <Select
-              title="Faction"
+              title="Factions"
+              factionLogo
               itemsName={factionItemsArray}
-              getValue={setFactionValue}
               itemValue={value.faction}
+              getValue={setFactionValue}
             />
-
             <Select
               title="Cost"
               number
@@ -121,6 +123,7 @@ const Cards = ({navigation}) => {
               setNumberValue={setStrengthNumber}
             />
             <Select
+              placeholder="- Select Challenges -"
               title="Challenges"
               itemsName={challengesItemsArray}
               getValue={setChallengesValue}
@@ -128,11 +131,11 @@ const Cards = ({navigation}) => {
             />
             <View style={styles.buttonContainer}>
               <Button
-                bgColor="#ffc533"
+                bgColor={theme.primary}
                 height={40}
                 width={280}
                 buttonTitle="Search"
-                fontColor="#000000"
+                fontColor={colors.black}
                 press={() =>
                   onSearch(
                     value.type,
