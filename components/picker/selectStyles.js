@@ -6,33 +6,34 @@ const selectStyles = StyleSheet.create({
     borderWidth: 2,
     borderColor: theme.secondary,
     borderRadius: 4,
+    width: 300,
   },
   title: {
     color: theme.primary,
     fontSize: 25,
+    textAlign: 'center',
   },
-  modalHeader: {
-    backgroundColor: theme.primary,
-  },
-  smallPicker: {
-    //vedi commenti per ios
-    // height: 20,
-    width: 120,
-    // paddingTop: '4%',
-  },
-  picker: {
-    width: 280,
-    // paddingVertical: height > 800 ? '10%' : '6%',
+  downArrow: {
+    color: theme.primary,
+    fontSize: 25,
+    right: 12,
+    top: 12,
+    position: 'absolute',
   },
   factionLogoContainer: {
-    marginTop: 10,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    flexWrap: 'wrap',
+    marginHorizontal: '15%',
   },
   factionLogo: {
     borderWidth: 2,
     borderColor: colors.black,
+    width: '30%',
+    borderRadius: 6,
+    alignItems: 'center',
+    marginVertical: '2%',
   },
 });
 

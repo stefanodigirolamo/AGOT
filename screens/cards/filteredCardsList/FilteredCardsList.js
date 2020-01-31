@@ -1,8 +1,13 @@
 import React, {useContext, useMemo} from 'react';
-import {View, Text, Image} from 'react-native';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import filteredCardListStyle from './filteredCardListStyle';
 import {Context} from '../../../App';
-import {FlatList} from 'react-native-gesture-handler';
 import noCardImage from '../../../assets/no_card_image.jpg';
 
 const Filtered = ({navigation}) => {
@@ -15,8 +20,6 @@ const Filtered = ({navigation}) => {
     valueStrength,
     challenges: {challenge, boolean},
   } = navigation.state.params;
-
-  // console.log(navigation.state.params);
 
   const cardsList = useContext(Context);
 
@@ -31,19 +34,13 @@ const Filtered = ({navigation}) => {
         if (selected && name.length > 0 && name !== item.faction_name) {
           isValidFilter = false;
         }
-        if (
-          (valueCost && valueCost < 0 && valueCost !== item.cost) ||
-          (valueCost && valueCost !== 0 && valueCost !== item.cost)
-        ) {
+        if (valueCost && valueCost >= 0 && valueCost !== item.cost) {
           isValidFilter = false;
         }
         if (
-          (valueStrength &&
-            valueStrength < 0 &&
-            valueStrength !== item.strength) ||
-          (valueStrength &&
-            valueStrength !== 0 &&
-            valueStrength !== item.strength)
+          valueStrength &&
+          valueStrength >= 0 &&
+          valueStrength !== item.strength
         ) {
           isValidFilter = false;
         }
@@ -73,26 +70,30 @@ const Filtered = ({navigation}) => {
     ],
   );
 
-  console.log(filteredCardsArray);
+  const openCardDetails = code => {
+    navigation.navigate('Card', {code});
+  };
 
   const renderCards = ({item}) => (
     <View
       style={
         item.type_code === 'plot' ? styles.plotContainer : styles.imageContainer
       }>
-      <Image
-        style={[
-          item.type_code === 'plot'
-            ? filteredCardsArray.length < 3
-              ? styles.plotImageLess
-              : styles.plotImageMore
-            : filteredCardsArray.length < 3
-            ? styles.imageLess
-            : styles.imageMore,
-        ]}
-        source={item.image_url ? {uri: item.image_url} : noCardImage}
-        borderRadius={10}
-      />
+      <TouchableWithoutFeedback onPress={() => openCardDetails(item.code)}>
+        <Image
+          style={[
+            item.type_code === 'plot'
+              ? filteredCardsArray.length < 3
+                ? styles.plotImageLess
+                : styles.plotImageMore
+              : filteredCardsArray.length < 3
+              ? styles.imageLess
+              : styles.imageMore,
+          ]}
+          source={item.image_url ? {uri: item.image_url} : noCardImage}
+          borderRadius={10}
+        />
+      </TouchableWithoutFeedback>
     </View>
   );
 

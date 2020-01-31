@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, SectionList, Text} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import cardListStyles from './cardListStyles';
-import { theme } from '../../assets/styles/theme';
+import {theme} from '../../assets/styles/theme';
 
 const CardList = ({deck, cards, navigation}) => {
   const styles = cardListStyles;
@@ -43,6 +43,7 @@ const CardList = ({deck, cards, navigation}) => {
       ItemSeparatorComponent={() => <View style={styles.separator} />}
       renderSectionHeader={renderSectionListHeader}
       renderItem={handleRenderItem}
+      showsVerticalScrollIndicator={false}
     />
   );
 };

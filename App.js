@@ -93,6 +93,14 @@ const cardsStack = createStackNavigator(
     Filtered: {
       screen: Filtered,
     },
+    Card: {
+      screen: Card,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: colors.black,
+        },
+      }),
+    },
   },
   {headerMode: 'none'},
 );

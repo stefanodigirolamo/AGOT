@@ -6,6 +6,7 @@ import FactionLogo from '../../assets/houses_logos/housesLogoSwitch';
 import NumericInput from 'react-native-numeric-input';
 import selectStyles from './selectStyles';
 import {theme, colors} from '../../assets/styles/theme';
+import factionColorSwitch from '../../assets/styles/factionColor';
 
 const {height} = Dimensions.get('window');
 const styles = selectStyles;
@@ -31,11 +32,11 @@ const Select = ({
         {title}
       </Text>
 
-      <View>
+      <View style={{alignItems: 'center'}}>
         {!number && !factionLogo ? (
           <View style={styles.pickersContainer}>
             <Picker
-              headerStyle={styles.modalHeader}
+              headerStyle={{backgroundColor: theme.primary}}
               headerBackButtonTextStyle={{
                 color: colors.black,
                 fontWeight: 'bold',
@@ -52,35 +53,23 @@ const Select = ({
               iosIcon={
                 <Icon
                   name="chevron-down"
-                  style={{color: theme.primary, fontSize: 25}}
+                  style={{color: theme.primary, fontSize: 25, right: 10}}
                 />
               }
-              textStyle={{color: theme.secondary}}
-              style={[
-                number ? styles.smallPicker : styles.picker,
-                Platform.OS === 'android' && {color: theme.secondary},
-              ]}>
+              textStyle={{color: theme.secondary}}>
               {!number &&
                 itemsName.map(item => (
                   <Picker.Item value={item} label={item} key={item} />
                 ))}
             </Picker>
             {Platform.OS === 'android' && (
-              <Icon
-                name="chevron-down"
-                style={{
-                  color: theme.primary,
-                  fontSize: 25,
-                  right: 12,
-                  top: 12,
-                  position: 'absolute',
-                }}
-              />
+              <Icon name="chevron-down" style={styles.downArrow} />
             )}
           </View>
         ) : !factionLogo ? (
           <View style={{alignItems: 'center'}}>
             <NumericInput
+              initValue={numberValue}
               value={numberValue}
               onChange={item => setNumberValue(item)}
               totalWidth={240}
@@ -107,11 +96,16 @@ const Select = ({
                   {
                     backgroundColor:
                       itemValue.selected && faction === itemValue.name
-                        ? theme.primary
+                        ? factionColorSwitch(faction)
                         : theme.secondary,
                   },
                 ]}>
-                <FactionLogo factionName={faction} width={25} height={25} />
+                <FactionLogo
+                  logoFilter
+                  factionName={faction}
+                  width={28}
+                  height={30}
+                />
               </TouchableOpacity>
             ))}
           </View>

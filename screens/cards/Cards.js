@@ -27,7 +27,6 @@ const Cards = ({navigation}) => {
     'Location',
   ];
   const factionItemsArray = [
-    '',
     'House Baratheon',
     'House Greyjoy',
     'House Lannister',
@@ -71,7 +70,7 @@ const Cards = ({navigation}) => {
       type: '',
       faction: {name: '', selected: false},
       cost: 0,
-      strength: 0,
+      strenght: 0,
       challenges: {challenge: '', boolean: false},
     });
   };
@@ -104,30 +103,32 @@ const Cards = ({navigation}) => {
               itemValue={value.type}
             />
             <Select
-              title="Factions"
-              factionLogo
-              itemsName={factionItemsArray}
-              itemValue={value.faction}
-              getValue={setFactionValue}
+              placeholder="- Select Challenges -"
+              title="Challenges"
+              itemsName={challengesItemsArray}
+              getValue={setChallengesValue}
+              itemValue={value.challenges.challenge}
             />
             <Select
               title="Cost"
               number
               numberValue={value.cost}
               setNumberValue={setCostNumber}
+              initValue={value.cost}
             />
             <Select
               title="Strenght"
               number
               numberValue={value.strength}
               setNumberValue={setStrengthNumber}
+              initValue={value.strength}
             />
             <Select
-              placeholder="- Select Challenges -"
-              title="Challenges"
-              itemsName={challengesItemsArray}
-              getValue={setChallengesValue}
-              itemValue={value.challenges.challenge}
+              title="Factions"
+              factionLogo
+              itemsName={factionItemsArray}
+              itemValue={value.faction}
+              getValue={setFactionValue}
             />
             <View style={styles.buttonContainer}>
               <Button

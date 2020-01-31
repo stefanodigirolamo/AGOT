@@ -11,6 +11,7 @@ const CardsStyle = StyleSheet.create({
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
+    marginBottom: '10%',
   },
 });
 
