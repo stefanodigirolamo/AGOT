@@ -20,6 +20,16 @@ const selectStyles = StyleSheet.create({
     top: 12,
     position: 'absolute',
   },
+  numericInputContainer: {
+    flexDirection: 'row',
+  },
+  xContainer: {
+    borderWidth: 2,
+    width: '10%',
+    borderColor: theme.secondary,
+    marginLeft: '5%',
+    justifyContent: 'center',
+  },
   factionLogoContainer: {
     display: 'flex',
     flexDirection: 'row',

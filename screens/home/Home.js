@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import {getDailyDecklists} from '../../api/decklistApi/decklistsApi';
 import {getPackagesLists} from '../../api/packsApi/packagesApi';
-import PacksImages from '../../assets/packagesImagesSwitch';
+import PacksImages from '../../assets/switch_pack_images/packagesImagesSwitch';
 import Deck from '../../components/cardDeck/CardDeck';
 import homeStyle from './homeStyles';
 import Header from '../../components/header/Header';

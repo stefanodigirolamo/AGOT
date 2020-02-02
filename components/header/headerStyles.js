@@ -20,8 +20,8 @@ const headerStyles = StyleSheet.create({
     width: '85%',
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: '20%',
-    marginTop: '5%',
+    paddingLeft: '15%',
+    marginTop: '2.5%',
   },
   containerReset: {
     width: '15%',

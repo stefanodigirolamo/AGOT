@@ -9,11 +9,11 @@ import {theme, colors} from '../../assets/styles/theme';
 const Cards = ({navigation}) => {
   const styles = CardsStyle;
 
-  const [value, setValue] = useState({
+  const [inputs, setInputs] = useState({
     type: '',
-    faction: {name: '', selected: false},
-    cost: 0,
-    strength: 0,
+    faction: {factionName: '', selected: false},
+    cost: {valueCost: 0, selectedCost: false},
+    strength: {valueStrength: 0, selectedStrength: false},
     challenges: {challenge: '', boolean: false},
   });
 
@@ -40,47 +40,60 @@ const Cards = ({navigation}) => {
   const challengesItemsArray = ['', 'is_military', 'is_intrigue', 'is_power'];
 
   const setTypeValue = item => {
-    setValue({...value, type: item});
+    setInputs({...inputs, type: item});
   };
 
   const setFactionValue = item => {
-    setValue({
-      ...value,
-      faction: {name: item, selected: true},
+    setInputs({
+      ...inputs,
+      faction: {factionName: item, selected: true},
     });
   };
 
   const setCostNumber = item => {
-    setValue({...value, cost: item});
+    setInputs({...inputs, cost: {valueCost: item, selectedCost: true}});
   };
-
   const setStrengthNumber = item => {
-    setValue({...value, strength: item});
+    setInputs({
+      ...inputs,
+      strength: {valueStrength: item, selectedStrength: true},
+    });
   };
 
   const setChallengesValue = item => {
-    setValue({
-      ...value,
+    setInputs({
+      ...inputs,
       challenges: {challenge: item, boolean: true},
     });
   };
 
   const resetFilters = () => {
-    setValue({
+    setInputs({
       type: '',
-      faction: {name: '', selected: false},
-      cost: 0,
-      strenght: 0,
+      faction: {factionName: '', selected: false},
+      cost: {valueCost: 0, selectedCost: false},
+      strength: {valueStrength: 0, selectedStrength: false},
       challenges: {challenge: '', boolean: false},
     });
   };
 
-  const onSearch = (type, faction, valueCost, valueStrength, challenges) => {
+  const clearCost = () => {
+    setInputs({...inputs, cost: {valueCost: 0, selectedCost: false}});
+  };
+
+  const clearStrength = () => {
+    setInputs({
+      ...inputs,
+      strength: {valueStrength: 0, selectedStrength: false},
+    });
+  };
+
+  const onSearch = (type, faction, cost, strength, challenges) => {
     navigation.navigate('Filtered', {
       type,
       faction,
-      valueCost,
-      valueStrength,
+      cost,
+      strength,
       challenges,
     });
   };
@@ -100,34 +113,38 @@ const Cards = ({navigation}) => {
               title="Types"
               itemsName={typeItemsArray}
               getValue={setTypeValue}
-              itemValue={value.type}
+              itemValue={inputs.type}
             />
             <Select
               placeholder="- Select Challenges -"
               title="Challenges"
               itemsName={challengesItemsArray}
               getValue={setChallengesValue}
-              itemValue={value.challenges.challenge}
+              itemValue={inputs.challenges.challenge}
             />
             <Select
               title="Cost"
               number
-              numberValue={value.cost}
-              setNumberValue={setCostNumber}
-              initValue={value.cost}
+              cost={true}
+              costValue={inputs.cost.valueCost}
+              setCostValue={setCostNumber}
+              initValueCost={inputs.cost.valueCost}
+              clearCost={clearCost}
             />
             <Select
-              title="Strenght"
+              title="Strength"
               number
-              numberValue={value.strength}
-              setNumberValue={setStrengthNumber}
-              initValue={value.strength}
+              cost={false}
+              strengthValue={inputs.strength.valueStrength}
+              setStrengthValue={setStrengthNumber}
+              initValueStrength={inputs.strength.valueStrength}
+              clearStrength={clearStrength}
             />
             <Select
               title="Factions"
               factionLogo
               itemsName={factionItemsArray}
-              itemValue={value.faction}
+              itemValue={inputs.faction}
               getValue={setFactionValue}
             />
             <View style={styles.buttonContainer}>
@@ -139,11 +156,11 @@ const Cards = ({navigation}) => {
                 fontColor={colors.black}
                 press={() =>
                   onSearch(
-                    value.type,
-                    value.faction,
-                    value.cost,
-                    value.strength,
-                    value.challenges,
+                    inputs.type,
+                    inputs.faction,
+                    inputs.cost,
+                    inputs.strength,
+                    inputs.challenges,
                   )
                 }
               />

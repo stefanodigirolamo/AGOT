@@ -5,21 +5,23 @@ import {
   Image,
   FlatList,
   TouchableWithoutFeedback,
+  Platform,
 } from 'react-native';
 import filteredCardListStyle from './filteredCardListStyle';
 import {Context} from '../../../App';
-import noCardImage from '../../../assets/no_card_image.jpg';
 
 const Filtered = ({navigation}) => {
   const styles = filteredCardListStyle;
 
   const {
     type,
-    faction: {name, selected},
-    valueCost,
-    valueStrength,
+    faction: {factionName, selected},
+    cost: {valueCost, selectedCost},
+    strength: {valueStrength, selectedStrength},
     challenges: {challenge, boolean},
   } = navigation.state.params;
+
+  console.log(navigation.state.params);
 
   const cardsList = useContext(Context);
 
@@ -31,28 +33,31 @@ const Filtered = ({navigation}) => {
         if (type.length > 0 && type !== item.type_name) {
           isValidFilter = false;
         }
-        if (selected && name.length > 0 && name !== item.faction_name) {
+        if (
+          selected &&
+          factionName.length > 0 &&
+          factionName !== item.faction_name
+        ) {
           isValidFilter = false;
         }
-        if (valueCost && valueCost >= 0 && valueCost !== item.cost) {
+        if (selectedCost && valueCost >= 0 && valueCost !== item.cost) {
           isValidFilter = false;
         }
         if (
-          valueStrength &&
+          selectedStrength &&
           valueStrength >= 0 &&
           valueStrength !== item.strength
         ) {
           isValidFilter = false;
         }
-        if (challenge < 0 && boolean !== item.is_military) {
+        /* if (
+          boolean &&
+          Object.entries(item).map(
+            ([key, value]) => key === challenge && value !== boolean,
+          )
+        ) {
           isValidFilter = false;
-        }
-        if (challenge < 0 && boolean !== item.is_intrigue) {
-          isValidFilter = false;
-        }
-        if (challenge < 0 && boolean !== item.is_power) {
-          isValidFilter = false;
-        }
+        } */
         if (isValidFilter) {
           acc.push(item);
         }
@@ -61,61 +66,96 @@ const Filtered = ({navigation}) => {
     [
       type,
       selected,
-      name,
+      factionName,
       valueCost,
       valueStrength,
-      boolean,
-      challenge,
+      selectedCost,
+      selectedStrength,
+      /* boolean,
+      challenge, */
       cardsList,
     ],
   );
+
+  console.log(filteredCardsArray);
 
   const openCardDetails = code => {
     navigation.navigate('Card', {code});
   };
 
-  const renderCards = ({item}) => (
-    <View
-      style={
-        item.type_code === 'plot' ? styles.plotContainer : styles.imageContainer
-      }>
-      <TouchableWithoutFeedback onPress={() => openCardDetails(item.code)}>
-        <Image
-          style={[
-            item.type_code === 'plot'
-              ? filteredCardsArray.length < 3
-                ? styles.plotImageLess
-                : styles.plotImageMore
-              : filteredCardsArray.length < 3
-              ? styles.imageLess
-              : styles.imageMore,
-          ]}
-          source={item.image_url ? {uri: item.image_url} : noCardImage}
-          borderRadius={10}
-        />
-      </TouchableWithoutFeedback>
-    </View>
-  );
+  const renderCards = ({item}) =>
+    item.image_url && (
+      <View style={styles.cardContainer}>
+        <TouchableWithoutFeedback onPress={() => openCardDetails(item.code)}>
+          <Image
+            style={item.type_code === 'plot' ? styles.plotImage : styles.cards}
+            source={{uri: item.image_url}}
+            borderRadius={10}
+          />
+        </TouchableWithoutFeedback>
+      </View>
+    );
 
   return (
-    <>
-      <View style={[styles.container]}>
-        {filteredCardsArray.length > 0 ? (
+    <View style={styles.container}>
+      <View
+        style={[
+          {
+            paddingTop: Platform.OS === 'ios' && 40,
+          },
+          styles.headerContainer,
+        ]}>
+        {type ? (
+          <View style={styles.headerItem}>
+            <Text style={styles.appliedFilters}>{type && type}</Text>
+          </View>
+        ) : null}
+        {boolean && challenge !== '' ? (
+          <View style={styles.headerItem}>
+            <Text style={styles.appliedFilters}>{challenge && challenge}</Text>
+          </View>
+        ) : null}
+        {selectedCost ? (
+          <View style={styles.headerItem}>
+            <Text style={styles.appliedFilters}>
+              {valueCost !== 0 && `Cost ${valueCost}`}
+            </Text>
+          </View>
+        ) : null}
+        {selectedStrength ? (
+          <View style={styles.headerItem}>
+            <Text style={styles.appliedFilters}>
+              {valueStrength !== 0 && `Strength ${valueStrength}`}
+            </Text>
+          </View>
+        ) : null}
+        {selected ? (
+          <View style={styles.headerItem}>
+            <Text style={styles.appliedFilters}>
+              {factionName && factionName}
+            </Text>
+          </View>
+        ) : null}
+      </View>
+      {filteredCardsArray.length > 0 ? (
+        <View style={styles.cardsContainer}>
           <FlatList
             keyExtractor={item => `key-${item.code}`}
             showsVerticalScrollIndicator={false}
-            numColumns={
-              filteredCardsArray && filteredCardsArray.length > 3 ? 2 : 1
-            }
-            horizontal={false}
             data={filteredCardsArray}
             renderItem={renderCards}
           />
-        ) : (
-          <Text style={styles.text}>Your query didn't match any card</Text>
-        )}
-      </View>
-    </>
+        </View>
+      ) : (
+        <View
+          style={[
+            styles.cardsContainer,
+            {alignItems: 'center', justifyContent: 'center'},
+          ]}>
+          <Text style={styles.textNoCards}>Cards not found</Text>
+        </View>
+      )}
+    </View>
   );
 };
 

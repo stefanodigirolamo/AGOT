@@ -4,39 +4,43 @@ import {theme, colors} from '../../../assets/styles/theme';
 const filteredCardListStyle = StyleSheet.create({
   container: {
     flex: 1,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: colors.black,
-    paddingTop: 40, // vedi per android
   },
-  text: {
+  headerContainer: {
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    paddingBottom: 20,
+  },
+  headerItem: {
+    borderWidth: 2,
+    borderColor: theme.primary,
+    margin: 10,
+    padding: 5,
+  },
+  appliedFilters: {
     fontSize: 20,
+    fontWeight: 'bold',
     color: theme.primary,
   },
-  plotContainer: {
-    marginVertical: '2.5%',
-    marginHorizontal: '2%',
+  cardsContainer: {
+    flex: 1,
   },
-  plotImageLess: {
+  textNoCards: {
+    fontSize: 30,
+    color: theme.primary,
+  },
+  cardContainer: {
+    marginVertical: '5%',
+    alignItems: 'center',
+  },
+  plotImage: {
     width: 330,
     height: 230,
   },
-  plotImageMore: {
-    width: 170,
-    height: 100,
-  },
-  imageContainer: {
-    marginVertical: '5%',
-    marginHorizontal: '2%',
-  },
-  imageLess: {
+  cards: {
     width: 250,
-    height: 330,
-  },
-  imageMore: {
-    width: 180,
-    height: 260,
+    height: 350,
   },
 });
 

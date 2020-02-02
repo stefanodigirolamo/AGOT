@@ -3,7 +3,7 @@ import modalStyles from './modalStyles';
 import {View, Text, ImageBackground, Linking} from 'react-native';
 import headerBackground from '../../assets/modal_header_background.jpg';
 import Spinner from '../../utils/spinner/Spinner';
-import PackImage from '../../assets/packagesImagesSwitch';
+import PackImage from '../../assets/switch_pack_images/packagesImagesSwitch';
 import CardList from '../cardList/CardList';
 import {getDeckDetails} from '../../api/deckDetailsApi/deckdetailsApi';
 import {getCard} from '../../api/cardApi/cardApi';
