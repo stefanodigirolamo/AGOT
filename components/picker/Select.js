@@ -96,14 +96,7 @@ const Select = ({
             </View>
             <View style={styles.xContainer}>
               <TouchableWithoutFeedback onPress={() => clearCost()}>
-                <Text
-                  style={{
-                    color: theme.secondary,
-                    fontSize: 15,
-                    textAlign: 'center',
-                  }}>
-                  X
-                </Text>
+                <Text style={styles.textX}>X</Text>
               </TouchableWithoutFeedback>
             </View>
           </View>
@@ -129,14 +122,7 @@ const Select = ({
             </View>
             <View style={styles.xContainer}>
               <TouchableWithoutFeedback onPress={() => clearStrength()}>
-                <Text
-                  style={{
-                    color: theme.secondary,
-                    fontSize: 15,
-                    textAlign: 'center',
-                  }}>
-                  X
-                </Text>
+                <Text style={styles.textX}>X</Text>
               </TouchableWithoutFeedback>
             </View>
           </View>

@@ -33,11 +33,7 @@ const Filtered = ({navigation}) => {
         if (type.length > 0 && type !== item.type_name) {
           isValidFilter = false;
         }
-        if (
-          selected &&
-          factionName.length > 0 &&
-          factionName !== item.faction_name
-        ) {
+        if (selected && factionName !== item.faction_name) {
           isValidFilter = false;
         }
         if (selectedCost && valueCost >= 0 && valueCost !== item.cost) {
@@ -50,14 +46,15 @@ const Filtered = ({navigation}) => {
         ) {
           isValidFilter = false;
         }
-        /* if (
-          boolean &&
-          Object.entries(item).map(
-            ([key, value]) => key === challenge && value !== boolean,
-          )
-        ) {
+        if (boolean && boolean !== item.is_military) {
           isValidFilter = false;
-        } */
+        }
+        if (boolean && boolean !== item.is_intrigue) {
+          isValidFilter = false;
+        }
+        if (boolean && boolean !== item.is_power) {
+          isValidFilter = false;
+        }
         if (isValidFilter) {
           acc.push(item);
         }
@@ -71,8 +68,7 @@ const Filtered = ({navigation}) => {
       valueStrength,
       selectedCost,
       selectedStrength,
-      /* boolean,
-      challenge, */
+      boolean,
       cardsList,
     ],
   );

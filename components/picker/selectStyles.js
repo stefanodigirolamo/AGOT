@@ -24,11 +24,15 @@ const selectStyles = StyleSheet.create({
     flexDirection: 'row',
   },
   xContainer: {
-    borderWidth: 2,
     width: '10%',
-    borderColor: theme.secondary,
     marginLeft: '5%',
     justifyContent: 'center',
+  },
+  textX: {
+    color: theme.primary,
+    fontSize: 25,
+    fontWeight: 'bold',
+    textAlign: 'center',
   },
   factionLogoContainer: {
     display: 'flex',
