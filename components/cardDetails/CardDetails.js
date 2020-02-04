@@ -59,7 +59,7 @@ const CardDetails = ({navigation}) => {
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
         <View style={styles.cardImageContainer}>
           <TouchableWithoutFeedback onPress={() => openModal()}>
             <Image

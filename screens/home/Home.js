@@ -71,13 +71,12 @@ const Home = ({navigation}) => {
             </View>
           )}
         </View>
-
         <View style={styles.packListContainer}>
           <Text style={styles.packListTitle}> All Packs Lists </Text>
           <FlatList
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-            data={packsLists.reverse()}
+            data={packsLists}
             renderItem={({item}) => (
               <View style={styles.singlePacksContainer}>
                 <TouchableOpacity

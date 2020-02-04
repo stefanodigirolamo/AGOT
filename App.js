@@ -43,7 +43,7 @@ const App = () => {
         </Context.Provider>
       ) : (
         <View style={{flex: 1, backgroundColor: colors.black}}>
-          <Spinner />
+          <Spinner styles={{marginTop: '100%'}} />
         </View>
       )}
     </>
@@ -112,6 +112,22 @@ const deckListStack = createStackNavigator(
       navigationOptions: () => ({
         cardStyle: {
           backgroundColor: 'transparent',
+        },
+      }),
+    },
+    Modal: {
+      screen: Modal,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: colors.black,
+        },
+      }),
+    },
+    Card: {
+      screen: Card,
+      navigationOptions: () => ({
+        cardStyle: {
+          backgroundColor: colors.black,
         },
       }),
     },

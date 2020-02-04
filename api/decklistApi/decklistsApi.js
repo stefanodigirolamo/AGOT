@@ -20,7 +20,29 @@ export const getDailyDecklists = async () => {
     });
     return dailyDecks;
   } catch (error) {
-    console.log(error);
+    return undefined;
+  }
+};
+
+export const getWeeklyDecklists = async day => {
+  try {
+    const decks = await decklists.get(`${day}.json`);
+
+    const weeklyDecks = decks.data.map(deck => {
+      return {
+        id: deck.id,
+        title: deck.name,
+        dateUpdt: deck.date_update,
+        faction: deck.faction_name,
+        description: deck.description_md,
+        joust: deck.isLegalForJoust,
+        melee: deck.isLegalForMelee,
+      };
+    });
+
+    return weeklyDecks;
+  } catch (error) {
+    return undefined;
   }
 };
 

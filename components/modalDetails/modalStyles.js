@@ -1,5 +1,5 @@
 import {StyleSheet, Platform} from 'react-native';
-import { theme } from '../../assets/styles/theme';
+import {theme} from '../../assets/styles/theme';
 
 const modalStyles = StyleSheet.create({
   container: {

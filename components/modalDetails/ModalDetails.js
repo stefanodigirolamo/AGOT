@@ -11,6 +11,7 @@ import {getCards, getSections} from '../../api/cardsApi/cardsApi';
 import {format} from 'date-fns';
 import Button from '../../utils/button/Button';
 import {theme, colors} from '../../assets/styles/theme';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
 const Modal = ({navigation}) => {
   const styles = modalStyles;
@@ -55,7 +56,6 @@ const Modal = ({navigation}) => {
       const array_type_name = cards.map(item => item.type_name);
       const cardSections = await getSections(array_type_name, cards);
       setCardSections(cardSections);
-      // console.log(cardSections);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +70,9 @@ const Modal = ({navigation}) => {
   return (
     <View style={styles.container}>
       {!deckDetails || cardSections < 1 ? (
-        <Spinner />
+        <View style={{flex: 1, backgroundColor: colors.black}}>
+          <Spinner styles={{marginTop: '100%'}} />
+        </View>
       ) : !packName && dateCreation ? (
         <View style={{flex: 3}}>
           <ImageBackground

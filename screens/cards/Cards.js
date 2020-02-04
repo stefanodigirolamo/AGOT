@@ -103,7 +103,7 @@ const Cards = ({navigation}) => {
       <Header resetFilters resetValue={resetFilters} />
 
       <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView bounces={false} showsVerticalScrollIndicator={false}>
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             enabled

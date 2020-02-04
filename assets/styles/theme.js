@@ -6,4 +6,6 @@ export const theme = {
 export const colors = {
   black: '#000000',
   mattBlack: '#000000C9',
+  mattYellowClear: '#c2a67fCC',
+  mattYellowDark: '#ffc533CC',
 };

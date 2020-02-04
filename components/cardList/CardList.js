@@ -6,7 +6,6 @@ import {theme} from '../../assets/styles/theme';
 
 const CardList = ({deck, cards, navigation}) => {
   const styles = cardListStyles;
-  // console.log(cards);
 
   const cardDetail = code => {
     navigation.navigate('Card', {code});
@@ -37,6 +36,7 @@ const CardList = ({deck, cards, navigation}) => {
 
   return (
     <SectionList
+      bounces={false}
       sections={cards}
       keyExtractor={item => `key-${item.code}`}
       stickySectionHeadersEnabled

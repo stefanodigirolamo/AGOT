@@ -21,8 +21,6 @@ const Filtered = ({navigation}) => {
     challenges: {challenge, boolean},
   } = navigation.state.params;
 
-  console.log(navigation.state.params);
-
   const cardsList = useContext(Context);
 
   const filteredCardsArray = useMemo(
@@ -73,8 +71,6 @@ const Filtered = ({navigation}) => {
     ],
   );
 
-  console.log(filteredCardsArray);
-
   const openCardDetails = code => {
     navigation.navigate('Card', {code});
   };
@@ -113,15 +109,13 @@ const Filtered = ({navigation}) => {
         ) : null}
         {selectedCost ? (
           <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>
-              {valueCost !== 0 && `Cost ${valueCost}`}
-            </Text>
+            <Text style={styles.appliedFilters}>{`Cost ${valueCost}`}</Text>
           </View>
         ) : null}
         {selectedStrength ? (
           <View style={styles.headerItem}>
             <Text style={styles.appliedFilters}>
-              {valueStrength !== 0 && `Strength ${valueStrength}`}
+              {`Strength ${valueStrength}`}
             </Text>
           </View>
         ) : null}
@@ -136,6 +130,7 @@ const Filtered = ({navigation}) => {
       {filteredCardsArray.length > 0 ? (
         <View style={styles.cardsContainer}>
           <FlatList
+            bounces={false}
             keyExtractor={item => `key-${item.code}`}
             showsVerticalScrollIndicator={false}
             data={filteredCardsArray}

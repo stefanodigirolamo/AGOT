@@ -1,13 +1,10 @@
 import React from 'react';
-import SpinnerStyle from './SpinnerStyle';
 import {ActivityIndicator, View} from 'react-native';
 import {theme} from '../../assets/styles/theme';
 
-const Spinner = () => {
-  const styles = SpinnerStyle;
-
+const Spinner = ({styles}) => {
   return (
-    <View style={styles.container}>
+    <View style={styles}>
       <ActivityIndicator size="large" color={theme.primary} />
     </View>
   );

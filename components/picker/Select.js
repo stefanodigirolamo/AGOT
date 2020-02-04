@@ -44,7 +44,9 @@ const Select = ({
         {!number && !factionLogo ? (
           <View style={styles.pickersContainer}>
             <Picker
-              style={{color: theme.secondary}}
+              style={
+                Platform.OS === 'android' ? {color: theme.secondary} : null
+              }
               headerStyle={{backgroundColor: theme.primary}}
               headerBackButtonTextStyle={{
                 color: colors.black,
@@ -87,7 +89,7 @@ const Select = ({
                 step={1}
                 minValue={0}
                 valueType="real"
-                rounded
+                rounded={true}
                 textColor={theme.primary}
                 iconStyle={{color: colors.black}}
                 rightButtonBackgroundColor={theme.secondary}
@@ -113,7 +115,7 @@ const Select = ({
                 step={1}
                 minValue={0}
                 valueType="real"
-                rounded
+                rounded={true}
                 textColor={theme.primary}
                 iconStyle={{color: colors.black}}
                 rightButtonBackgroundColor={theme.secondary}
