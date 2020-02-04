@@ -10,12 +10,11 @@ import Spinner from '../../utils/spinner/Spinner';
 
 const styles = decklistStyles;
 
-const lastDayWeek = format(new Date(), 'yyyy, M, d');
-const firstDayWeek = format(subDays(new Date(lastDayWeek), 7), 'yyyy, M, d');
+const firstDayWeek = subDays(new Date(), 7);
 
 const week = eachDayOfInterval({
   start: new Date(firstDayWeek),
-  end: new Date(lastDayWeek),
+  end: new Date(),
 });
 
 const formattedWeek = week.map(item => format(new Date(item), 'yyyy-MM-dd'));
@@ -30,7 +29,7 @@ const DecksList = ({navigation}) => {
       );
       setDecklist(details);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   }, []);
 

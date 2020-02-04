@@ -6,43 +6,50 @@ const modalStyles = StyleSheet.create({
     flex: 1,
   },
   deckDetailsContainer: {
-    maxHeight: '30%',
-    paddingBottom: '8%',
+    justifyContent: 'flex-end',
   },
   packDetailsContainer: {
     maxHeight: '30%',
     paddingTop: Platform.OS === 'ios' ? '15%' : '6%',
     paddingBottom: Platform.OS === 'ios' ? '5%' : '7%',
   },
-  imageContainer: {
+  packImageContainer: {
     width: '35%',
   },
-  titleContainer: {
+  titlePackContainer: {
     width: '65%',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  deckNameContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    marginHorizontal: '5%',
-    paddingVertical: '5%',
+  packTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: theme.primary,
+    marginTop: '5%',
   },
-  headerItemsContainer: {
+  deckTitle: {
+    fontSize: 30,
+    fontWeight: 'bold',
+    color: theme.primary,
+    textAlign: 'center',
+    marginTop: '10%',
+  },
+  iconContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+  },
+  headerItemsPackContainer: {
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginHorizontal: '5%',
   },
-  title: {
-    fontSize: 18,
-    fontWeight: 'bold',
+  dateCreationDeck: {
+    textAlign: 'right',
+    marginRight: '2%',
+    fontSize: 15,
     color: theme.primary,
-    textShadowColor: 'rgba(0, 0, 0, 0.75)',
-    textShadowOffset: {width: 2, height: 2},
-    textShadowRadius: 10,
-    marginTop: '5%',
   },
   details: {
     fontSize: 12,

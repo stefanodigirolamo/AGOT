@@ -17,7 +17,7 @@ const Home = ({navigation}) => {
       const dailyDecks = await getDailyDecklists();
       setDailyDecks(dailyDecks);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   };
 
@@ -26,7 +26,7 @@ const Home = ({navigation}) => {
       const packsLists = await getPackagesLists();
       setPacksLists(packsLists);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   };
 

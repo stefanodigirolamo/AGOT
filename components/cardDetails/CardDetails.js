@@ -24,7 +24,7 @@ const CardDetails = ({navigation}) => {
       const info = await getCard(navigation.state.params.code);
       setCardInfo(info);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   }, [navigation.state.params.code]);
 

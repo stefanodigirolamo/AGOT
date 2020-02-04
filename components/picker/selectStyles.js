@@ -23,17 +23,6 @@ const selectStyles = StyleSheet.create({
   numericInputContainer: {
     flexDirection: 'row',
   },
-  xContainer: {
-    width: '10%',
-    marginLeft: '5%',
-    justifyContent: 'center',
-  },
-  textX: {
-    color: theme.primary,
-    fontSize: 25,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
   factionLogoContainer: {
     display: 'flex',
     flexDirection: 'row',

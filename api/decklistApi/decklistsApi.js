@@ -29,15 +29,17 @@ export const getWeeklyDecklists = async day => {
     const decks = await decklists.get(`${day}.json`);
 
     const weeklyDecks = decks.data.map(deck => {
-      return {
-        id: deck.id,
-        title: deck.name,
-        dateUpdt: deck.date_update,
-        faction: deck.faction_name,
-        description: deck.description_md,
-        joust: deck.isLegalForJoust,
-        melee: deck.isLegalForMelee,
-      };
+      return (
+        deck && {
+          id: deck.id,
+          title: deck.name,
+          dateUpdt: deck.date_update,
+          faction: deck.faction_name,
+          description: deck.description_md,
+          joust: deck.isLegalForJoust,
+          melee: deck.isLegalForMelee,
+        }
+      );
     });
 
     return weeklyDecks;

@@ -6,6 +6,6 @@ export const getDeckDetails = async id => {
 
     return deckDetail.data;
   } catch (error) {
-    console.log(error);
+    return undefined;
   }
 };

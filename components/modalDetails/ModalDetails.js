@@ -1,7 +1,12 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect, useCallback, useRef} from 'react';
 import modalStyles from './modalStyles';
-import {View, Text, ImageBackground, Linking} from 'react-native';
-import headerBackground from '../../assets/modal_header_background.jpg';
+import {
+  View,
+  Text,
+  Linking,
+  Animated,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import Spinner from '../../utils/spinner/Spinner';
 import PackImage from '../../assets/switch_pack_images/packagesImagesSwitch';
 import CardList from '../cardList/CardList';
@@ -10,8 +15,9 @@ import {getCard} from '../../api/cardApi/cardApi';
 import {getCards, getSections} from '../../api/cardsApi/cardsApi';
 import {format} from 'date-fns';
 import Button from '../../utils/button/Button';
-import {theme, colors} from '../../assets/styles/theme';
-import Swipeable from 'react-native-gesture-handler/Swipeable';
+import {colors, theme} from '../../assets/styles/theme';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Modal = ({navigation}) => {
   const styles = modalStyles;
@@ -21,6 +27,9 @@ const Modal = ({navigation}) => {
 
   const [deckDetails, setDeckDetails] = useState({});
   const [cardSections, setCardSections] = useState([]);
+  const [isHeaderOpen, setHeaderOpen] = useState(false);
+
+  const heightAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (packName) {
@@ -29,6 +38,13 @@ const Modal = ({navigation}) => {
       deck();
     }
   }, [packName, card, deck]);
+
+  useEffect(() => {
+    Animated.spring(heightAnimation, {
+      toValue: isHeaderOpen ? 1 : 0,
+      duration: 500,
+    }).start();
+  }, [isHeaderOpen, heightAnimation]);
 
   const deck = useCallback(async () => {
     try {
@@ -42,7 +58,7 @@ const Modal = ({navigation}) => {
       setDeckDetails(details);
       setCardSections(cardSections);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   }, [navigation.state.params.id]);
 
@@ -57,7 +73,7 @@ const Modal = ({navigation}) => {
       const cardSections = await getSections(array_type_name, cards);
       setCardSections(cardSections);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   }, [navigation.state.params.id]);
 
@@ -65,7 +81,16 @@ const Modal = ({navigation}) => {
     Linking.openURL(URL);
   };
 
+  const openHeader = () => {
+    setHeaderOpen(prevState => !prevState);
+  };
+
   const dateCreation = deckDetails.date_creation;
+
+  const heightTransform = heightAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [40, 400],
+  });
 
   return (
     <View style={styles.container}>
@@ -75,46 +100,53 @@ const Modal = ({navigation}) => {
         </View>
       ) : !packName && dateCreation ? (
         <View style={{flex: 3}}>
-          <ImageBackground
-            source={headerBackground}
-            imageStyle={{opacity: 0.95}}
-            style={styles.deckDetailsContainer}>
-            <View style={styles.deckNameContainer}>
-              <Text style={styles.title}>{deckDetails.name}</Text>
-            </View>
-            <View style={styles.headerItemsContainer}>
-              <Text style={styles.details}>{deckDetails.faction_name}</Text>
-              <Text style={styles.details}>
+          <Text
+            ellipsizeMode={!isHeaderOpen && 'tail'}
+            numberOfLines={6}
+            style={styles.deckTitle}>
+            {deckDetails.name}
+          </Text>
+
+          <Animated.View
+            style={[styles.deckDetailsContainer, {height: heightTransform}]}>
+            {isHeaderOpen && (
+              <Text style={styles.dateCreationDeck}>
                 {format(new Date(dateCreation), 'dd-MM-yyyy')}
               </Text>
-            </View>
-          </ImageBackground>
+            )}
+            <TouchableOpacity
+              onPress={() => openHeader()}
+              style={styles.iconContainer}>
+              <Icon
+                name={!isHeaderOpen ? 'chevron-down' : 'chevron-up'}
+                size={30}
+                color={theme.primary}
+              />
+            </TouchableOpacity>
+          </Animated.View>
+
           <CardList deck navigation={navigation} cards={cardSections} />
         </View>
       ) : (
         packName && (
           <View style={{flex: 2}}>
-            <ImageBackground
-              source={headerBackground}
-              imageStyle={{opacity: 0.95}}
-              style={styles.packDetailsContainer}>
-              <View style={styles.headerItemsContainer}>
-                <View style={styles.imageContainer}>
+            <View style={styles.packDetailsContainer}>
+              <View style={styles.headerItemsPackContainer}>
+                <View style={styles.packImageContainer}>
                   <PackImage packagesImages={packName} />
                 </View>
-                <View style={styles.titleContainer}>
-                  <Text style={styles.title}>{packName}</Text>
+                <View style={styles.titlePackContainer}>
+                  <Text style={styles.packTitle}>{packName}</Text>
                   <Text style={styles.details}> Total {totalCards} </Text>
                   <Button
-                    bgColor={colors.mattBlack}
+                    bgColor={colors.mattYellowClear}
                     height="50%"
                     buttonTitle="View On Site"
-                    fontColor={theme.secondary}
                     press={() => openUrl()}
                   />
                 </View>
               </View>
-            </ImageBackground>
+            </View>
             <CardList navigation={navigation} cards={cardSections} />
           </View>
         )

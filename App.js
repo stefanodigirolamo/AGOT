@@ -26,7 +26,7 @@ const App = () => {
       const cardsList = await getAllCardsList();
       setCards(cardsList);
     } catch (error) {
-      console.log(error);
+      return undefined;
     }
   }, []);
 

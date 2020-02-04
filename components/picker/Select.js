@@ -96,11 +96,6 @@ const Select = ({
                 leftButtonBackgroundColor={theme.secondary}
               />
             </View>
-            <View style={styles.xContainer}>
-              <TouchableWithoutFeedback onPress={() => clearCost()}>
-                <Text style={styles.textX}>X</Text>
-              </TouchableWithoutFeedback>
-            </View>
           </View>
         ) : !factionLogo && !cost ? (
           <View style={styles.numericInputContainer}>
@@ -121,11 +116,6 @@ const Select = ({
                 rightButtonBackgroundColor={theme.secondary}
                 leftButtonBackgroundColor={theme.secondary}
               />
-            </View>
-            <View style={styles.xContainer}>
-              <TouchableWithoutFeedback onPress={() => clearStrength()}>
-                <Text style={styles.textX}>X</Text>
-              </TouchableWithoutFeedback>
             </View>
           </View>
         ) : (
