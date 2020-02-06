@@ -37,7 +37,6 @@ const modalStyles = StyleSheet.create({
   iconContainer: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'flex-end',
   },
   headerItemsPackContainer: {
     display: 'flex',
