@@ -105,8 +105,8 @@ const DecksList = ({navigation}) => {
           <FlatList
             data={decklist}
             renderItem={renderDeck}
-            keyExtractor={item => item && item.map(code => `${code.id}`)}
             showsVerticalScrollIndicator={false}
+            keyExtractor={item => item && item.map(code => `${code.id}`)}
           />
         </View>
       ) : (

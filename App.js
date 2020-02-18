@@ -2,7 +2,7 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
-import {View} from 'react-native';
+import {View, StatusBar} from 'react-native';
 import Home from './screens/home/Home';
 import Cards from './screens/cards/Cards';
 import DecksList from './screens/decksList/DecksList';
@@ -15,6 +15,7 @@ import Filtered from './screens/cards/filteredCardsList/FilteredCardsList';
 import {getAllCardsList} from './api/cardsApi/cardsApi';
 import Spinner from './utils/spinner/Spinner';
 import {theme, colors} from './assets/styles/theme';
+import {HideNavigationBar} from 'react-native-navigation-bar-color';
 
 export const Context = React.createContext([]);
 
@@ -31,11 +32,13 @@ const App = () => {
   }, []);
 
   useEffect(() => {
+    HideNavigationBar;
     getAllCards();
   }, [getAllCards]);
 
   return (
     <>
+      <StatusBar backgroundColor={colors.black} />
       {cards.length > 0 ? (
         <Context.Provider value={cards}>
           <Background />
