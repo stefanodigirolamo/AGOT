@@ -5,17 +5,18 @@ import {
   Image,
   FlatList,
   TouchableWithoutFeedback,
-  Platform,
+  SafeAreaView,
 } from 'react-native';
 import filteredCardListStyle from './filteredCardListStyle';
 import {Context} from '../../../App';
+import {ScrollView} from 'react-native-gesture-handler';
 
 const Filtered = ({navigation}) => {
   const styles = filteredCardListStyle;
 
   const {
     type,
-    faction: {factionName, selected},
+    factions,
     cost: {valueCost, selectedCost},
     strength: {valueStrength, selectedStrength},
     challenges: {challenge, boolean},
@@ -29,9 +30,6 @@ const Filtered = ({navigation}) => {
         let isValidFilter = true;
 
         if (type.length > 0 && type !== item.type_name) {
-          isValidFilter = false;
-        }
-        if (selected && factionName !== item.faction_name) {
           isValidFilter = false;
         }
         if (selectedCost && valueCost >= 0 && valueCost !== item.cost) {
@@ -60,8 +58,6 @@ const Filtered = ({navigation}) => {
       }, []),
     [
       type,
-      selected,
-      factionName,
       valueCost,
       valueStrength,
       selectedCost,
@@ -70,6 +66,14 @@ const Filtered = ({navigation}) => {
       cardsList,
     ],
   );
+
+  const factionsCardsArrays = Object.entries(factions).map(([key, value]) =>
+    filteredCardsArray.filter(item => {
+      return item.faction_name === key && value;
+    }),
+  );
+
+  const factionsArray = [].concat.apply([], factionsCardsArrays);
 
   const openCardDetails = code => {
     navigation.navigate('Card', {code});
@@ -89,45 +93,69 @@ const Filtered = ({navigation}) => {
     );
 
   return (
-    <View style={styles.container}>
-      <View
-        style={[
-          {
-            paddingTop: Platform.OS === 'ios' && 40,
-          },
-          styles.headerContainer,
-        ]}>
+    <SafeAreaView style={styles.container}>
+      <ScrollView bounces={false} horizontal style={styles.headerContainer}>
         {type ? (
           <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>{type && type}</Text>
+            <Text style={styles.appliedFilters}>
+              {'  '}
+              {type && type}
+              {'  '}
+            </Text>
           </View>
         ) : null}
         {boolean && challenge !== '' ? (
           <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>{challenge && challenge}</Text>
+            <Text style={styles.appliedFilters}>
+              {'  '}
+              {challenge && challenge}
+              {'  '}
+            </Text>
           </View>
         ) : null}
         {selectedCost ? (
           <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>{`Cost ${valueCost}`}</Text>
+            <Text style={styles.appliedFilters}>
+              {'  '} {`Cost: ${valueCost}`}
+              {'  '}{' '}
+            </Text>
           </View>
         ) : null}
         {selectedStrength ? (
           <View style={styles.headerItem}>
             <Text style={styles.appliedFilters}>
-              {`Strength ${valueStrength}`}
+              {'  '}
+              {`Strength: ${valueStrength}`}
+              {'  '}
             </Text>
           </View>
         ) : null}
-        {selected ? (
-          <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>
-              {factionName && factionName}
-            </Text>
-          </View>
-        ) : null}
-      </View>
-      {filteredCardsArray.length > 0 ? (
+        {Object.entries(factions).map(([key, value]) => {
+          if (value) {
+            return (
+              <View style={styles.headerItem}>
+                <Text style={styles.appliedFilters}>
+                  {'  '}
+                  {key} {'  '}
+                </Text>
+              </View>
+            );
+          } else {
+            return null;
+          }
+        })}
+      </ScrollView>
+      {factionsArray.length > 0 ? (
+        <View style={styles.cardsContainer}>
+          <FlatList
+            bounces={false}
+            keyExtractor={item => `key-${item.code}`}
+            showsVerticalScrollIndicator={false}
+            data={factionsArray}
+            renderItem={renderCards}
+          />
+        </View>
+      ) : filteredCardsArray.length > 0 ? (
         <View style={styles.cardsContainer}>
           <FlatList
             bounces={false}
@@ -146,7 +174,7 @@ const Filtered = ({navigation}) => {
           <Text style={styles.textNoCards}>Cards not found</Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

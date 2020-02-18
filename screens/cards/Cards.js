@@ -11,21 +11,11 @@ const Cards = ({navigation}) => {
 
   const [inputs, setInputs] = useState({
     type: '',
-    faction: {factionName: '', selected: false},
     cost: {valueCost: 0, selectedCost: false},
     strength: {valueStrength: 0, selectedStrength: false},
     challenges: {challenge: '', boolean: false},
   });
 
-  const typeItemsArray = [
-    '',
-    'Agenda',
-    'Attachment',
-    'Character',
-    'Plot',
-    'Event',
-    'Location',
-  ];
   const factionItemsArray = [
     'House Baratheon',
     'House Greyjoy',
@@ -37,17 +27,41 @@ const Cards = ({navigation}) => {
     'House Tyrell',
     'Neutral',
   ];
+
+  const typeItemsArray = [
+    '',
+    'Agenda',
+    'Attachment',
+    'Character',
+    'Plot',
+    'Event',
+    'Location',
+  ];
+
   const challengesItemsArray = ['', 'is_military', 'is_intrigue', 'is_power'];
+
+  const factionsActive = {};
+
+  factionItemsArray.map(item => (factionsActive[item] = false));
+
+  const [activeFactions, setFactionActive] = useState(factionsActive);
 
   const setTypeValue = item => {
     setInputs({...inputs, type: item});
   };
 
-  const setFactionValue = item => {
-    setInputs({
-      ...inputs,
-      faction: {factionName: item, selected: true},
+  const setFactionValue = selectedFaction => {
+    Object.keys(activeFactions).map(key => {
+      if (key === selectedFaction) {
+        if (activeFactions[key] === false) {
+          activeFactions[key] = true;
+        } else {
+          activeFactions[key] = false;
+        }
+      }
     });
+
+    setFactionActive({...activeFactions});
   };
 
   const setCostNumber = item => {
@@ -70,28 +84,23 @@ const Cards = ({navigation}) => {
   const resetFilters = () => {
     setInputs({
       type: '',
-      faction: {factionName: '', selected: false},
       cost: {valueCost: 0, selectedCost: false},
       strength: {valueStrength: 0, selectedStrength: false},
       challenges: {challenge: '', boolean: false},
     });
-  };
-
-  const clearCost = () => {
-    setInputs({...inputs, cost: {valueCost: 0, selectedCost: false}});
-  };
-
-  const clearStrength = () => {
-    setInputs({
-      ...inputs,
-      strength: {valueStrength: 0, selectedStrength: false},
+    Object.keys(activeFactions).map(key => {
+      if (activeFactions[key] === true) {
+        activeFactions[key] = false;
+      }
     });
+    setFactionActive({...activeFactions});
   };
 
-  const onSearch = (type, faction, cost, strength, challenges) => {
+  const onSearch = (type, factions, cost, strength, challenges) => {
     navigation.navigate('Filtered', {
       type,
-      faction,
+      factionItemsArray,
+      factions,
       cost,
       strength,
       challenges,
@@ -129,7 +138,6 @@ const Cards = ({navigation}) => {
               costValue={inputs.cost.valueCost}
               setCostValue={setCostNumber}
               initValueCost={inputs.cost.valueCost}
-              clearCost={clearCost}
             />
             <Select
               title="Strength"
@@ -138,13 +146,13 @@ const Cards = ({navigation}) => {
               strengthValue={inputs.strength.valueStrength}
               setStrengthValue={setStrengthNumber}
               initValueStrength={inputs.strength.valueStrength}
-              clearStrength={clearStrength}
             />
             <Select
               title="Factions"
               factionLogo
               itemsName={factionItemsArray}
-              itemValue={inputs.faction}
+              itemValue={inputs.factions}
+              activeFactions={activeFactions}
               getValue={setFactionValue}
             />
             <View style={styles.buttonContainer}>
@@ -157,7 +165,7 @@ const Cards = ({navigation}) => {
                 press={() =>
                   onSearch(
                     inputs.type,
-                    inputs.faction,
+                    activeFactions,
                     inputs.cost,
                     inputs.strength,
                     inputs.challenges,

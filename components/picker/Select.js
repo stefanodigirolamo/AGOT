@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Text, View, TouchableOpacity, Dimensions, Platform} from 'react-native';
 import {Picker} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -7,7 +7,6 @@ import NumericInput from 'react-native-numeric-input';
 import selectStyles from './selectStyles';
 import {theme, colors} from '../../assets/styles/theme';
 import factionColorSwitch from '../../assets/styles/factionColor';
-import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 const {height} = Dimensions.get('window');
 const styles = selectStyles;
@@ -19,11 +18,10 @@ const Select = ({
   initValueCost,
   initValueStrength,
   getValue,
+  activeFactions,
   costValue,
   strengthValue,
   setCostValue,
-  clearCost,
-  clearStrength,
   setStrengthValue,
   number,
   cost,
@@ -129,9 +127,9 @@ const Select = ({
                     styles.factionLogo,
                     {
                       backgroundColor:
-                        itemValue.selected && faction === itemValue.factionName
-                          ? factionColorSwitch(faction)
-                          : theme.secondary,
+                        activeFactions[faction] === false
+                          ? theme.secondary
+                          : factionColorSwitch(faction),
                     },
                   ]}>
                   <FactionLogo
