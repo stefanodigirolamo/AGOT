@@ -19,7 +19,7 @@ const Filtered = ({navigation}) => {
     factions,
     cost: {valueCost, selectedCost},
     strength: {valueStrength, selectedStrength},
-    challenges: {challenge, boolean},
+    challenges,
   } = navigation.state.params;
 
   const cardsList = useContext(Context);
@@ -42,15 +42,16 @@ const Filtered = ({navigation}) => {
         ) {
           isValidFilter = false;
         }
-        if (boolean && boolean !== item.is_military) {
-          isValidFilter = false;
-        }
-        if (boolean && boolean !== item.is_intrigue) {
-          isValidFilter = false;
-        }
-        if (boolean && boolean !== item.is_power) {
-          isValidFilter = false;
-        }
+        Object.entries(challenges).map(([challengeKey, challengeValue]) => {
+          if (challengeValue) {
+            Object.entries(item).map(([key, value]) => {
+              if (challengeKey === key && challengeValue !== value) {
+                isValidFilter = false;
+              }
+            });
+          }
+        });
+
         if (isValidFilter) {
           acc.push(item);
         }
@@ -62,10 +63,12 @@ const Filtered = ({navigation}) => {
       valueStrength,
       selectedCost,
       selectedStrength,
-      boolean,
+      challenges,
       cardsList,
     ],
   );
+
+  console.log(challenges);
 
   const factionsCardsArrays = Object.entries(factions).map(([key, value]) =>
     filteredCardsArray.filter(item => {
@@ -92,6 +95,9 @@ const Filtered = ({navigation}) => {
       </View>
     );
 
+  console.log('Array with factions', factionsArray);
+  console.log('Array without factions', filteredCardsArray);
+
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView bounces={false} horizontal style={styles.headerContainer}>
@@ -104,15 +110,21 @@ const Filtered = ({navigation}) => {
             </Text>
           </View>
         ) : null}
-        {boolean && challenge !== '' ? (
-          <View style={styles.headerItem}>
-            <Text style={styles.appliedFilters}>
-              {'  '}
-              {challenge && challenge}
-              {'  '}
-            </Text>
-          </View>
-        ) : null}
+        {Object.entries(challenges).map(([key, value]) => {
+          if (value) {
+            return (
+              <View style={styles.headerItem}>
+                <Text style={styles.appliedFilters}>
+                  {'  '}
+                  {key}
+                  {'  '}
+                </Text>
+              </View>
+            );
+          } else {
+            return null;
+          }
+        })}
         {selectedCost ? (
           <View style={styles.headerItem}>
             <Text style={styles.appliedFilters}>
@@ -145,7 +157,16 @@ const Filtered = ({navigation}) => {
           }
         })}
       </ScrollView>
-      {factionsArray.length > 0 ? (
+      {factionsArray.length === 0 && filteredCardsArray.length === 0 ? (
+        <View
+          style={[
+            styles.cardsContainer,
+            {alignItems: 'center', justifyContent: 'center'},
+          ]}>
+          <Text style={styles.textNoCards}>Cards not found</Text>
+        </View>
+      ) : factionsArray.length > 0 &&
+        (filteredCardsArray.length === 0 || filteredCardsArray.length > 0) ? (
         <View style={styles.cardsContainer}>
           <FlatList
             bounces={false}
@@ -155,7 +176,7 @@ const Filtered = ({navigation}) => {
             renderItem={renderCards}
           />
         </View>
-      ) : filteredCardsArray.length > 0 ? (
+      ) : filteredCardsArray.length > 0 && factionsArray.length === 0 ? (
         <View style={styles.cardsContainer}>
           <FlatList
             bounces={false}
@@ -165,15 +186,7 @@ const Filtered = ({navigation}) => {
             renderItem={renderCards}
           />
         </View>
-      ) : (
-        <View
-          style={[
-            styles.cardsContainer,
-            {alignItems: 'center', justifyContent: 'center'},
-          ]}>
-          <Text style={styles.textNoCards}>Cards not found</Text>
-        </View>
-      )}
+      ) : null}
     </SafeAreaView>
   );
 };

@@ -242,6 +242,10 @@ const Modal = ({navigation}) => {
     },
   ];
 
+  const fixYValue = yValue => {
+    return parseInt(yValue).toFixed(0);
+  };
+
   return (
     <View style={styles.container}>
       {!deckDetails || cardSections < 1 ? (
@@ -257,6 +261,7 @@ const Modal = ({navigation}) => {
               <>
                 <View style={{marginTop: 110}}>
                   <Carousel
+                    loop={true}
                     data={cardsArray}
                     sliderWidth={carouselWidth}
                     itemWidth={carouselWidth}
@@ -272,16 +277,16 @@ const Modal = ({navigation}) => {
                         }}>
                         {obj.item.text === 'TYPES' ? (
                           <LineChart
+                            formatYLabel={value => fixYValue(value)}
                             data={obj.item.data}
                             width={400}
-                            height={260}
+                            height={285}
                             style={{marginTop: 25}}
                             chartConfig={{
                               propsForLabels: {
                                 fontSize: 10,
                               },
                               fillShadowGradient: theme.primary,
-                              decimalPlaces: 2,
                               color: (opacity = 1) =>
                                 `rgba(255, 255, 255, ${opacity})`,
                               labelColor: (opacity = 1) =>
@@ -339,15 +344,15 @@ const Modal = ({navigation}) => {
                                 color: theme.secondary,
                                 fontWeight: 'bold',
                                 marginLeft: '2%',
-                                marginTop: '5%'
+                                marginTop: '5%',
                               }}>
-                              {' '}
-                              {obj.item.text}{' '}
+                              {obj.item.text}
                             </Text>
-                            <BarChart
+                            <LineChart
+                              formatYLabel={value => fixYValue(value)}
                               data={obj.item.data}
-                              width={360}
-                              height={230}
+                              width={400}
+                              height={250}
                               style={{
                                 marginTop: 15,
                                 alignSelf: 'center',
@@ -357,8 +362,8 @@ const Modal = ({navigation}) => {
                                 propsForLabels: {
                                   fontSize: 10,
                                 },
+                                backgroundColor: theme.primary,
                                 fillShadowGradient: theme.primary,
-                                decimalPlaces: 2,
                                 color: (opacity = 1) =>
                                   `rgba(255, 255, 255, ${opacity})`,
                                 labelColor: (opacity = 1) =>

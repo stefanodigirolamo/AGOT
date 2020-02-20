@@ -41,60 +41,64 @@ const DecksList = ({navigation}) => {
     navigation.navigate('Modal', {id});
   };
 
-  const renderDeck = ({item}) =>
-    item &&
-    item.map(deckItem => (
-      <TouchableOpacity onPress={() => openDeckDetails(deckItem.id)}>
-        <View style={styles.cardBox}>
-          <View style={{alignItems: 'center'}}>
-            <Text style={styles.title}>{deckItem.title}</Text>
-            <View style={{paddingVertical: '6%'}}>
-              <HousesCard
-                factionName={deckItem.faction}
-                width={140}
-                height={200}
-              />
-            </View>
+  const decklistArray = [].concat.apply([], decklist);
 
-            <View style={styles.joust_melee_container}>
+  const renderDeck = ({item}) => {
+    if (item) {
+      return (
+        <TouchableOpacity onPress={() => openDeckDetails(item.id)}>
+          <View style={styles.cardBox}>
+            <View style={{alignItems: 'center'}}>
+              <Text style={styles.title}>{item.title}</Text>
+              <View style={{paddingVertical: '6%'}}>
+                <HousesCard
+                  factionName={item.faction}
+                  width={140}
+                  height={200}
+                />
+              </View>
+
+              <View style={styles.joust_melee_container}>
+                <Text
+                  style={[
+                    styles.joust_melee_text,
+                    item.joust ? {color: '#0B6623'} : {color: '#C21807'},
+                  ]}>
+                  J
+                </Text>
+                <Text style={[styles.joust_melee_text, {color: theme.primary}]}>
+                  {' '}
+                  |{' '}
+                </Text>
+                <Text
+                  style={[
+                    styles.joust_melee_text,
+                    item.melee ? {color: '#0B6623'} : {color: '#C21807'},
+                  ]}>
+                  M
+                </Text>
+              </View>
+
               <Text
-                style={[
-                  styles.joust_melee_text,
-                  deckItem.joust ? {color: '#0B6623'} : {color: '#C21807'},
-                ]}>
-                J
-              </Text>
-              <Text style={[styles.joust_melee_text, {color: theme.primary}]}>
-                {' '}
-                |{' '}
-              </Text>
-              <Text
-                style={[
-                  styles.joust_melee_text,
-                  deckItem.melee ? {color: '#0B6623'} : {color: '#C21807'},
-                ]}>
-                M
+                ellipsizeMode="tail"
+                numberOfLines={4}
+                style={styles.description}>
+                {item.description}
               </Text>
             </View>
 
             <Text
-              ellipsizeMode="tail"
-              numberOfLines={4}
-              style={styles.description}>
-              {deckItem.description}
+              style={[
+                styles.description,
+                {textAlign: 'right', paddingTop: '3%', paddingRight: '3%'},
+              ]}>
+              {format(new Date(item.dateUpdt), 'dd-MM-yyyy')}
             </Text>
           </View>
-
-          <Text
-            style={[
-              styles.description,
-              {textAlign: 'right', paddingTop: '3%', paddingRight: '3%'},
-            ]}>
-            {format(new Date(deckItem.dateUpdt), 'dd-MM-yyyy')}
-          </Text>
-        </View>
-      </TouchableOpacity>
-    ));
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <>
@@ -103,10 +107,10 @@ const DecksList = ({navigation}) => {
       {decklist.length > 0 ? (
         <View style={styles.container}>
           <FlatList
-            data={decklist}
+            data={decklistArray}
             renderItem={renderDeck}
             showsVerticalScrollIndicator={false}
-            keyExtractor={item => item && item.map(code => `${code.id}`)}
+            keyExtractor={item => item && `${item.id}`}
           />
         </View>
       ) : (

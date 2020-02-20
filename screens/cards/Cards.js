@@ -13,7 +13,6 @@ const Cards = ({navigation}) => {
     type: '',
     cost: {valueCost: 0, selectedCost: false},
     strength: {valueStrength: 0, selectedStrength: false},
-    challenges: {challenge: '', boolean: false},
   });
 
   const factionItemsArray = [
@@ -38,13 +37,17 @@ const Cards = ({navigation}) => {
     'Location',
   ];
 
-  const challengesItemsArray = ['', 'is_military', 'is_intrigue', 'is_power'];
+  const challengesItemsArray = ['is_military', 'is_intrigue', 'is_power'];
 
   const factionsActive = {};
 
   factionItemsArray.map(item => (factionsActive[item] = false));
 
+  const challengesActive = {};
+  challengesItemsArray.map(item => (challengesActive[item] = false));
+
   const [activeFactions, setFactionActive] = useState(factionsActive);
+  const [activeChallenges, setChallengeActive] = useState(challengesActive);
 
   const setTypeValue = item => {
     setInputs({...inputs, type: item});
@@ -74,11 +77,18 @@ const Cards = ({navigation}) => {
     });
   };
 
-  const setChallengesValue = item => {
-    setInputs({
-      ...inputs,
-      challenges: {challenge: item, boolean: true},
+  const setChallengesValue = selectedChallenge => {
+    Object.keys(activeChallenges).map(key => {
+      if (key === selectedChallenge) {
+        if (activeChallenges[key] === false) {
+          activeChallenges[key] = true;
+        } else {
+          activeChallenges[key] = false;
+        }
+      }
     });
+
+    setChallengeActive({...activeChallenges});
   };
 
   const resetFilters = () => {
@@ -93,7 +103,13 @@ const Cards = ({navigation}) => {
         activeFactions[key] = false;
       }
     });
+    Object.keys(activeChallenges).map(key => {
+      if (activeChallenges[key] === true) {
+        activeChallenges[key] = false;
+      }
+    });
     setFactionActive({...activeFactions});
+    setChallengeActive({...activeChallenges});
   };
 
   const onSearch = (type, factions, cost, strength, challenges) => {
@@ -126,10 +142,11 @@ const Cards = ({navigation}) => {
             />
             <Select
               placeholder="- Select Challenges -"
+              challenge
               title="Challenges"
               itemsName={challengesItemsArray}
               getValue={setChallengesValue}
-              itemValue={inputs.challenges.challenge}
+              activeChallenges={activeChallenges}
             />
             <Select
               title="Cost"
@@ -151,7 +168,6 @@ const Cards = ({navigation}) => {
               title="Factions"
               factionLogo
               itemsName={factionItemsArray}
-              itemValue={inputs.factions}
               activeFactions={activeFactions}
               getValue={setFactionValue}
             />
@@ -168,7 +184,7 @@ const Cards = ({navigation}) => {
                     activeFactions,
                     inputs.cost,
                     inputs.strength,
-                    inputs.challenges,
+                    activeChallenges,
                   )
                 }
               />

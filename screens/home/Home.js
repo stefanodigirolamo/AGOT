@@ -52,7 +52,7 @@ const Home = ({navigation}) => {
               keyExtractor={item => `key-${item.id}`}
               renderItem={({item}) => (
                 <TouchableOpacity
-                  style={{marginVertical: dailyDecks.length < 2 ? '15%' : '0%'}}
+                  style={{marginVertical: dailyDecks.length < 2 ? '8%' : '0%'}}
                   onPress={() => openModal(item.id)}>
                   <Deck
                     id={item.id}

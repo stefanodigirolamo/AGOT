@@ -20,6 +20,15 @@ const selectStyles = StyleSheet.create({
     top: 12,
     position: 'absolute',
   },
+  checkContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  singleCheck: {
+    marginHorizontal: '2%',
+  },
+  checkText: {color: theme.secondary, fontSize: 20},
   numericInputContainer: {
     flexDirection: 'row',
   },

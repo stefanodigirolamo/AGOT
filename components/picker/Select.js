@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {Text, View, TouchableOpacity, Dimensions, Platform} from 'react-native';
-import {Picker} from 'native-base';
+import {Picker, CheckBox} from 'native-base';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import FactionLogo from '../../assets/houses_logos/housesLogoSwitch';
 import NumericInput from 'react-native-numeric-input';
@@ -18,6 +18,8 @@ const Select = ({
   initValueCost,
   initValueStrength,
   getValue,
+  challenge,
+  activeChallenges,
   activeFactions,
   costValue,
   strengthValue,
@@ -39,7 +41,7 @@ const Select = ({
       </Text>
 
       <View style={{alignItems: 'center'}}>
-        {!number && !factionLogo ? (
+        {!number && !factionLogo && !challenge ? (
           <View style={styles.pickersContainer}>
             <Picker
               style={
@@ -73,6 +75,30 @@ const Select = ({
             {Platform.OS === 'android' && (
               <Icon name="chevron-down" style={styles.downArrow} />
             )}
+          </View>
+        ) : challenge ? (
+          <View style={styles.checkContainer}>
+            {Object.entries(activeChallenges).map(([key, value]) => (
+              <>
+                <View style={styles.singleCheck}>
+                  <CheckBox
+                    key={key}
+                    color={theme.primary}
+                    checked={value}
+                    onPress={() => getValue(key)}
+                  />
+                </View>
+                <View style={styles.singleCheck}>
+                  <Text style={styles.checkText}>
+                    {key === 'is_military'
+                      ? 'Military'
+                      : key === 'is_intrigue'
+                      ? 'Intrigue'
+                      : 'Power'}
+                  </Text>
+                </View>
+              </>
+            ))}
           </View>
         ) : !factionLogo && cost ? (
           <View style={styles.numericInputContainer}>
