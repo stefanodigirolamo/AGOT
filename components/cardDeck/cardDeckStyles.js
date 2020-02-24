@@ -18,6 +18,7 @@ const deckStyles = StyleSheet.create({
     zIndex: 2,
     elevation: 2,
   },
+  image: {width: '100%'},
   detailContainer: {
     flexDirection: 'row',
     display: 'flex',

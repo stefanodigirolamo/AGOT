@@ -15,7 +15,7 @@ const Deck = ({name, faction}) => {
       </View>
       <View style={styles.cardContainer}>
         <ImageBackground
-          style={{width: '100%'}}
+          style={styles.image}
           imageStyle={{transform: [{rotateY: '180deg'}]}}
           source={backgroundDeck}>
           <View style={styles.detailContainer}>

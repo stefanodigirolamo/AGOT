@@ -41,7 +41,7 @@ const CardDetails = ({navigation}) => {
   }, [card]);
 
   return !cardInfo.image_url ? (
-    <Spinner />
+    <Spinner spinnerStyles={styles.spinner} />
   ) : (
     <>
       <View style={{backgroundColor: factionColor(cardInfo.faction_name)}}>

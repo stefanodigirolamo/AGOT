@@ -17,15 +17,15 @@ const headerStyles = StyleSheet.create({
     marginTop: '8%',
   },
   containerImageInFilter: {
-    width: '85%',
+    width: '79%',
     display: 'flex',
     alignItems: 'center',
-    paddingLeft: '15%',
-    marginTop: '2.5%',
+    paddingLeft: '21%',
+    marginTop: '7%',
   },
   containerReset: {
-    width: '15%',
-    marginTop: '5%',
+    width: '21%',
+    marginTop: '10%',
   },
 });
 

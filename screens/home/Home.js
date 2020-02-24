@@ -12,19 +12,19 @@ const Home = ({navigation}) => {
   const [dailyDecks, setDailyDecks] = useState([]);
   const [packsLists, setPacksLists] = useState([]);
 
-  const decks = async () => {
+  const getDecks = async () => {
     try {
-      const dailyDecks = await getDailyDecklists();
-      setDailyDecks(dailyDecks);
+      const decks = await getDailyDecklists();
+      setDailyDecks(decks);
     } catch (error) {
       return undefined;
     }
   };
 
-  const packs = async () => {
+  const getPacks = async () => {
     try {
-      const packsLists = await getPackagesLists();
-      setPacksLists(packsLists);
+      const packs = await getPackagesLists();
+      setPacksLists(packs);
     } catch (error) {
       return undefined;
     }
@@ -35,8 +35,8 @@ const Home = ({navigation}) => {
   };
 
   useEffect(() => {
-    decks();
-    packs();
+    getDecks();
+    getPacks();
   }, []);
 
   return (

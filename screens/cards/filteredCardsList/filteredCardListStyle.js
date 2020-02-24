@@ -1,8 +1,6 @@
 import {StyleSheet, Dimensions} from 'react-native';
 import {theme, colors} from '../../../assets/styles/theme';
 
-const {height} = Dimensions.get('screen');
-
 const filteredCardListStyle = StyleSheet.create({
   container: {
     flex: 1,
@@ -24,8 +22,14 @@ const filteredCardListStyle = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.primary,
   },
+  noCardsContainer: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   cardsContainer: {
     flex: 6,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   textNoCards: {
     fontSize: 30,

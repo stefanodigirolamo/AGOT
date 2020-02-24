@@ -2,12 +2,20 @@ import {StyleSheet} from 'react-native';
 import {theme, colors} from '../../assets/styles/theme';
 
 const selectStyles = StyleSheet.create({
-  pickersContainer: {
+  container: {alignItems: 'center'},
+  pickerContainer: {
     borderWidth: 2,
     borderColor: theme.secondary,
     borderRadius: 4,
     width: 300,
   },
+  headerBackButton: {
+    color: colors.black,
+    fontWeight: 'bold',
+  },
+  headerTitle: {fontSize: 25},
+  item: {height: 80},
+  itemText: {color: theme.primary, fontSize: 25},
   title: {
     color: theme.primary,
     fontSize: 25,
@@ -20,6 +28,7 @@ const selectStyles = StyleSheet.create({
     top: 12,
     position: 'absolute',
   },
+  iosIcon: {color: theme.primary, fontSize: 25, right: 10},
   checkContainer: {
     display: 'flex',
     flexDirection: 'row',

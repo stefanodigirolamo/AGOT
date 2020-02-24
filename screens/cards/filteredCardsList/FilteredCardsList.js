@@ -68,8 +68,6 @@ const Filtered = ({navigation}) => {
     ],
   );
 
-  console.log(challenges);
-
   const factionsCardsArrays = Object.entries(factions).map(([key, value]) =>
     filteredCardsArray.filter(item => {
       return item.faction_name === key && value;
@@ -94,9 +92,6 @@ const Filtered = ({navigation}) => {
         </TouchableWithoutFeedback>
       </View>
     );
-
-  console.log('Array with factions', factionsArray);
-  console.log('Array without factions', filteredCardsArray);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -158,11 +153,7 @@ const Filtered = ({navigation}) => {
         })}
       </ScrollView>
       {factionsArray.length === 0 && filteredCardsArray.length === 0 ? (
-        <View
-          style={[
-            styles.cardsContainer,
-            {alignItems: 'center', justifyContent: 'center'},
-          ]}>
+        <View style={styles.noCardsContainer}>
           <Text style={styles.textNoCards}>Cards not found</Text>
         </View>
       ) : factionsArray.length > 0 &&

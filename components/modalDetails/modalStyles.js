@@ -1,17 +1,19 @@
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {theme} from '../../assets/styles/theme';
 
 const modalStyles = StyleSheet.create({
+  spinner: {marginTop: '100%'},
   container: {
     flex: 1,
   },
   deckDetailsContainer: {
     justifyContent: 'flex-end',
   },
+  decksContainer: {flex: 3},
+  packsContainer: {flex: 1},
   packDetailsContainer: {
     maxHeight: '30%',
-    paddingTop: Platform.OS === 'ios' ? '15%' : '6%',
-    paddingBottom: Platform.OS === 'ios' ? '5%' : '7%',
+    marginTop: '8%',
   },
   packImageContainer: {
     width: '35%',
@@ -44,6 +46,7 @@ const modalStyles = StyleSheet.create({
     justifyContent: 'space-between',
     marginHorizontal: '5%',
   },
+  dateContainer: {justifyContent: 'flex-end'},
   dateCreationDeck: {
     textAlign: 'right',
     marginRight: '2%',

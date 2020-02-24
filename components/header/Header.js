@@ -14,23 +14,25 @@ const {height} = Dimensions.get('window');
 const styles = headerStyles;
 
 const Header = ({resetFilters, resetValue}) => (
-  <View
-    style={[
-      styles.container,
-      height < 800 && {height: 95},
-      resetFilters && styles.containerFilter,
-    ]}>
-    <View style={resetFilters && styles.containerImageInFilter}>
-      <Image source={AGOTLogo} style={styles.image} />
-    </View>
-    {resetFilters && (
-      <View style={styles.containerReset}>
-        <TouchableWithoutFeedback onPress={() => resetValue()}>
-          <Text style={{color: theme.primary}}>RESET</Text>
-        </TouchableWithoutFeedback>
+  <>
+    <View
+      style={[
+        styles.container,
+        height < 800 && {height: 91},
+        resetFilters && styles.containerFilter,
+      ]}>
+      <View style={resetFilters && styles.containerImageInFilter}>
+        <Image source={AGOTLogo} style={styles.image} />
       </View>
-    )}
-  </View>
+      {resetFilters && (
+        <View style={styles.containerReset}>
+          <TouchableWithoutFeedback onPress={() => resetValue()}>
+            <Text style={{color: theme.primary}}>RESET</Text>
+          </TouchableWithoutFeedback>
+        </View>
+      )}
+    </View>
+  </>
 );
 
 export default Header;

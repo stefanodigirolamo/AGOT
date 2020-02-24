@@ -5,7 +5,7 @@ import decklistStyles from './decklistStyle';
 import {getWeeklyDecklists} from '../../api/decklistApi/decklistsApi';
 import {format, eachDayOfInterval, subDays} from 'date-fns';
 import HousesCard from '../../assets/houses_cards/housesCardSwitch';
-import {theme, colors} from '../../assets/styles/theme';
+import {theme} from '../../assets/styles/theme';
 import Spinner from '../../utils/spinner/Spinner';
 
 const styles = decklistStyles;
@@ -48,9 +48,9 @@ const DecksList = ({navigation}) => {
       return (
         <TouchableOpacity onPress={() => openDeckDetails(item.id)}>
           <View style={styles.cardBox}>
-            <View style={{alignItems: 'center'}}>
+            <View style={styles.detailsContainer}>
               <Text style={styles.title}>{item.title}</Text>
-              <View style={{paddingVertical: '6%'}}>
+              <View style={styles.houseCardContainer}>
                 <HousesCard
                   factionName={item.faction}
                   width={140}
@@ -62,7 +62,7 @@ const DecksList = ({navigation}) => {
                 <Text
                   style={[
                     styles.joust_melee_text,
-                    item.joust ? {color: '#0B6623'} : {color: '#C21807'},
+                    item.joust ? styles.joustColor : styles.meleeColor,
                   ]}>
                   J
                 </Text>
@@ -73,7 +73,7 @@ const DecksList = ({navigation}) => {
                 <Text
                   style={[
                     styles.joust_melee_text,
-                    item.melee ? {color: '#0B6623'} : {color: '#C21807'},
+                    item.melee ? styles.joustColor : styles.meleeColor,
                   ]}>
                   M
                 </Text>
@@ -87,11 +87,7 @@ const DecksList = ({navigation}) => {
               </Text>
             </View>
 
-            <Text
-              style={[
-                styles.description,
-                {textAlign: 'right', paddingTop: '3%', paddingRight: '3%'},
-              ]}>
+            <Text style={styles.date}>
               {format(new Date(item.dateUpdt), 'dd-MM-yyyy')}
             </Text>
           </View>
@@ -114,9 +110,7 @@ const DecksList = ({navigation}) => {
           />
         </View>
       ) : (
-        <View style={{flex: 1, backgroundColor: colors.mattBlack}}>
-          <Spinner styles={{marginTop: '80%'}} />
-        </View>
+        <Spinner spinnerStyles={styles.spinner} />
       )}
     </>
   );

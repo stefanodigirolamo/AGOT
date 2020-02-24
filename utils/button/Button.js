@@ -6,7 +6,9 @@ const styles = buttonStyles;
 
 const Button = ({press, bgColor, fontColor, height, width, buttonTitle}) => {
   return (
-    <TouchableOpacity onPress={() => press()} style={{marginTop: '10%'}}>
+    <TouchableOpacity
+      onPress={() => press()}
+      style={styles.touchButtonContainer}>
       <View
         style={[
           styles.buttonContainer,

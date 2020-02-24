@@ -33,28 +33,22 @@ const Select = ({
   return (
     <>
       <Text
-        style={[
-          styles.title,
-          {paddingVertical: height > 800 ? '6%' : height < 738 ? '2%' : '4%'},
-        ]}>
+        style={[styles.title, {paddingVertical: height > 800 ? '6%' : '4%'}]}>
         {title}
       </Text>
 
-      <View style={{alignItems: 'center'}}>
+      <View style={styles.container}>
         {!number && !factionLogo && !challenge ? (
-          <View style={styles.pickersContainer}>
+          <View style={styles.pickerContainer}>
             <Picker
               style={
                 Platform.OS === 'android' ? {color: theme.secondary} : null
               }
               headerStyle={{backgroundColor: theme.primary}}
-              headerBackButtonTextStyle={{
-                color: colors.black,
-                fontWeight: 'bold',
-              }}
-              headerTitleStyle={{fontSize: 25}}
-              itemStyle={{height: 80}}
-              itemTextStyle={{color: theme.primary, fontSize: 25}}
+              headerBackButtonTextStyle={styles.headerBackButton}
+              headerTitleStyle={styles.headerTitle}
+              itemStyle={styles.item}
+              itemTextStyle={styles.itemText}
               textStyle={{color: theme.secondary}}
               placeholder={Platform.OS === 'ios' ? placeholder : ''}
               placeholderStyle={{color: theme.secondary}}
@@ -62,12 +56,7 @@ const Select = ({
               modalStyle={{backgroundColor: colors.black}}
               selectedValue={itemValue}
               onValueChange={item => getValue(item)}
-              iosIcon={
-                <Icon
-                  name="chevron-down"
-                  style={{color: theme.primary, fontSize: 25, right: 10}}
-                />
-              }>
+              iosIcon={<Icon name="chevron-down" style={styles.iosIcon} />}>
               {itemsName.map(item => (
                 <Picker.Item value={item} label={item} key={item} />
               ))}

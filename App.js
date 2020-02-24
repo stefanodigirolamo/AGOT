@@ -38,16 +38,14 @@ const App = () => {
 
   return (
     <>
-      <StatusBar backgroundColor={colors.black} />
+      <StatusBar barStyle="light-content" backgroundColor={colors.black} />
       {cards.length > 0 ? (
         <Context.Provider value={cards}>
           <Background />
           <AppNavigator />
         </Context.Provider>
       ) : (
-        <View style={{flex: 1, backgroundColor: colors.black}}>
-          <Spinner styles={{marginTop: '100%'}} />
-        </View>
+        <Spinner spinnerStyles={{marginTop: '100%'}} />
       )}
     </>
   );

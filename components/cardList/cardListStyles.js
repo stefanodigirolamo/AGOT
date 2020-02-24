@@ -10,8 +10,8 @@ const cardStyles = StyleSheet.create({
     backgroundColor: colors.black,
   },
   cardNameContainer: {
-    marginLeft: '2%',
-    width: '92%',
+    marginLeft: '4%',
+    width: '90%',
   },
   headerContainer: {
     backgroundColor: theme.secondary,
@@ -20,6 +20,7 @@ const cardStyles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     textTransform: 'uppercase',
+    marginLeft: '2%',
   },
   cardName: {
     fontSize: 18,
@@ -28,7 +29,7 @@ const cardStyles = StyleSheet.create({
   },
   separator: {height: 0.5, backgroundColor: theme.secondary},
   arrowContainer: {
-    width: '8%',
+    width: '10%',
   },
 });
 

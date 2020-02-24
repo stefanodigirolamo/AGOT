@@ -2,6 +2,7 @@ import {StyleSheet, Platform} from 'react-native';
 import {theme, colors} from '../../assets/styles/theme';
 
 const CardDetailsStyle = StyleSheet.create({
+  spinner: {marginTop: '100%'},
   titleContainer: {
     display: 'flex',
     flexDirection: 'row',

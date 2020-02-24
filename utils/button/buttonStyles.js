@@ -1,6 +1,7 @@
 import {StyleSheet} from 'react-native';
 
 const buttonStyles = StyleSheet.create({
+  touchButtonContainer: {marginTop: '10%'},
   buttonContainer: {
     display: 'flex',
     borderRadius: 20,

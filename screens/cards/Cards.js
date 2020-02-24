@@ -132,7 +132,7 @@ const Cards = ({navigation}) => {
           <KeyboardAvoidingView
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
             enabled
-            style={{flexGrow: 1, height: '100%'}}>
+            style={styles.keyboard}>
             <Select
               placeholder="- Select Type -"
               title="Types"

@@ -7,6 +7,9 @@ const decklistStyles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.mattBlack,
   },
+  spinner: {marginTop: '80%'},
+  detailsContainer: {alignItems: 'center'},
+  houseCardContainer: {paddingVertical: '6%'},
   title: {
     fontSize: 20,
     color: theme.primary,
@@ -15,6 +18,13 @@ const decklistStyles = StyleSheet.create({
   description: {
     fontSize: 15,
     color: theme.secondary,
+  },
+  date: {
+    fontSize: 15,
+    color: theme.secondary,
+    textAlign: 'right',
+    paddingTop: '3%',
+    paddingRight: '3%',
   },
   cardBox: {
     backgroundColor: colors.mattBlack,
@@ -31,6 +41,8 @@ const decklistStyles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingBottom: '4%',
   },
+  joustColor: {color: '#0B6623'},
+  meleeColor: {color: '#C21807'},
   joust_melee_text: {
     fontSize: 15,
     fontWeight: 'bold',

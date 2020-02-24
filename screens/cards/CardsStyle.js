@@ -8,6 +8,7 @@ const CardsStyle = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.mattBlack,
   },
+  keyboard: {flexGrow: 1, height: '100%'},
   buttonContainer: {
     display: 'flex',
     alignItems: 'center',
