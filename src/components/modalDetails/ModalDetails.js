@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {connect} from 'react-redux';
 import modalStyles from './modalStyles';
 import {
@@ -19,13 +19,11 @@ import {colors, theme} from '../../../assets/styles/theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {
   getDeckDetailsAction,
-  getSlotsOfDeckAction,
+  getDeckSlotsAction,
+  getDeckCardsAction,
 } from '../../../store/actions/decksActions';
-import {
-  getSectionsAction,
-  getCardAction,
-  getCardsAction,
-} from '../../../store/actions/cardsActions';
+import {getSectionsAction} from '../../../store/actions/cardsActions';
+import {getPackCardsAction} from '../../../store/actions/packsActions';
 
 const Modal = ({
   navigation,
@@ -34,39 +32,48 @@ const Modal = ({
   getSlotsOfDeck,
   slots,
   getCards,
-  cards,
-  getCard,
+  packCards,
+  getDeckCards,
+  deckCards,
   getSections,
+  sections,
 }) => {
   const styles = modalStyles;
+  const id = navigation.state.params.id;
   const packName = navigation.state.params.name;
   const totalCards = navigation.state.params.total;
   const URL = navigation.state.params.url;
-  console.log(navigation.state.params.id);
 
-  const [cardSections, setCardSections] = useState([]);
   const [isHeaderOpen, setHeaderOpen] = useState(false);
 
   const heightAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (packName) {
-      getCards(navigation.state.params.id);
-      card();
+      getCards(id);
     } else {
-      getSlotsOfDeck(navigation.state.params.id);
-      getDeckDetails(navigation.state.params.id);
-      deck();
+      getSlotsOfDeck(id);
+      getDeckDetails(id);
     }
-  }, [
-    navigation.state.params.id,
-    getCards,
-    getDeckDetails,
-    getSlotsOfDeck,
-    packName,
-    card,
-    deck,
-  ]);
+  }, [id, getCards, getDeckDetails, getSlotsOfDeck, packName]);
+
+  useEffect(() => {
+    if (packName && packCards.length > 0) {
+      getSections(packCards);
+    }
+  }, [packName, packCards, getSections]);
+
+  useEffect(() => {
+    if (!packName && slots.length > 0) {
+      getDeckCards(slots);
+    }
+  }, [packName, slots, getDeckCards]);
+
+  useEffect(() => {
+    if (!packName && deckCards.length > 0) {
+      getSections(deckCards);
+    }
+  }, [packName, deckCards, getSections]);
 
   useEffect(() => {
     Animated.spring(heightAnimation, {
@@ -74,31 +81,6 @@ const Modal = ({
       duration: 500,
     }).start();
   }, [isHeaderOpen, heightAnimation]);
-
-  const deck = useCallback(async () => {
-    try {
-      const cardsArray = await Promise.all(slots.map(item => getCard(item)));
-      const array_type_name = cardsArray.map(item => item.type_name);
-      const cardSectionsArray = await getSections(array_type_name, cardsArray);
-      setCardSections(cardSectionsArray);
-    } catch (error) {
-      return undefined;
-    }
-  }, [slots, getCard, getSections]);
-
-  const card = useCallback(async () => {
-    try {
-      const array_type_name = cards.map(item => item.type_name);
-      console.log(array_type_name);
-
-      const cardListSections = await getSections(array_type_name, cards);
-      console.log(cardListSections);
-
-      setCardSections(cardListSections);
-    } catch (error) {
-      return undefined;
-    }
-  }, [cards, getSections]);
 
   const openUrl = () => {
     Linking.openURL(URL);
@@ -110,6 +92,10 @@ const Modal = ({
 
   const dateCreation = deckDetails.date_creation;
 
+  const cardsSections = sections.filter(
+    item => item.title !== 'Agenda' && item.title !== 'Plot',
+  );
+
   const heightTransform = heightAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [40, 400],
@@ -117,7 +103,7 @@ const Modal = ({
 
   return (
     <View style={styles.container}>
-      {!deckDetails || cardSections.length === 0 ? (
+      {!deckDetails || sections.length === 0 ? (
         <Spinner spinnerStyles={styles.spinner} />
       ) : !packName && dateCreation ? (
         <View style={styles.decksContainer}>
@@ -127,8 +113,8 @@ const Modal = ({
             {isHeaderOpen && (
               <>
                 <GraphCarousel
-                  listOfCards={cards}
-                  cardSections={cardSections}
+                  deckCards={deckCards}
+                  cardSections={cardsSections}
                 />
                 <View style={styles.dateContainer}>
                   <Text style={styles.dateCreationDeck}>
@@ -147,7 +133,7 @@ const Modal = ({
               />
             </TouchableOpacity>
           </Animated.View>
-          <CardList deck navigation={navigation} cards={cardSections} />
+          <CardList deck navigation={navigation} sections={sections} />
         </View>
       ) : (
         packName && (
@@ -169,7 +155,7 @@ const Modal = ({
                 </View>
               </View>
             </SafeAreaView>
-            <CardList navigation={navigation} cards={cardSections} />
+            <CardList navigation={navigation} sections={sections} />
           </View>
         )
       )}
@@ -181,17 +167,17 @@ const mapStateToProps = state => ({
   deckDetails: state.decksReducer.deckDetails,
   slots: state.decksReducer.slots,
   sections: state.cardsReducer.sections,
-  cards: state.cardsReducer.cards,
-  card: state.cardsReducer.card,
+  packCards: state.packsReducer.packCards,
+  deckCards: state.decksReducer.deckCards,
 });
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  getDeckDetails: () => dispatch(getDeckDetailsAction()),
-  getSlotsOfDeck: () => dispatch(getSlotsOfDeckAction()),
-  getSections: () => dispatch(getSectionsAction()),
-  getCards: () => dispatch(getCardsAction()),
-  getCard: () => dispatch(getCardAction()),
+  getDeckDetails: id => dispatch(getDeckDetailsAction(id)),
+  getSlotsOfDeck: id => dispatch(getDeckSlotsAction(id)),
+  getSections: cardsArray => dispatch(getSectionsAction(cardsArray)),
+  getCards: id => dispatch(getPackCardsAction(id)),
+  getDeckCards: slotsArray => dispatch(getDeckCardsAction(slotsArray)),
 });
 
 // eslint-disable-next-line prettier/prettier

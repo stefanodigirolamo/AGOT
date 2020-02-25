@@ -1,47 +1,24 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import Header from '../../components/header/Header';
 import decklistStyles from './decklistStyle';
-import {getWeeklyDecklists} from '../../../api/decklistApi/decklistsApi';
-import {format, eachDayOfInterval, subDays} from 'date-fns';
+import {getWeeklyDecksAction} from '../../../store/actions/decksActions';
+import {format} from 'date-fns';
 import HousesCard from '../../../assets/houses_cards/housesCardSwitch';
 import {theme} from '../../../assets/styles/theme';
 import Spinner from '../../../utils/spinner/Spinner';
 
 const styles = decklistStyles;
 
-const firstDayWeek = subDays(new Date(), 7);
-
-const week = eachDayOfInterval({
-  start: new Date(firstDayWeek),
-  end: new Date(),
-});
-
-const formattedWeek = week.map(item => format(new Date(item), 'yyyy-MM-dd'));
-
-const DecksList = ({navigation}) => {
-  const [decklist, setDecklist] = useState([]);
-
-  const deck = useCallback(async () => {
-    try {
-      const details = await Promise.all(
-        formattedWeek.map(day => getWeeklyDecklists(day)),
-      );
-      setDecklist(details);
-    } catch (error) {
-      return undefined;
-    }
-  }, []);
-
+const DecksList = ({navigation, getWeeklyDecks, weeklyDecks}) => {
   useEffect(() => {
-    deck();
-  }, [deck]);
+    getWeeklyDecks();
+  }, [getWeeklyDecks]);
 
   const openDeckDetails = id => {
     navigation.navigate('Modal', {id});
   };
-
-  const decklistArray = [].concat.apply([], decklist);
 
   const renderDeck = ({item}) => {
     if (item) {
@@ -100,10 +77,10 @@ const DecksList = ({navigation}) => {
     <>
       <Header />
 
-      {decklist.length > 0 ? (
+      {weeklyDecks.length > 0 ? (
         <View style={styles.container}>
           <FlatList
-            data={decklistArray}
+            data={weeklyDecks}
             renderItem={renderDeck}
             showsVerticalScrollIndicator={false}
             keyExtractor={item => item && `${item.id}`}
@@ -116,4 +93,14 @@ const DecksList = ({navigation}) => {
   );
 };
 
-export default DecksList;
+const mapStateToProps = state => ({
+  weeklyDecks: state.decksReducer.weeklyDecks,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  getWeeklyDecks: () => dispatch(getWeeklyDecksAction()),
+});
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, mapDispatchToProps)(DecksList);

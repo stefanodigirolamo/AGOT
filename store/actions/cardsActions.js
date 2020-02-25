@@ -1,7 +1,11 @@
 import card from '../../interceptors/cardInterceptor';
 import cards from '../../interceptors/cardsInterceptor';
 
-import {GET_CARD, GET_CARDS, GET_SECTIONS_CARDS as GET_SECTIONS} from './types';
+import {
+  GET_CARD,
+  GET_ALL_CARDS,
+  GET_SECTIONS_CARDS as GET_SECTIONS,
+} from './types';
 
 let agendaSection = {};
 let attachmentSection = {};
@@ -12,12 +16,27 @@ let eventSection = {};
 
 const sectionsArray = [];
 
-export function getCardsAction() {
+export function getCardByIdAction(id) {
+  return async dispatch => {
+    try {
+      const {data} = await card.get(`${id}.json`);
+
+      return dispatch({
+        type: GET_CARD,
+        payload: data,
+      });
+    } catch (error) {
+      return undefined;
+    }
+  };
+}
+
+export function getAllCardsAction() {
   return async dispatch => {
     try {
       const {data} = await cards.get();
       return dispatch({
-        type: GET_CARDS,
+        type: GET_ALL_CARDS,
         payload: data,
       });
     } catch (error) {
@@ -28,18 +47,20 @@ export function getCardsAction() {
   };
 }
 
-export function getSectionsAction(type, cardsArray) {
-  async dispatch => {
-    const sectionFilter = (title, array) => {
-      return {
-        title: title,
-        data: array.filter(item => {
-          return item.type_name === title;
-        }),
-      };
+export function getSectionsAction(cardsArray) {
+  const typesArray =
+    cardsArray.length > 0 && cardsArray.map(item => item.type_name);
+  const sectionFilter = (title, array) => {
+    return {
+      title: title,
+      data: array.filter(item => {
+        return item.type_name === title;
+      }),
     };
+  };
 
-    type.map(item => {
+  return async dispatch => {
+    typesArray.map(item => {
       switch (item) {
         case 'Agenda':
           {
@@ -88,26 +109,9 @@ export function getSectionsAction(type, cardsArray) {
       value => JSON.stringify(value) !== '{}',
     );
 
-    console.log(filterCards);
-
     return dispatch({
       type: GET_SECTIONS,
       payload: filterCards,
     });
   };
 }
-
-export const getCardAction = id => {
-  async dispatch => {
-    try {
-      const {data} = await card.get(`${id}.json`);
-
-      return dispatch({
-        type: GET_CARD,
-        payload: data,
-      });
-    } catch (error) {
-      return null;
-    }
-  };
-};

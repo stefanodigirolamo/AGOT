@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux';
 import CardDetailsStyle from './CardDetailsStyle';
 import FactionIcon from '../../../assets/houses_logos/housesLogoSwitch';
 import factionColor from '../../../assets/styles/factionColor';
@@ -12,21 +13,12 @@ import {
   Text,
   TouchableHighlight,
 } from 'react-native';
-import {getCard} from '../../../api/cardApi/getCard';
+import {getCardByIdAction} from '../../../store/actions/cardsActions';
 
-const CardDetails = ({navigation}) => {
+const CardDetails = ({navigation, getCard, card}) => {
   const styles = CardDetailsStyle;
-  const [cardInfo, setCardInfo] = useState({});
+  const id = navigation.state.params.code;
   const [modalState, setModalState] = useState(false);
-
-  const card = useCallback(async () => {
-    try {
-      const info = await getCard(navigation.state.params.code);
-      setCardInfo(info);
-    } catch (error) {
-      return undefined;
-    }
-  }, [navigation.state.params.code]);
 
   const openModal = () => {
     setModalState(true);
@@ -37,24 +29,24 @@ const CardDetails = ({navigation}) => {
   };
 
   useEffect(() => {
-    card();
-  }, [card]);
+    getCard(id);
+  }, [id, getCard]);
 
-  return !cardInfo.image_url ? (
+  return !card.image_url ? (
     <Spinner spinnerStyles={styles.spinner} />
   ) : (
     <>
-      <View style={{backgroundColor: factionColor(cardInfo.faction_name)}}>
+      <View style={{backgroundColor: factionColor(card.faction_name)}}>
         <View style={styles.titleContainer}>
           <View style={styles.iconContainer}>
             <FactionIcon
-              factionName={cardInfo.faction_name}
+              factionName={card.faction_name}
               width={50}
               height={50}
             />
           </View>
           <View style={styles.cardNameContainer}>
-            <Text style={styles.cardTitle}> {cardInfo.name} </Text>
+            <Text style={styles.cardTitle}> {card.name} </Text>
           </View>
         </View>
       </View>
@@ -65,42 +57,40 @@ const CardDetails = ({navigation}) => {
             <Image
               style={[
                 styles.cardImage,
-                cardInfo.type_code === 'plot'
+                card.type_code === 'plot'
                   ? styles.dimensionsPlotCards
                   : styles.dimensionsOtherCards,
               ]}
               borderRadius={10}
-              source={{uri: `${cardInfo.image_url}`}}
+              source={{uri: `${card.image_url}`}}
             />
           </TouchableWithoutFeedback>
         </View>
 
         <Text style={[styles.cardDetails, styles.emphasizedFaction]}>
-          {cardInfo.faction_name}
+          {card.faction_name}
         </Text>
         <Text style={[styles.cardDetails, styles.emphasizedName]}>
-          {cardInfo.type_name} {cardInfo.cost && `. Cost: ${cardInfo.cost}`}
+          {card.type_name} {card.cost && `. Cost: ${card.cost}`}
         </Text>
-        {cardInfo.traits ? (
+        {card.traits ? (
           <Text style={[styles.cardDetails, styles.emphasizedTraits]}>
-            {cardInfo.traits}
+            {card.traits}
           </Text>
         ) : null}
         <View style={styles.containerDescription}>
           <View
             style={[
               styles.verticalLineDesc,
-              {backgroundColor: factionColor(cardInfo.faction_name)},
+              {backgroundColor: factionColor(card.faction_name)},
             ]}
           />
           <Text style={styles.cardDetails}>
-            {cardInfo.text.replace(/<b>|<\/b>|<i>|<\/i>|<em>|<\/em>/gi, '')}
+            {card.text.replace(/<b>|<\/b>|<i>|<\/i>|<em>|<\/em>/gi, '')}
           </Text>
         </View>
-        <Text style={styles.cardDetails}>Pack Name: {cardInfo.pack_name}</Text>
-        <Text style={styles.cardDetails}>
-          Deck Limit: {cardInfo.deck_limit}
-        </Text>
+        <Text style={styles.cardDetails}>Pack Name: {card.pack_name}</Text>
+        <Text style={styles.cardDetails}>Deck Limit: {card.deck_limit}</Text>
       </ScrollView>
 
       <Modal
@@ -115,12 +105,12 @@ const CardDetails = ({navigation}) => {
             <Image
               style={[
                 styles.cardImage,
-                cardInfo.type_code === 'plot'
+                card.type_code === 'plot'
                   ? styles.dimensionsPlotZoom
                   : styles.dimensionsOtherZoom,
               ]}
               borderRadius={10}
-              source={{uri: `${cardInfo.image_url}`}}
+              source={{uri: `${card.image_url}`}}
             />
           </View>
         </TouchableHighlight>
@@ -129,4 +119,14 @@ const CardDetails = ({navigation}) => {
   );
 };
 
-export default CardDetails;
+const mapStateToProps = state => ({
+  card: state.cardsReducer.card,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  getCard: id => dispatch(getCardByIdAction(id)),
+});
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, mapDispatchToProps)(CardDetails);

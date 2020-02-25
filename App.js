@@ -16,18 +16,18 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/background/Background';
 import {theme, colors} from './assets/styles/theme';
 import {HideNavigationBar} from 'react-native-navigation-bar-color';
-import {getCardsAction} from './store/actions/cardsActions';
+import {getAllCardsAction} from './store/actions/cardsActions';
 
-const App = ({cards, getCards}) => {
+const App = ({allCards, getAllCards}) => {
   useEffect(() => {
     HideNavigationBar;
-    cards.length <= 0 && getCards();
-  }, [cards, getCards]);
+    allCards.length <= 0 && getAllCards();
+  }, [allCards, getAllCards]);
 
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={colors.black} />
-      {cards.length > 0 ? (
+      {allCards.length > 0 ? (
         <>
           <Background />
           <AppNavigator />
@@ -192,13 +192,13 @@ const AppNavigator = createAppContainer(tabNavigator);
 
 const mapStateToProps = state => {
   return {
-    cards: state.cardsReducer.cards,
+    allCards: state.cardsReducer.allCards,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
-  getCards: () => dispatch(getCardsAction()),
+  getAllCards: () => dispatch(getAllCardsAction()),
 });
 
 // eslint-disable-next-line prettier/prettier

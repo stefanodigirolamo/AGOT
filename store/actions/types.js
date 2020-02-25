@@ -1,5 +1,6 @@
 export const GET_CARD = 'GET_CARD';
-export const GET_CARDS = 'GET_CARDS';
+export const GET_ALL_CARDS = 'GET_ALL_CARDS';
+export const GET_CARDS_PACK = 'GET_CARDS_PACK';
 export const GET_SECTIONS_CARDS = 'GET_SECTIONS_CARDS';
 export const GET_DAILY_DECKS = 'GET__DAILY_DECKS';
 export const GET_WEEK_DECKS = 'GET__WEEK_DECKS';

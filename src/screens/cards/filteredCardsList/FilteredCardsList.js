@@ -1,4 +1,5 @@
-import React, {useContext, useMemo} from 'react';
+import React, {useMemo, useEffect} from 'react';
+import {connect} from 'react-redux';
 import {
   View,
   Text,
@@ -8,11 +9,15 @@ import {
   SafeAreaView,
 } from 'react-native';
 import filteredCardListStyle from './filteredCardListStyle';
-import {Context} from '../../../../App';
 import {ScrollView} from 'react-native-gesture-handler';
+import {getAllCardsAction} from '../../../../store/actions/cardsActions';
 
-const Filtered = ({navigation}) => {
+const Filtered = ({navigation, getAllCards, allCards}) => {
   const styles = filteredCardListStyle;
+
+  useEffect(() => {
+    getAllCards();
+  }, [getAllCards]);
 
   const {
     type,
@@ -22,11 +27,9 @@ const Filtered = ({navigation}) => {
     challenges,
   } = navigation.state.params;
 
-  const cardsList = useContext(Context);
-
   const filteredCardsArray = useMemo(
     () =>
-      cardsList.reduce((acc, item) => {
+      allCards.reduce((acc, item) => {
         let isValidFilter = true;
 
         if (type.length > 0 && type !== item.type_name) {
@@ -64,7 +67,7 @@ const Filtered = ({navigation}) => {
       selectedCost,
       selectedStrength,
       challenges,
-      cardsList,
+      allCards,
     ],
   );
 
@@ -182,4 +185,13 @@ const Filtered = ({navigation}) => {
   );
 };
 
-export default Filtered;
+const mapStateToProps = state => ({
+  allCards: state.cardsReducer.allCards,
+});
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  getAllCards: () => dispatch(getAllCardsAction()),
+});
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, mapDispatchToProps)(Filtered);

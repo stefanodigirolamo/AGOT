@@ -3,17 +3,19 @@ import {
   GET_WEEK_DECKS,
   GET_CARDS_DECK,
   GET_DECK_DETAILS,
+  GET_SLOTS,
 } from './types';
 import decklists from '../../interceptors/decklistInterceptor';
-import {format} from 'date-fns';
+import {format, subDays, eachDayOfInterval} from 'date-fns';
 import deckDetails from '../../interceptors/deckDetailsInterceptor';
+import card from '../../interceptors/cardInterceptor';
 
 const today = format(new Date(), 'yyyy-MM-dd');
 
 export function getDailyDecksAction() {
   return async dispatch => {
     try {
-      const decks = await decklists.get(`2020-02-24.json`);
+      const decks = await decklists.get(`${today}.json`);
 
       const dailyDecks = decks.data.map(deck => {
         return {
@@ -37,12 +39,25 @@ export function getDailyDecksAction() {
   };
 }
 
-export function getWeeklyDecksAction(day) {
+export function getWeeklyDecksAction() {
+  const firstDayWeek = subDays(new Date(), 7);
+
+  const week = eachDayOfInterval({
+    start: new Date(firstDayWeek),
+    end: new Date(),
+  });
+
+  const formattedWeek = week.map(item => format(new Date(item), 'yyyy-MM-dd'));
   return async dispatch => {
     try {
-      const decks = await decklists.get(`${day}.json`);
+      const details = await Promise.all(
+        formattedWeek.map(day => decklists.get(`${day}.json`)),
+      );
 
-      const weeklyDecks = decks.data.map(deck => {
+      const decks = details.map(item => item.data);
+      const decksArray = [].concat.apply([], decks);
+
+      const weeklyDecks = decksArray.map(deck => {
         return (
           deck && {
             id: deck.id,
@@ -70,7 +85,6 @@ export function getDeckDetailsAction(id) {
   return async dispatch => {
     try {
       const {data} = await deckDetails.get(`${id}.json`);
-      console.log(data);
 
       return dispatch({
         type: GET_DECK_DETAILS,
@@ -82,15 +96,14 @@ export function getDeckDetailsAction(id) {
   };
 }
 
-export function getSlotsOfDeckAction(id) {
+export function getDeckSlotsAction(id) {
   return async dispatch => {
     try {
       const {data} = await deckDetails.get(`${id}.json`);
       const slots = Object.keys(data.slots);
-      console.log(slots);
 
       return dispatch({
-        type: GET_DECK_DETAILS,
+        type: GET_SLOTS,
         payload: slots,
       });
     } catch (error) {
@@ -99,19 +112,21 @@ export function getSlotsOfDeckAction(id) {
   };
 }
 
-export function getCardsOfDeckAction() {
+export function getDeckCardsAction(slotsArray) {
   return async dispatch => {
-    const decks = await decklists.get(`${today}.json`);
-    const cards = decks.data.map(deck => {
-      return {
-        id: deck.id,
-        slot: deck.slots,
-      };
-    });
+    try {
+      const array = await Promise.all(
+        slotsArray.length > 0 && slotsArray.map(id => card.get(`${id}.json`)),
+      );
 
-    return dispatch({
-      type: GET_CARDS_DECK,
-      payload: cards,
-    });
+      const cards = array.map(item => item.data);
+
+      return dispatch({
+        type: GET_CARDS_DECK,
+        payload: cards,
+      });
+    } catch (error) {
+      return undefined;
+    }
   };
 }

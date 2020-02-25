@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import cardListStyles from './cardListStyles';
 import {theme} from '../../../assets/styles/theme';
 
-const CardList = ({deck, cards, navigation}) => {
+const CardList = ({deck, sections, navigation}) => {
   const styles = cardListStyles;
 
   const cardDetail = code => {
@@ -37,7 +37,7 @@ const CardList = ({deck, cards, navigation}) => {
   return (
     <SectionList
       bounces={false}
-      sections={cards}
+      sections={sections}
       keyExtractor={item => `key-${item.code}`}
       stickySectionHeadersEnabled
       ItemSeparatorComponent={() => <View style={styles.separator} />}

@@ -11,7 +11,7 @@ const initialState = {
   weeklyDecks: [],
   deckDetails: {},
   slots: [],
-  cardsOfDeck: [],
+  deckCards: [],
 };
 
 export default function(state = initialState, action) {
@@ -25,7 +25,7 @@ export default function(state = initialState, action) {
     case GET_SLOTS:
       return {...state, slots: action.payload};
     case GET_CARDS_DECK:
-      return {...state, cardsOfDeck: action.payload};
+      return {...state, deckCards: action.payload};
     default:
       return state;
   }

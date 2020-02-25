@@ -7,7 +7,7 @@ import factionColorSwitch from '../../../assets/styles/factionColor';
 import {theme} from '../../../assets/styles/theme';
 import styles from './graphCarouselStyles';
 
-const GraphCarousel = ({cardSections, listOfCards}) => {
+const GraphCarousel = ({cardSections, deckCards}) => {
   const carouselWidth = Dimensions.get('window').width;
   const [activeSlide, setActiveSlide] = useState(0);
 
@@ -63,20 +63,17 @@ const GraphCarousel = ({cardSections, listOfCards}) => {
     return results;
   };
 
-  const cardSectionsType = cardSections.filter(
-    item => item.title !== 'Agenda' && item.title !== 'Plot',
-  );
-  const groupedFaction = groupByFaction(listOfCards);
-  const groupedCost = groupByCost(listOfCards);
+  const groupedFaction = groupByFaction(deckCards);
+  const groupedCost = groupByCost(deckCards);
   const filteredGroupCost = groupedCost.filter(item => item.key !== 'null');
-  let groupedStrength = groupByStrength(listOfCards);
+  let groupedStrength = groupByStrength(deckCards);
   groupedStrength.pop();
 
-  const cardsOfType = cardSectionsType.map(item => {
+  const cardsOfType = cardSections.map(item => {
     return item.title;
   });
 
-  const numberOfCardsByType = cardSectionsType.map(item => {
+  const numberOfCardsByType = cardSections.map(item => {
     return item.data.length;
   });
 
@@ -206,6 +203,7 @@ const GraphCarousel = ({cardSections, listOfCards}) => {
                   <View style={styles.containerTextPiedChart}>
                     {groupedFaction.map((item, index) => (
                       <Text
+                        key={index}
                         style={{
                           color: factionColorSwitch(item.name),
                           fontWeight: 'bold',
