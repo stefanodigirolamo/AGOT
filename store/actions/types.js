@@ -1,0 +1,9 @@
+export const GET_CARD = 'GET_CARD';
+export const GET_CARDS = 'GET_CARDS';
+export const GET_SECTIONS_CARDS = 'GET_SECTIONS_CARDS';
+export const GET_DAILY_DECKS = 'GET__DAILY_DECKS';
+export const GET_WEEK_DECKS = 'GET__WEEK_DECKS';
+export const GET_CARDS_DECK = 'GET__CARDS_DECK';
+export const GET_DECK_DETAILS = 'GET_DECK_DETAILS';
+export const GET_SLOTS = 'GET_SLOTS';
+export const GET_PACKS = 'GET_PACKS';

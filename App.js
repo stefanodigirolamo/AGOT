@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useEffect} from 'react';
+import {connect} from 'react-redux';
 import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
@@ -13,37 +14,24 @@ import Filtered from './src/screens/cards/filteredCardsList/FilteredCardsList';
 import Spinner from './utils/spinner/Spinner';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Background from './utils/background/Background';
-import {getAllCardsList} from './api/cardsApi/getCards';
 import {theme, colors} from './assets/styles/theme';
 import {HideNavigationBar} from 'react-native-navigation-bar-color';
+import {getCardsAction} from './store/actions/cardsActions';
 
-export const Context = React.createContext([]);
-
-const App = () => {
-  const [cards, setCards] = useState([]);
-
-  const getAllCards = useCallback(async () => {
-    try {
-      const cardsList = await getAllCardsList();
-      setCards(cardsList);
-    } catch (error) {
-      return undefined;
-    }
-  }, []);
-
+const App = ({cards, getCards}) => {
   useEffect(() => {
     HideNavigationBar;
-    getAllCards();
-  }, [getAllCards]);
+    cards.length <= 0 && getCards();
+  }, [cards, getCards]);
 
   return (
     <>
       <StatusBar barStyle="light-content" backgroundColor={colors.black} />
       {cards.length > 0 ? (
-        <Context.Provider value={cards}>
+        <>
           <Background />
           <AppNavigator />
-        </Context.Provider>
+        </>
       ) : (
         <Spinner spinnerStyles={{marginTop: '100%'}} />
       )}
@@ -202,4 +190,16 @@ const tabNavigator = createBottomTabNavigator(
 
 const AppNavigator = createAppContainer(tabNavigator);
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    cards: state.cardsReducer.cards,
+  };
+};
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  getCards: () => dispatch(getCardsAction()),
+});
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, mapDispatchToProps)(App);

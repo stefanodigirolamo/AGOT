@@ -86,7 +86,7 @@ export const getSections = (type, cards) => {
     value => JSON.stringify(value) !== '{}',
   );
 
-  // console.log(filterCards);
+  console.log(filterCards);
 
   return filterCards;
 };

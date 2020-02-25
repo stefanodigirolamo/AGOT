@@ -1,4 +1,5 @@
 import React, {useState, useEffect, useCallback, useRef} from 'react';
+import {connect} from 'react-redux';
 import modalStyles from './modalStyles';
 import {
   View,
@@ -12,34 +13,60 @@ import Spinner from '../../../utils/spinner/Spinner';
 import GraphCarousel from '../graphCarousel/GraphCarousel';
 import PackImage from '../../../assets/switch_pack_images/packagesImagesSwitch';
 import CardList from '../cardList/CardList';
-import {getDeckDetails} from '../../../api/deckDetailsApi/deckdetailsApi';
-import {getCard} from '../../../api/cardApi/getCard';
-import {getCards, getSections} from '../../../api/cardsApi/getCards';
 import {format} from 'date-fns';
 import Button from '../../../utils/button/Button';
 import {colors, theme} from '../../../assets/styles/theme';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {
+  getDeckDetailsAction,
+  getSlotsOfDeckAction,
+} from '../../../store/actions/decksActions';
+import {
+  getSectionsAction,
+  getCardAction,
+  getCardsAction,
+} from '../../../store/actions/cardsActions';
 
-const Modal = ({navigation}) => {
+const Modal = ({
+  navigation,
+  getDeckDetails,
+  deckDetails,
+  getSlotsOfDeck,
+  slots,
+  getCards,
+  cards,
+  getCard,
+  getSections,
+}) => {
   const styles = modalStyles;
   const packName = navigation.state.params.name;
   const totalCards = navigation.state.params.total;
   const URL = navigation.state.params.url;
+  console.log(navigation.state.params.id);
 
-  const [deckDetails, setDeckDetails] = useState({});
   const [cardSections, setCardSections] = useState([]);
-  const [listOfCards, setListOfCards] = useState([]);
   const [isHeaderOpen, setHeaderOpen] = useState(false);
 
   const heightAnimation = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (packName) {
+      getCards(navigation.state.params.id);
       card();
     } else {
+      getSlotsOfDeck(navigation.state.params.id);
+      getDeckDetails(navigation.state.params.id);
       deck();
     }
-  }, [packName, card, deck]);
+  }, [
+    navigation.state.params.id,
+    getCards,
+    getDeckDetails,
+    getSlotsOfDeck,
+    packName,
+    card,
+    deck,
+  ]);
 
   useEffect(() => {
     Animated.spring(heightAnimation, {
@@ -48,35 +75,30 @@ const Modal = ({navigation}) => {
     }).start();
   }, [isHeaderOpen, heightAnimation]);
 
-  const getIds = slots => {
-    return Object.keys(slots);
-  };
-
   const deck = useCallback(async () => {
     try {
-      const details = await getDeckDetails(navigation.state.params.id);
-      const ids = getIds(details.slots);
-      const cards = await Promise.all(ids.map(item => getCard(item)));
-      const array_type_name = cards.map(item => item.type_name);
-      const cardSectionsArray = await getSections(array_type_name, cards);
-      setListOfCards(cards);
-      setDeckDetails(details);
+      const cardsArray = await Promise.all(slots.map(item => getCard(item)));
+      const array_type_name = cardsArray.map(item => item.type_name);
+      const cardSectionsArray = await getSections(array_type_name, cardsArray);
       setCardSections(cardSectionsArray);
     } catch (error) {
       return undefined;
     }
-  }, [navigation.state.params.id]);
+  }, [slots, getCard, getSections]);
 
   const card = useCallback(async () => {
     try {
-      const cards = await getCards(navigation.state.params.id);
       const array_type_name = cards.map(item => item.type_name);
+      console.log(array_type_name);
+
       const cardListSections = await getSections(array_type_name, cards);
+      console.log(cardListSections);
+
       setCardSections(cardListSections);
     } catch (error) {
       return undefined;
     }
-  }, [navigation.state.params.id]);
+  }, [cards, getSections]);
 
   const openUrl = () => {
     Linking.openURL(URL);
@@ -95,7 +117,7 @@ const Modal = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {!deckDetails || cardSections < 1 ? (
+      {!deckDetails || cardSections.length === 0 ? (
         <Spinner spinnerStyles={styles.spinner} />
       ) : !packName && dateCreation ? (
         <View style={styles.decksContainer}>
@@ -105,7 +127,7 @@ const Modal = ({navigation}) => {
             {isHeaderOpen && (
               <>
                 <GraphCarousel
-                  listOfCards={listOfCards}
+                  listOfCards={cards}
                   cardSections={cardSections}
                 />
                 <View style={styles.dateContainer}>
@@ -155,4 +177,22 @@ const Modal = ({navigation}) => {
   );
 };
 
-export default Modal;
+const mapStateToProps = state => ({
+  deckDetails: state.decksReducer.deckDetails,
+  slots: state.decksReducer.slots,
+  sections: state.cardsReducer.sections,
+  cards: state.cardsReducer.cards,
+  card: state.cardsReducer.card,
+});
+
+const mapDispatchToProps = dispatch => ({
+  dispatch,
+  getDeckDetails: () => dispatch(getDeckDetailsAction()),
+  getSlotsOfDeck: () => dispatch(getSlotsOfDeckAction()),
+  getSections: () => dispatch(getSectionsAction()),
+  getCards: () => dispatch(getCardsAction()),
+  getCard: () => dispatch(getCardAction()),
+});
+
+// eslint-disable-next-line prettier/prettier
+export default connect(mapStateToProps, mapDispatchToProps)(Modal);
