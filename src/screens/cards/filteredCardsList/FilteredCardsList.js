@@ -1,4 +1,4 @@
-import React, {useMemo, useEffect} from 'react';
+import React, {useMemo} from 'react';
 import {connect} from 'react-redux';
 import {
   View,
@@ -10,14 +10,9 @@ import {
 } from 'react-native';
 import filteredCardListStyle from './filteredCardListStyle';
 import {ScrollView} from 'react-native-gesture-handler';
-import {getAllCardsAction} from '../../../../store/actions/cardsActions';
 
-const Filtered = ({navigation, getAllCards, allCards}) => {
+const Filtered = ({navigation, allCards}) => {
   const styles = filteredCardListStyle;
-
-  useEffect(() => {
-    getAllCards();
-  }, [getAllCards]);
 
   const {
     type,
@@ -188,10 +183,5 @@ const Filtered = ({navigation, getAllCards, allCards}) => {
 const mapStateToProps = state => ({
   allCards: state.cardsReducer.allCards,
 });
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  getAllCards: () => dispatch(getAllCardsAction()),
-});
 
-// eslint-disable-next-line prettier/prettier
-export default connect(mapStateToProps, mapDispatchToProps)(Filtered);
+export default connect(mapStateToProps)(Filtered);

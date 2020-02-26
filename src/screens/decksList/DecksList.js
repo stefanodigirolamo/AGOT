@@ -1,9 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import Header from '../../components/header/Header';
 import decklistStyles from './decklistStyle';
-import {getWeeklyDecksAction} from '../../../store/actions/decksActions';
 import {format} from 'date-fns';
 import HousesCard from '../../../assets/houses_cards/housesCardSwitch';
 import {theme} from '../../../assets/styles/theme';
@@ -11,11 +10,7 @@ import Spinner from '../../../utils/spinner/Spinner';
 
 const styles = decklistStyles;
 
-const DecksList = ({navigation, getWeeklyDecks, weeklyDecks}) => {
-  useEffect(() => {
-    getWeeklyDecks();
-  }, [getWeeklyDecks]);
-
+const DecksList = ({navigation, weeklyDecks}) => {
   const openDeckDetails = id => {
     navigation.navigate('Modal', {id});
   };
@@ -97,10 +92,4 @@ const mapStateToProps = state => ({
   weeklyDecks: state.decksReducer.weeklyDecks,
 });
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  getWeeklyDecks: () => dispatch(getWeeklyDecksAction()),
-});
-
-// eslint-disable-next-line prettier/prettier
-export default connect(mapStateToProps, mapDispatchToProps)(DecksList);
+export default connect(mapStateToProps)(DecksList);

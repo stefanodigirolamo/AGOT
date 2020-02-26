@@ -1,24 +1,17 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
 import {View, Text, FlatList, TouchableOpacity} from 'react-native';
 import PacksImages from '../../../assets/switch_pack_images/packagesImagesSwitch';
 import Deck from '../../components/cardDeck/CardDeck';
 import homeStyle from './homeStyles';
 import Header from '../../components/header/Header';
-import {getDailyDecksAction} from '../../../store/actions/decksActions';
-import {getPacksAction} from '../../../store/actions/packsActions';
 
-const Home = ({navigation, getDailyDecks, dailyDecks, getPacks, packs}) => {
+const Home = ({navigation, dailyDecks, packs}) => {
   const styles = homeStyle;
 
   const openModal = (id, name, total, url) => {
     navigation.navigate('Modal', {id, name, total, url});
   };
-
-  useEffect(() => {
-    getDailyDecks();
-    getPacks();
-  }, [getDailyDecks, getPacks]);
 
   return (
     <>
@@ -47,7 +40,7 @@ const Home = ({navigation, getDailyDecks, dailyDecks, getPacks, packs}) => {
           ) : (
             <View style={styles.warningContainer}>
               <Text style={styles.messageWarning}>
-                I'm sorry! There are no Decklists for now!
+                I'm sorry! No Decks published yet!
               </Text>
             </View>
           )}
@@ -85,11 +78,4 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = dispatch => ({
-  dispatch,
-  getDailyDecks: () => dispatch(getDailyDecksAction()),
-  getPacks: () => dispatch(getPacksAction()),
-});
-
-// eslint-disable-next-line prettier/prettier
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps)(Home);

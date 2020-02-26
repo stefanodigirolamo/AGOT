@@ -19,7 +19,7 @@ const homeStyles = StyleSheet.create({
         },
   packListContainer: {
     flex: height > 800 ? 3 : 1,
-    marginTop: height > 800 ? '5%' : '0%',
+    marginTop: height > 800 ? '15%' : '0%',
   },
   decklistTitle: {
     display: 'flex',
@@ -55,10 +55,10 @@ const homeStyles = StyleSheet.create({
   warningContainer: {
     display: 'flex',
     alignItems: 'center',
-    marginVertical: '25%',
+    marginVertical: height > 800 ? '30%' : '20%',
   },
   messageWarning: {
-    fontSize: 14,
+    fontSize: 22,
     color: theme.secondary,
   },
 });

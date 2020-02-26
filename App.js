@@ -4,6 +4,7 @@ import {createAppContainer} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {StatusBar} from 'react-native';
+import {startOfYesterday} from 'date-fns';
 import Home from './src/screens/home/Home';
 import Cards from './src/screens/cards/Cards';
 import DecksList from './src/screens/decksList/DecksList';
@@ -17,12 +18,41 @@ import Background from './utils/background/Background';
 import {theme, colors} from './assets/styles/theme';
 import {HideNavigationBar} from 'react-native-navigation-bar-color';
 import {getAllCardsAction} from './store/actions/cardsActions';
+import {getPacksAction} from './store/actions/packsActions';
+import {
+  getWeeklyDecksAction,
+  getDailyDecksAction,
+} from './store/actions/decksActions';
 
-const App = ({allCards, getAllCards}) => {
+const App = ({
+  allCards,
+  getAllCards,
+  packs,
+  getPacks,
+  dailyDecks,
+  getDailyDecks,
+  weeklyDecks,
+  getWeeklyDecks,
+}) => {
+  const lastDayWeek = dailyDecks.length > 0 ? new Date() : startOfYesterday();
+
   useEffect(() => {
     HideNavigationBar;
-    allCards.length <= 0 && getAllCards();
-  }, [allCards, getAllCards]);
+    allCards.length === 0 && getAllCards();
+    packs.length === 0 && getPacks();
+    dailyDecks.length === 0 && getDailyDecks();
+    weeklyDecks.length === 0 && getWeeklyDecks(lastDayWeek);
+  }, [
+    allCards,
+    getAllCards,
+    packs,
+    getPacks,
+    dailyDecks,
+    getDailyDecks,
+    lastDayWeek,
+    weeklyDecks,
+    getWeeklyDecks,
+  ]);
 
   return (
     <>
@@ -193,12 +223,18 @@ const AppNavigator = createAppContainer(tabNavigator);
 const mapStateToProps = state => {
   return {
     allCards: state.cardsReducer.allCards,
+    packs: state.packsReducer.packs,
+    dailyDecks: state.decksReducer.dailyDecks,
+    weeklyDecks: state.decksReducer.weeklyDecks,
   };
 };
 
 const mapDispatchToProps = dispatch => ({
   dispatch,
   getAllCards: () => dispatch(getAllCardsAction()),
+  getPacks: () => dispatch(getPacksAction()),
+  getDailyDecks: () => dispatch(getDailyDecksAction()),
+  getWeeklyDecks: lastDayWeek => dispatch(getWeeklyDecksAction(lastDayWeek)),
 });
 
 // eslint-disable-next-line prettier/prettier

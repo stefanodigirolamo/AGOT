@@ -6,11 +6,12 @@ import {
   GET_SLOTS,
 } from './types';
 import decklists from '../../interceptors/decklistInterceptor';
-import {format, subDays, eachDayOfInterval} from 'date-fns';
 import deckDetails from '../../interceptors/deckDetailsInterceptor';
 import card from '../../interceptors/cardInterceptor';
+import {format, subDays, eachDayOfInterval} from 'date-fns';
 
 const today = format(new Date(), 'yyyy-MM-dd');
+const firstDayWeek = subDays(new Date(), 7);
 
 export function getDailyDecksAction() {
   return async dispatch => {
@@ -39,12 +40,10 @@ export function getDailyDecksAction() {
   };
 }
 
-export function getWeeklyDecksAction() {
-  const firstDayWeek = subDays(new Date(), 7);
-
+export function getWeeklyDecksAction(lastDayWeek) {
   const week = eachDayOfInterval({
     start: new Date(firstDayWeek),
-    end: new Date(),
+    end: lastDayWeek,
   });
 
   const formattedWeek = week.map(item => format(new Date(item), 'yyyy-MM-dd'));
@@ -54,7 +53,8 @@ export function getWeeklyDecksAction() {
         formattedWeek.map(day => decklists.get(`${day}.json`)),
       );
 
-      const decks = details.map(item => item.data);
+      const decks = details.map(item => item && item.data);
+
       const decksArray = [].concat.apply([], decks);
 
       const weeklyDecks = decksArray.map(deck => {
